@@ -1,39 +1,8 @@
-<!DOCTYPE html>
-<html lang="ru">
-
-<head>
-<meta charset="UTF-8">
-<meta name="viewport" content="width=device-width, initial-scale=1.0">
-
-<title>Eyes Case</title>
-
-<script src="https://telegram.org/js/telegram-web-app.js"></script>
-
-<!-- подключаем CSS -->
-
-<link rel="stylesheet" href="style/style.css">
-
-<link href="https://fonts.googleapis.com/css2?family=Orbitron:wght@600;800&display=swap" rel="stylesheet">
-  
-</head>
-
-<body>
-
-<!-- HEADER -->
-
-<div class="header">
-
-<img id="avatar" class="avatar" src="https://placehold.co/100">
-
-<div id="username" class="username">
-лучшие тестеры
-</div>
-
-</div>
-
 <!-- CASES -->
 
 <div class="container">
+
+<!-- MYTHIC -->
 
 <div class="case">
 
@@ -44,60 +13,56 @@ MYTHIC
 </div>
 
 <button class="open-btn" onclick="openCase()">
-Открыть кейс
+Открыть
 </button>
 
 </div>
 
+
+<!-- CASE В РАЗРАБОТКЕ -->
+
+<div class="case case-disabled">
+
+<img src="CasesPhoto/image.png" class="case-img">
+
+<div class="case-title">
+DEMON
 </div>
 
-<!-- NAV -->
-
-<div class="nav">
-
-<button>Главная</button>
-
-<button class="disabled">Лидерборд</button>
-
-<button>Профиль</button>
+<div class="dev-text">
+В разработке
+</div>
 
 </div>
 
-<script>
 
-const tg = window.Telegram.WebApp
+<div class="case case-disabled">
 
-tg.expand()
+<img src="CasesPhoto/image.png" class="case-img">
 
-const user = tg.initDataUnsafe?.user
+<div class="case-title">
+LEGEND
+</div>
 
-if(user){
+<div class="dev-text">
+В разработке
+</div>
 
-document.getElementById("username").innerText =
-user.first_name + " @" + user.username
+</div>
 
-if(user.photo_url){
-document.getElementById("avatar").src = user.photo_url
-}
 
-}
+<div class="case case-disabled">
 
-function openCase(){
+<img src="CasesPhoto/image.png" class="case-img">
 
-const items = [
-"NFT Cat",
-"NFT Demon",
-"NFT Dragon",
-"NFT Devil"
-]
+<div class="case-title">
+RARE
+</div>
 
-const item = items[Math.floor(Math.random()*items.length)]
+<div class="dev-text">
+В разработке
+</div>
 
-alert("🎉 Вам выпало: " + item)
+</div>
 
-}
-
-</script>
-
-</body>
-</html>
+</div>
