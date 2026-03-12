@@ -78,14 +78,18 @@ transform: translateY(0px) rotate(-2deg);
 /* CASE TITLE */
 
 .case-title{
-font-size:22px;
+font-family:'Orbitron', sans-serif;
+font-size:24px;
 margin:15px 0;
-font-weight:bold;
-color:#d35cff;
+font-weight:800;
+letter-spacing:3px;
+
+color:#ff2b2b;
+
 text-shadow:
-0 0 8px #a020f0,
-0 0 18px #a020f0;
-letter-spacing:2px;
+0 0 6px #ff0000,
+0 0 12px #ff0000,
+0 0 22px #ff3c3c;
 }
 
 /* OPEN BUTTON */
