@@ -101,11 +101,35 @@ RARE
 
 <div class="nav">
 
-<button>Главная</button>
+<button class="nav-btn">
 
-<button class="disabled">Лидерборд</button>
+<svg class="nav-icon" viewBox="0 0 24 24">
+<path d="M12 3L2 12h3v8h6v-5h2v5h6v-8h3z"/>
+</svg>
 
-<button onclick="openProfile()">Профиль</button>
+<span>Главная</span>
+
+</button>
+
+<button class="nav-btn disabled">
+
+<svg class="nav-icon" viewBox="0 0 24 24">
+<path d="M12 17.27L18.18 21l-1.64-7.03L22 9.24l-7.19-.61L12 2 9.19 8.63 2 9.24l5.46 4.73L5.82 21z"/>
+</svg>
+
+<span>Лидерборд</span>
+
+</button>
+
+<button class="nav-btn" onclick="openProfile()">
+
+<svg class="nav-icon" viewBox="0 0 24 24">
+<path d="M12 12c2.7 0 5-2.3 5-5s-2.3-5-5-5-5 2.3-5 5 2.3 5 5 5zm0 2c-3.3 0-10 1.7-10 5v3h20v-3c0-3.3-6.7-5-10-5z"/>
+</svg>
+
+<span>Профиль</span>
+
+</button>
 
 </div>
 
