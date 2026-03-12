@@ -14,84 +14,13 @@
 <link href="https://fonts.googleapis.com/css2?family=Orbitron:wght@600;800&display=swap" rel="stylesheet">
 
 <style>
-
-/* экран кейса */
-
 .case-screen{
 display:flex;
 flex-direction:column;
 align-items:center;
-gap:25px;
+gap:20px;
 padding:20px;
 }
-
-/* анимация кейса */
-
-.case-open{
-transition:0.4s;
-}
-
-.case-open.active{
-transform:scale(1.3);
-filter:brightness(1.5);
-}
-
-/* рулетка */
-
-.roulette-container{
-width:100%;
-max-width:350px;
-overflow:hidden;
-border:2px solid #333;
-border-radius:10px;
-background:#111;
-height:90px;
-display:none;
-}
-
-.roulette{
-display:flex;
-gap:10px;
-padding:10px;
-transition:3s cubic-bezier(.1,.7,.1,1);
-}
-
-.item{
-min-width:70px;
-height:70px;
-background:#1a1a1a;
-border-radius:8px;
-display:flex;
-align-items:center;
-justify-content:center;
-font-size:12px;
-border:1px solid #333;
-}
-
-/* выпадение */
-
-.win{
-border:2px solid red;
-}
-
-/* дроп кейса */
-
-.case-items{
-display:grid;
-grid-template-columns:repeat(4,1fr);
-gap:10px;
-margin-top:10px;
-}
-
-.case-item{
-background:#141414;
-border-radius:8px;
-padding:8px;
-font-size:12px;
-text-align:center;
-border:1px solid #333;
-}
-
 </style>
 
 </head>
@@ -112,9 +41,23 @@ MYTHIC CASE
 
 </div>
 
+<!-- CASE SCREEN -->
+
 <div class="case-screen">
 
+<div class="case-area">
+
+<div class="pointer">▼</div>
+
 <img id="caseImg" src="../CasesPhoto/image.png" class="case-img case-open">
+
+<div class="roulette-container" id="rouletteContainer">
+
+<div class="roulette" id="roulette"></div>
+
+</div>
+
+</div>
 
 <div class="case-title">
 MYTHIC
@@ -123,14 +66,6 @@ MYTHIC
 <button class="open-btn" onclick="openCase()">
 Открыть кейс
 </button>
-
-<!-- рулетка -->
-
-<div class="roulette-container" id="rouletteContainer">
-
-<div class="roulette" id="roulette"></div>
-
-</div>
 
 <!-- содержимое кейса -->
 
@@ -146,6 +81,26 @@ MYTHIC
 <div class="case-item">NFT KING</div>
 
 </div>
+
+</div>
+
+</div>
+
+<!-- POPUP ВЫИГРЫША -->
+
+<div class="win-popup" id="winPopup">
+
+<div class="win-card">
+
+<div>🎉 Вам выпало</div>
+
+<div class="win-item" id="winItem">
+NFT
+</div>
+
+<button class="claim-btn" onclick="closeWin()">
+Забрать
+</button>
 
 </div>
 
@@ -177,35 +132,34 @@ const caseImg = document.getElementById("caseImg")
 const roulette = document.getElementById("roulette")
 const container = document.getElementById("rouletteContainer")
 
-/* анимация открытия */
-
 caseImg.classList.add("active")
 
 setTimeout(()=>{
 
-caseImg.style.display="none"
-container.style.display="block"
+caseImg.style.visibility="hidden"
 
-/* создаём рулетку */
+container.style.display="block"
 
 roulette.innerHTML=""
 
-for(let i=0;i<40;i++){
+/* создаём рулетку */
+
+for(let i=0;i<50;i++){
 
 const item = document.createElement("div")
 item.className="item"
 
 const rand = items[Math.floor(Math.random()*items.length)]
 
-item.innerText=rand
+item.innerText = rand
 
 roulette.appendChild(item)
 
 }
 
-/* крутим */
+/* индекс выигрыша */
 
-const winIndex = 30 + Math.floor(Math.random()*5)
+const winIndex = 35 + Math.floor(Math.random()*5)
 
 const offset = winIndex * 80
 
@@ -213,8 +167,24 @@ setTimeout(()=>{
 roulette.style.transform="translateX(-"+offset+"px)"
 },100)
 
-},600)
+/* popup выигрыша */
 
+setTimeout(()=>{
+
+const winItem = roulette.children[winIndex].innerText
+
+document.getElementById("winItem").innerText = winItem
+
+document.getElementById("winPopup").classList.add("active")
+
+},3400)
+
+},700)
+
+}
+
+function closeWin(){
+document.getElementById("winPopup").classList.remove("active")
 }
 
 </script>
