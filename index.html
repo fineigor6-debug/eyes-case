@@ -9,125 +9,10 @@
 
 <script src="https://telegram.org/js/telegram-web-app.js"></script>
 
-<style>
+<!-- подключаем CSS -->
 
-body{
-margin:0;
-font-family:Arial;
-background:#0f0f0f;
-color:white;
-}
+<link rel="stylesheet" href="style/style.css">
 
-/* HEADER */
-
-.header{
-display:flex;
-align-items:center;
-padding:15px;
-background:#181818;
-border-bottom:1px solid #333;
-}
-
-.avatar{
-width:40px;
-height:40px;
-border-radius:50%;
-margin-right:10px;
-}
-
-.username{
-font-size:16px;
-font-weight:bold;
-}
-
-/* CASES */
-
-.container{
-padding:20px;
-}
-
-.case{
-background:#1b1b1b;
-border-radius:12px;
-padding:20px;
-margin-bottom:15px;
-text-align:center;
-border:1px solid #333;
-}
-
-/* АНИМАЦИЯ КЕЙСА */
-
-.case-img{
-width:140px;
-margin-bottom:10px;
-animation: floatCase 3s ease-in-out infinite;
-filter: drop-shadow(0 0 12px rgba(255,60,60,0.6));
-}
-
-/* ключевые кадры */
-
-@keyframes floatCase{
-
-0%{
-transform: translateY(0px);
-}
-
-50%{
-transform: translateY(-15px);
-}
-
-100%{
-transform: translateY(0px);
-}
-
-}
-
-.case-title{
-font-size:18px;
-margin:10px 0;
-}
-
-.open-btn{
-background:#ff3c3c;
-border:none;
-padding:10px 20px;
-border-radius:8px;
-color:white;
-font-size:16px;
-cursor:pointer;
-}
-
-.open-btn:hover{
-background:#ff1c1c;
-}
-
-/* BOTTOM NAV */
-
-.nav{
-position:fixed;
-bottom:0;
-left:0;
-right:0;
-background:#181818;
-display:flex;
-justify-content:space-around;
-padding:10px;
-border-top:1px solid #333;
-}
-
-.nav button{
-background:none;
-border:none;
-color:white;
-font-size:14px;
-cursor:pointer;
-}
-
-.disabled{
-opacity:0.5;
-}
-
-</style>
 </head>
 
 <body>
@@ -150,10 +35,10 @@ Player
 
 <div class="case">
 
-<img src="casesphoto/image.png" class="case-img">
+<img src="CasesPhoto/image.png" class="case-img">
 
 <div class="case-title">
-Тестовый кейс
+MYTHIC
 </div>
 
 <button class="open-btn" onclick="openCase()">
