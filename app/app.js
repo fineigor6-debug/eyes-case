@@ -30,12 +30,11 @@ function updateBalanceUI(){
 const el = document.getElementById("balance")
 
 if(el){
-
 el.innerText = getBalance()
-
 }
 
 }
+
 
 /* =========================
    NOTIFICATION SYSTEM
@@ -87,6 +86,7 @@ notice.style.opacity = "0"
 
 }
 
+
 /* =========================
    CASE PRICE
 ========================= */
@@ -111,59 +111,6 @@ return true
 
 }
 
-function openBalanceTester(){
-
-document
-.getElementById("testerPopup")
-.classList
-.add("active")
-
-}
-
-function closeTester(){
-
-document
-.getElementById("testerPopup")
-.classList
-.remove("active")
-
-}
-
-function giveTestBalance(){
-
-const input = document.getElementById("testerAmount")
-
-let value = parseInt(input.value)
-
-if(!value || value < 1){
-
-showNotice("Введите сумму")
-
-return
-
-}
-
-if(value > 100){
-
-showNotice("Максимум 100")
-
-return
-
-}
-
-let balance = getBalance()
-
-balance += value
-
-setBalance(balance)
-
-showNotice("Выдано +" + value)
-
-closeTester()
-
-input.value = ""
-
-}
 
 /* =========================
    INIT
