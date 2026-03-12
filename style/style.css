@@ -413,3 +413,38 @@ font-size:14px;
 cursor:pointer;
 
 }
+
+/* NAV ICONS */
+
+.nav-btn{
+display:flex;
+flex-direction:column;
+align-items:center;
+gap:4px;
+font-size:11px;
+}
+
+.nav-icon{
+width:22px;
+height:22px;
+
+fill:white;
+
+filter:
+drop-shadow(0 0 4px #ff0000)
+drop-shadow(0 0 8px #ff2b2b);
+}
+
+.nav-btn:active .nav-icon{
+
+filter:
+drop-shadow(0 0 6px #ff0000)
+drop-shadow(0 0 14px #ff2b2b);
+
+transform:scale(0.9);
+
+}
+
+.nav-btn span{
+font-size:11px;
+}
