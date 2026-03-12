@@ -215,8 +215,6 @@ NFT
 
 </div>
 
-<!-- GLOBAL APP SCRIPT -->
-
 <script src="../app/app.js"></script>
 
 <script>
@@ -224,9 +222,24 @@ NFT
 const tg = window.Telegram.WebApp
 tg.expand()
 
+/* =========================
+   BACK BUTTON
+========================= */
+
 function goBack(){
-window.location.href="../index.html"
+
+if(spinning){
+showNotice("Кейс уже открывается")
+return
 }
+
+window.location.href="../index.html"
+
+}
+
+/* =========================
+   ITEMS
+========================= */
 
 const items = [
 "DEVIL",
@@ -243,17 +256,17 @@ const casePrice = 25
 
 let spinning = false
 
+/* =========================
+   OPEN CASE
+========================= */
+
 function openCase(){
 
 if(spinning) return
 
-/* ПРОВЕРКА БАЛАНСА */
-
 if(!payForCase(casePrice)){
 return
 }
-
-/* УВЕЛИЧИВАЕМ СЧЁТЧИК КЕЙСОВ */
 
 let opened = localStorage.getItem("openedCases") || 0
 opened++
@@ -311,6 +324,10 @@ document.getElementById("winPopup").classList.add("active")
 },500)
 
 }
+
+/* =========================
+   CLOSE WIN
+========================= */
 
 function closeWin(){
 
