@@ -204,3 +204,128 @@ transition:0.2s;
 .back-btn:active{
 transform:scale(0.92);
 }
+
+/* ========================= */
+/* CASE OPENING ANIMATION */
+/* ========================= */
+
+.case-open{
+transition:0.7s ease;
+}
+
+.case-open.active{
+
+transform:scale(1.6);
+
+opacity:0;
+
+filter:
+brightness(1.6)
+drop-shadow(0 0 20px red)
+drop-shadow(0 0 40px red);
+
+}
+
+/* ========================= */
+/* ROULETTE */
+/* ========================= */
+
+.roulette-container{
+
+width:100%;
+max-width:360px;
+
+height:90px;
+
+overflow:hidden;
+
+border-radius:12px;
+
+border:2px solid #333;
+
+background:#111;
+
+display:none;
+
+margin-top:10px;
+
+}
+
+.roulette{
+
+display:flex;
+
+gap:10px;
+
+padding:10px;
+
+transition:3.2s cubic-bezier(.08,.7,.1,1);
+
+}
+
+/* ITEM */
+
+.item{
+
+min-width:70px;
+height:70px;
+
+background:#1a1a1a;
+
+border-radius:10px;
+
+display:flex;
+align-items:center;
+justify-content:center;
+
+font-size:11px;
+
+border:1px solid #333;
+
+color:white;
+
+}
+
+/* выпадение */
+
+.win{
+
+border:2px solid red;
+
+box-shadow:
+0 0 10px red,
+0 0 20px red;
+
+}
+
+/* ========================= */
+/* CASE ITEMS */
+/* ========================= */
+
+.case-items{
+
+display:grid;
+
+grid-template-columns:repeat(4,1fr);
+
+gap:10px;
+
+margin-top:10px;
+
+}
+
+.case-item{
+
+background:#141414;
+
+border-radius:8px;
+
+padding:8px;
+
+font-size:11px;
+
+text-align:center;
+
+border:1px solid #333;
+
+}
