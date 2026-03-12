@@ -2,7 +2,9 @@
 <html lang="ru">
 
 <head>
+
 <meta charset="UTF-8">
+
 <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no">
 
 <title>Eyes Case</title>
@@ -26,7 +28,7 @@
 <img id="avatar" class="avatar" src="https://placehold.co/100">
 
 <div id="username" class="username">
-лучшие тестеры
+Loading...
 </div>
 
 </div>
@@ -97,7 +99,7 @@ RARE
 
 </div>
 
-<!-- NAV -->
+<!-- NAVIGATION -->
 
 <div class="nav">
 
@@ -135,18 +137,23 @@ RARE
 
 </div>
 
+<!-- APP SCRIPT -->
+
+<script src="app/app.js"></script>
+
 <script>
 
 const tg = window.Telegram.WebApp
-
 tg.expand()
+
+/* TELEGRAM USER */
 
 const user = tg.initDataUnsafe?.user
 
 if(user){
 
 document.getElementById("username").innerText =
-user.first_name + " @" + user.username
+user.first_name + (user.username ? " @" + user.username : "")
 
 if(user.photo_url){
 document.getElementById("avatar").src = user.photo_url
@@ -154,29 +161,20 @@ document.getElementById("avatar").src = user.photo_url
 
 }
 
-function openCase(){
-
-const items = [
-"NFT Cat",
-"NFT Demon",
-"NFT Dragon",
-"NFT Devil"
-]
-
-const item = items[Math.floor(Math.random()*items.length)]
-
-alert("🎉 Вам выпало: " + item)
-
-}
+/* NAVIGATION */
 
 function openMythicCase(){
+
 window.location.href = "casesscreen/mythic.html"
+
 }
 
 function openProfile(){
+
 window.location.href = "profile.html"
+
 }
-  
+
 </script>
 
 </body>
