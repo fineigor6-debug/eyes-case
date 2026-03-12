@@ -15,8 +15,6 @@
 
 <style>
 
-/* экран кейса */
-
 .case-screen{
 display:flex;
 flex-direction:column;
@@ -24,8 +22,6 @@ align-items:center;
 gap:25px;
 padding:20px;
 }
-
-/* контейнер кейса и рулетки */
 
 .case-area{
 position:relative;
@@ -35,8 +31,6 @@ align-items:center;
 justify-content:center;
 }
 
-/* анимация кейса */
-
 .case-open{
 transition:0.5s;
 }
@@ -45,8 +39,6 @@ transition:0.5s;
 transform:scale(1.4);
 opacity:0;
 }
-
-/* рулетка */
 
 .roulette-container{
 position:absolute;
@@ -59,8 +51,6 @@ background:#111;
 height:90px;
 display:none;
 }
-
-/* стрелка */
 
 .pointer{
 position:absolute;
@@ -91,8 +81,6 @@ font-size:12px;
 border:1px solid #333;
 }
 
-/* содержимое кейса */
-
 .case-items{
 display:grid;
 grid-template-columns:repeat(4,1fr);
@@ -108,8 +96,6 @@ font-size:12px;
 text-align:center;
 border:1px solid #333;
 }
-
-/* окно выигрыша */
 
 .win-popup{
 position:fixed;
@@ -146,6 +132,11 @@ color:#ff2b2b;
 font-family:'Orbitron';
 }
 
+.open-btn:disabled{
+opacity:0.5;
+cursor:not-allowed;
+}
+
 </style>
 
 </head>
@@ -153,8 +144,6 @@ font-family:'Orbitron';
 <body>
 
 <div class="app">
-
-<!-- HEADER -->
 
 <div class="header">
 
@@ -186,11 +175,9 @@ MYTHIC CASE
 MYTHIC
 </div>
 
-<button class="open-btn" onclick="openCase()">
+<button class="open-btn" id="openBtn" onclick="openCase()">
 Открыть кейс
 </button>
-
-<!-- содержимое кейса -->
 
 <div class="case-items">
 
@@ -208,8 +195,6 @@ MYTHIC
 </div>
 
 </div>
-
-<!-- окно выигрыша -->
 
 <div class="win-popup" id="winPopup">
 
@@ -249,11 +234,20 @@ const items = [
 "KING"
 ]
 
+let spinning = false
+
 function openCase(){
+
+if(spinning) return
+
+spinning = true
 
 const caseImg = document.getElementById("caseImg")
 const roulette = document.getElementById("roulette")
 const container = document.getElementById("rouletteContainer")
+const btn = document.getElementById("openBtn")
+
+btn.disabled = true
 
 caseImg.classList.add("active")
 
@@ -263,8 +257,6 @@ container.style.display="block"
 
 roulette.innerHTML=""
 roulette.style.transform="translateX(0px)"
-
-/* создаём рулетку */
 
 for(let i=0;i<50;i++){
 
@@ -279,8 +271,6 @@ roulette.appendChild(item)
 
 }
 
-/* крутим */
-
 const winIndex = 35 + Math.floor(Math.random()*5)
 
 const offset = winIndex * 80
@@ -288,8 +278,6 @@ const offset = winIndex * 80
 setTimeout(()=>{
 roulette.style.transform="translateX(-"+offset+"px)"
 },100)
-
-/* показываем выигрыш */
 
 setTimeout(()=>{
 
@@ -312,12 +300,17 @@ document.getElementById("winPopup").classList.remove("active")
 const caseImg = document.getElementById("caseImg")
 const roulette = document.getElementById("roulette")
 const container = document.getElementById("rouletteContainer")
+const btn = document.getElementById("openBtn")
 
 caseImg.classList.remove("active")
 
 container.style.display="none"
 
 roulette.innerHTML=""
+
+btn.disabled = false
+
+spinning = false
 
 }
 
