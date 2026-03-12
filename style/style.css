@@ -477,10 +477,14 @@ drop-shadow(0 0 12px #ff2b2b);
 }
 
 .inventory-name{
-margin-top:10px;
-font-size:11px;
-color:#ccc;
+margin-top:12px;
+font-size:10px;
+color:#aaa;
 
-position:relative;
-z-index:2;
+line-height:1.2;
+
+text-align:center;
+
+padding-top:6px;
+border-top:1px solid #222;
 }
