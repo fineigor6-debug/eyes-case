@@ -2,6 +2,7 @@
 <html lang="ru">
 
 <head>
+
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 
@@ -176,7 +177,7 @@ MYTHIC
 </div>
 
 <button class="open-btn" id="openBtn" onclick="openCase()">
-Открыть кейс
+Открыть кейс • 25
 </button>
 
 <div class="case-items">
@@ -214,6 +215,10 @@ NFT
 
 </div>
 
+<!-- GLOBAL APP SCRIPT -->
+
+<script src="../app/app.js"></script>
+
 <script>
 
 const tg = window.Telegram.WebApp
@@ -234,11 +239,25 @@ const items = [
 "KING"
 ]
 
+const casePrice = 25
+
 let spinning = false
 
 function openCase(){
 
 if(spinning) return
+
+/* ПРОВЕРКА БАЛАНСА */
+
+if(!payForCase(casePrice)){
+return
+}
+
+/* УВЕЛИЧИВАЕМ СЧЁТЧИК КЕЙСОВ */
+
+let opened = localStorage.getItem("openedCases") || 0
+opened++
+localStorage.setItem("openedCases", opened)
 
 spinning = true
 
@@ -265,7 +284,7 @@ item.className="item"
 
 const rand = items[Math.floor(Math.random()*items.length)]
 
-item.innerText=rand
+item.innerText = rand
 
 roulette.appendChild(item)
 
