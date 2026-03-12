@@ -114,9 +114,12 @@ drop-shadow(0 0 12px #ff2b2b);
 }
 
 .inventory-name{
-margin-top:6px;
-font-size:11px;
-color:#ccc;
+margin-top:10px;
+font-size:10px;
+color:#aaa;
+line-height:1.2;
+border-top:1px solid #222;
+padding-top:6px;
 }
 
 </style>
@@ -146,127 +149,11 @@ PROFILE
 <img id="avatar" class="profile-avatar" src="https://placehold.co/100">
 
 <div id="name" class="profile-name">
-Player
+Loading...
 </div>
 
 <!-- STATS -->
 
 <div class="stats">
 
-<div class="stat">
-<div class="stat-title">Баланс</div>
-<div class="stat-value" id="balance">0</div>
-</div>
-
-<div class="stat">
-<div class="stat-title">Открыто кейсов</div>
-<div class="stat-value" id="opened">0</div>
-</div>
-
-</div>
-
-<!-- INVENTORY -->
-
-<div class="inventory">
-
-<div class="inventory-title">
-ИНВЕНТАРЬ
-</div>
-
-<div class="inventory-grid">
-
-<div class="inventory-item">
-
-<img
-src="nft/IMG_0767.png"
-class="inventory-img"
-loading="lazy"
->
-
-<div class="inventory-name">
-Plush Pepes
-</div>
-
-</div>
-
-</div>
-
-</div>
-
-</div>
-
-<!-- NAVIGATION -->
-
-<div class="nav">
-
-<button class="nav-btn" onclick="goHome()">
-
-<svg class="nav-icon" viewBox="0 0 24 24">
-<path d="M12 3L2 12h3v8h6v-5h2v5h6v-8h3z"/>
-</svg>
-
-<span>Главная</span>
-
-</button>
-
-<button class="nav-btn disabled">
-
-<svg class="nav-icon" viewBox="0 0 24 24">
-<path d="M12 17.27L18.18 21l-1.64-7.03L22 9.24l-7.19-.61L12 2 9.19 8.63 2 9.24l5.46 4.73L5.82 21z"/>
-</svg>
-
-<span>Лидерборд</span>
-
-</button>
-
-<button class="nav-btn">
-
-<svg class="nav-icon" viewBox="0 0 24 24">
-<path d="M12 12c2.7 0 5-2.3 5-5s-2.3-5-5-5-5 2.3-5 5 2.3 5 5 5zm0 2c-3.3 0-10 1.7-10 5v3h20v-3c0-3.3-6.7-5-10-5z"/>
-</svg>
-
-<span>Профиль</span>
-
-</button>
-
-</div>
-
-</div>
-
-<script>
-
-const tg = window.Telegram.WebApp
-tg.expand()
-
-const avatar = document.getElementById("avatar")
-const name = document.getElementById("name")
-const balance = document.getElementById("balance")
-const opened = document.getElementById("opened")
-
-function goHome(){
-window.location.href = "index.html"
-}
-
-/* TELEGRAM USER */
-
-const user = tg.initDataUnsafe?.user
-
-if(user){
-
-name.innerText = `${user.first_name} @${user.username ?? ""}`
-
-if(user.photo_url){
-avatar.src = user.photo_url
-}
-
-}
-
-/* TEST DATA */
-
-balance.textContent = "100"
-opened.textContent = "3"
-
-</script>
-
-</body>
-</html>
+<div class="stat
