@@ -9,7 +9,7 @@
 
 <script src="https://telegram.org/js/telegram-web-app.js"></script>
 
-<link rel="stylesheet" href="style/style.css">
+<link rel="stylesheet" href="../style/style.css">
 
 <link href="https://fonts.googleapis.com/css2?family=Orbitron:wght@600;800&display=swap" rel="stylesheet">
 
@@ -23,7 +23,9 @@
 
 <div class="header">
 
-<button onclick="goBack()" style="margin-right:10px;">⬅</button>
+<button class="back-btn" onclick="goBack()">
+←
+</button>
 
 <div class="username">
 MYTHIC CASE
@@ -35,7 +37,7 @@ MYTHIC CASE
 
 <div class="container" style="display:flex;flex-direction:column;align-items:center;gap:30px;">
 
-<img src="CasesPhoto/image.png" class="case-img">
+<img src="../CasesPhoto/image.png" class="case-img">
 
 <div class="case-title">
 MYTHIC
@@ -73,7 +75,7 @@ const tg = window.Telegram.WebApp
 tg.expand()
 
 function goBack(){
-window.location.href = "index.html"
+window.location.href = "../index.html"
 }
 
 function spinCase(){
