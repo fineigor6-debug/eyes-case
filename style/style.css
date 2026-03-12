@@ -448,3 +448,34 @@ transform:scale(0.9);
 .nav-btn span{
 font-size:11px;
 }
+
+/* INVENTORY GRID */
+
+.inventory-grid{
+display:grid;
+grid-template-columns:repeat(3,1fr);
+gap:12px;
+}
+
+.inventory-item{
+background:#141414;
+border:1px solid #333;
+border-radius:10px;
+padding:10px;
+text-align:center;
+}
+
+.inventory-img{
+width:100%;
+border-radius:6px;
+
+filter:
+drop-shadow(0 0 6px #ff0000)
+drop-shadow(0 0 12px #ff2b2b);
+}
+
+.inventory-name{
+margin-top:6px;
+font-size:11px;
+color:#ccc;
+}
