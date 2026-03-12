@@ -4,7 +4,6 @@
 <head>
 
 <meta charset="UTF-8">
-
 <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no">
 
 <title>Profile</title>
@@ -14,115 +13,6 @@
 <link rel="stylesheet" href="style/style.css">
 
 <link href="https://fonts.googleapis.com/css2?family=Orbitron:wght@600;800&display=swap" rel="stylesheet">
-
-<style>
-
-/* PROFILE */
-
-.profile{
-display:flex;
-flex-direction:column;
-align-items:center;
-padding:30px 20px;
-gap:20px;
-}
-
-.profile-avatar{
-width:90px;
-height:90px;
-border-radius:50%;
-border:3px solid #ff2b2b;
-box-shadow:0 0 15px rgba(255,0,0,0.6);
-object-fit:cover;
-}
-
-.profile-name{
-font-size:18px;
-font-weight:bold;
-}
-
-/* STATS */
-
-.stats{
-width:100%;
-display:grid;
-grid-template-columns:repeat(2,1fr);
-gap:15px;
-margin-top:10px;
-}
-
-.stat{
-background:#141414;
-border:1px solid #333;
-border-radius:12px;
-padding:15px;
-text-align:center;
-}
-
-.stat-title{
-font-size:12px;
-color:#aaa;
-}
-
-.stat-value{
-font-size:18px;
-margin-top:5px;
-font-family:'Orbitron';
-color:#ff2b2b;
-}
-
-/* INVENTORY */
-
-.inventory{
-margin-top:25px;
-width:100%;
-}
-
-.inventory-title{
-font-family:'Orbitron';
-margin-bottom:12px;
-letter-spacing:1px;
-}
-
-.inventory-grid{
-display:grid;
-grid-template-columns:repeat(auto-fill,minmax(90px,1fr));
-gap:12px;
-}
-
-.inventory-item{
-background:#141414;
-border:1px solid #333;
-border-radius:10px;
-padding:10px;
-text-align:center;
-transition:.2s;
-}
-
-.inventory-item:hover{
-transform:scale(1.05);
-border-color:#ff2b2b;
-}
-
-.inventory-img{
-width:100%;
-border-radius:6px;
-
-filter:
-drop-shadow(0 0 6px #ff0000)
-drop-shadow(0 0 12px #ff2b2b);
-}
-
-.inventory-name{
-margin-top:10px;
-font-size:10px;
-color:#aaa;
-line-height:1.2;
-border-top:1px solid #222;
-padding-top:6px;
-}
-
-</style>
 
 </head>
 
@@ -156,4 +46,84 @@ Loading...
 
 <div class="stats">
 
-<div class="stat
+<div class="stat">
+<div class="stat-title">Баланс</div>
+<div class="stat-value" id="balance" onclick="openBalanceTester()">0</div>
+</div>
+
+<div class="stat">
+<div class="stat-title">Открыто кейсов</div>
+<div class="stat-value" id="opened">0</div>
+</div>
+
+</div>
+
+<!-- INVENTORY -->
+
+<div class="inventory">
+
+<div class="inventory-title">
+ИНВЕНТАРЬ
+</div>
+
+<div class="inventory-grid">
+
+<div class="inventory-item">
+
+<img
+src="nft/IMG_0767.png"
+class="inventory-img"
+loading="lazy"
+>
+
+<div class="inventory-name">
+Plush Pepes
+</div>
+
+</div>
+
+</div>
+
+</div>
+
+</div>
+
+<!-- TESTER POPUP -->
+
+<div class="tester-popup" id="testerPopup">
+
+<div class="tester-box">
+
+<div class="tester-title">
+Выдать валюту
+</div>
+
+<input 
+type="number"
+id="testerAmount"
+placeholder="0 - 100"
+min="1"
+max="100"
+>
+
+<button class="open-btn" onclick="giveTestBalance()">
+Выдать
+</button>
+
+<button class="tester-close" onclick="closeTester()">
+Отмена
+</button>
+
+</div>
+
+</div>
+
+</div>
+
+<!-- SCRIPTS -->
+
+<script src="app/app.js"></script>
+<script src="app/profile.js"></script>
+
+</body>
+</html>
