@@ -1,0 +1,193 @@
+<!DOCTYPE html>
+<html lang="ru">
+
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+<title>Eyes Case</title>
+
+<script src="https://telegram.org/js/telegram-web-app.js"></script>
+
+<style>
+
+body{
+margin:0;
+font-family:Arial;
+background:#0f0f0f;
+color:white;
+}
+
+/* HEADER */
+
+.header{
+display:flex;
+align-items:center;
+padding:15px;
+background:#181818;
+border-bottom:1px solid #333;
+}
+
+.avatar{
+width:40px;
+height:40px;
+border-radius:50%;
+margin-right:10px;
+}
+
+.username{
+font-size:16px;
+font-weight:bold;
+}
+
+/* CASES */
+
+.container{
+padding:20px;
+}
+
+.case{
+background:#1b1b1b;
+border-radius:12px;
+padding:20px;
+margin-bottom:15px;
+text-align:center;
+border:1px solid #333;
+}
+
+.case img{
+width:120px;
+}
+
+.case-title{
+font-size:18px;
+margin:10px 0;
+}
+
+.open-btn{
+background:#ff3c3c;
+border:none;
+padding:10px 20px;
+border-radius:8px;
+color:white;
+font-size:16px;
+cursor:pointer;
+}
+
+.open-btn:hover{
+background:#ff1c1c;
+}
+
+/* BOTTOM NAV */
+
+.nav{
+position:fixed;
+bottom:0;
+left:0;
+right:0;
+background:#181818;
+display:flex;
+justify-content:space-around;
+padding:10px;
+border-top:1px solid #333;
+}
+
+.nav button{
+background:none;
+border:none;
+color:white;
+font-size:14px;
+cursor:pointer;
+}
+
+.disabled{
+opacity:0.5;
+}
+
+</style>
+</head>
+
+<body>
+
+<!-- HEADER -->
+
+<div class="header">
+
+<img id="avatar" class="avatar" src="https://placehold.co/100">
+
+<div id="username" class="username">
+Player
+</div>
+
+</div>
+
+<!-- CASES -->
+
+<div class="container">
+
+<div class="case">
+
+<img src="https://placehold.co/200x120">
+
+<div class="case-title">
+Тестовый кейс
+</div>
+
+<button class="open-btn" onclick="openCase()">
+Открыть кейс
+</button>
+
+</div>
+
+</div>
+
+<!-- NAV -->
+
+<div class="nav">
+
+<button>Главная</button>
+
+<button class="disabled">Лидерборд</button>
+
+<button>Профиль</button>
+
+</div>
+
+<script>
+
+const tg = window.Telegram.WebApp
+
+tg.expand()
+
+const user = tg.initDataUnsafe?.user
+
+if(user){
+
+document.getElementById("username").innerText =
+user.first_name + " @" + user.username
+
+if(user.photo_url){
+document.getElementById("avatar").src = user.photo_url
+}
+
+}
+
+function openCase(){
+
+const items = [
+"NFT Cat",
+"NFT Demon",
+"NFT Dragon",
+"NFT Devil"
+]
+
+const item = items[Math.floor(Math.random()*items.length)]
+
+alert("🎉 Вам выпало: " + item)
+
+}
+
+</script>
+
+</body>
+</html>
