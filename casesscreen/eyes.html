@@ -6,7 +6,7 @@
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 
-<title>EYES Case</title>
+<title>Eyes Case</title>
 
 <script src="https://telegram.org/js/telegram-web-app.js"></script>
 
@@ -78,8 +78,11 @@ border-radius:8px;
 display:flex;
 align-items:center;
 justify-content:center;
-font-size:12px;
 border:1px solid #333;
+}
+
+.item img{
+width:55px;
 }
 
 .case-items{
@@ -93,9 +96,14 @@ margin-top:10px;
 background:#141414;
 border-radius:8px;
 padding:8px;
-font-size:12px;
+font-size:11px;
 text-align:center;
 border:1px solid #333;
+}
+
+.case-item img{
+width:40px;
+margin-bottom:4px;
 }
 
 .win-popup{
@@ -126,11 +134,9 @@ text-align:center;
 border:1px solid #333;
 }
 
-.win-item{
-font-size:18px;
-margin:15px 0;
-color:#ff2b2b;
-font-family:'Orbitron';
+.win-item img{
+width:90px;
+margin:10px 0;
 }
 
 .open-btn:disabled{
@@ -177,21 +183,60 @@ EYES
 </div>
 
 <button class="open-btn" id="openBtn" onclick="openCase()">
-Открыть кейс • 20
+Открыть кейс • 25
 </button>
 
 <div class="case-items">
 
-<div class="case-item">Bunny Maffin</div>
-<div class="case-item">Crystal Ball</div>
-<div class="case-item">Easter Egg</div>
-<div class="case-item">Evil Eye</div>
-<div class="case-item">Fresh Socks</div>
-<div class="case-item">Happy Brownie</div>
-<div class="case-item">Hex Pot</div>
-<div class="case-item">Jelly Bunny</div>
-<div class="case-item">Pet Snakes</div>
-<div class="case-item">Voodoo Doll</div>
+<div class="case-item">
+<img src="../nft/eyes-nft/bunny-maffin.png">
+Bunny Maffin
+</div>
+
+<div class="case-item">
+<img src="../nft/eyes-nft/crystall-ball.png">
+Crystal Ball
+</div>
+
+<div class="case-item">
+<img src="../nft/eyes-nft/easter-egg.png">
+Easter Egg
+</div>
+
+<div class="case-item">
+<img src="../nft/eyes-nft/evil-eye.png">
+Evil Eye
+</div>
+
+<div class="case-item">
+<img src="../nft/eyes-nft/fresh-socks.png">
+Fresh Socks
+</div>
+
+<div class="case-item">
+<img src="../nft/eyes-nft/happy-brownie.png">
+Happy Brownie
+</div>
+
+<div class="case-item">
+<img src="../nft/eyes-nft/hex-potjpg.png">
+Hex Pot
+</div>
+
+<div class="case-item">
+<img src="../nft/eyes-nft/jelly-bunny.png">
+Jelly Bunny
+</div>
+
+<div class="case-item">
+<img src="../nft/eyes-nft/pet-snakes.png">
+Pet Snakes
+</div>
+
+<div class="case-item">
+<img src="../nft/eyes-nft/voodoo-doll.png">
+Voodoo Doll
+</div>
 
 </div>
 
@@ -205,9 +250,7 @@ EYES
 
 <div>🎉 Вам выпало</div>
 
-<div class="win-item" id="winItem">
-NFT
-</div>
+<div class="win-item" id="winItem"></div>
 
 <button class="open-btn" onclick="closeWin()">
 Забрать
@@ -237,20 +280,20 @@ window.location.href="../index.html"
 
 const items = [
 
-{ name:"Bunny Maffin", img:"../nft/eyes-nft/bunny-maffin.png" },
-{ name:"Crystal Ball", img:"../nft/eyes-nft/crystall-ball.png" },
-{ name:"Easter Egg", img:"../nft/eyes-nft/easter-egg.png" },
-{ name:"Evil Eye", img:"../nft/eyes-nft/evil-eye.png" },
-{ name:"Fresh Socks", img:"../nft/eyes-nft/fresh-socks.png" },
-{ name:"Happy Brownie", img:"../nft/eyes-nft/happy-brownie.png" },
-{ name:"Hex Pot", img:"../nft/eyes-nft/hex-potjpg.png" },
-{ name:"Jelly Bunny", img:"../nft/eyes-nft/jelly-bunny.png" },
-{ name:"Pet Snakes", img:"../nft/eyes-nft/pet-snakes.png" },
-{ name:"Voodoo Doll", img:"../nft/eyes-nft/voodoo-doll.png" }
+{name:"Bunny Maffin",img:"../nft/eyes-nft/bunny-maffin.png"},
+{name:"Crystal Ball",img:"../nft/eyes-nft/crystall-ball.png"},
+{name:"Easter Egg",img:"../nft/eyes-nft/easter-egg.png"},
+{name:"Evil Eye",img:"../nft/eyes-nft/evil-eye.png"},
+{name:"Fresh Socks",img:"../nft/eyes-nft/fresh-socks.png"},
+{name:"Happy Brownie",img:"../nft/eyes-nft/happy-brownie.png"},
+{name:"Hex Pot",img:"../nft/eyes-nft/hex-potjpg.png"},
+{name:"Jelly Bunny",img:"../nft/eyes-nft/jelly-bunny.png"},
+{name:"Pet Snakes",img:"../nft/eyes-nft/pet-snakes.png"},
+{name:"Voodoo Doll",img:"../nft/eyes-nft/voodoo-doll.png"}
 
 ]
 
-const casePrice = 20
+const casePrice = 25
 
 let spinning = false
 
@@ -291,11 +334,10 @@ item.className="item"
 
 const rand = items[Math.floor(Math.random()*items.length)]
 
-item.innerHTML = `
-<img src="${rand.img}" style="width:55px">
-`
-item.dataset.name = rand.name
-item.dataset.img = rand.img
+item.innerHTML=`<img src="${rand.img}">`
+
+item.dataset.name=rand.name
+item.dataset.img=rand.img
 
 roulette.appendChild(item)
 
@@ -311,9 +353,14 @@ roulette.style.transform="translateX(-"+offset+"px)"
 
 setTimeout(()=>{
 
-const winItem = roulette.children[winIndex].innerText
+const winItem = roulette.children[winIndex].dataset.name
+const winImg = roulette.children[winIndex].dataset.img
 
-document.getElementById("winItem").innerText = winItem
+document.getElementById("winItem").innerHTML=`
+<img src="${winImg}">
+<br>
+${winItem}
+`
 
 document.getElementById("winPopup").classList.add("active")
 
@@ -338,9 +385,9 @@ container.style.display="none"
 
 roulette.innerHTML=""
 
-btn.disabled = false
+btn.disabled=false
 
-spinning = false
+spinning=false
 
 }
 
