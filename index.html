@@ -7,7 +7,7 @@
 
 <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no">
 
-<title>Eyes Case</title>
+<title>Devil Case</title>
 
 <script src="https://telegram.org/js/telegram-web-app.js"></script>
 
@@ -53,6 +53,8 @@ MYTHIC
 
 </div>
 
+<!-- EYES -->
+
 <div class="case">
 
 <img src="CasesPhoto/image.png" class="case-img">
@@ -67,9 +69,7 @@ EYES
 
 </div>
 
-<!-- CASE В РАЗРАБОТКЕ -->
-
-</div>
+<!-- LEGEND -->
 
 <div class="case case-disabled">
 
@@ -84,6 +84,8 @@ LEGEND
 </div>
 
 </div>
+
+<!-- RARE -->
 
 <div class="case case-disabled">
 
@@ -139,16 +141,12 @@ RARE
 
 </div>
 
-<!-- APP SCRIPT -->
-
 <script src="app/app.js"></script>
 
 <script>
 
 const tg = window.Telegram.WebApp
 tg.expand()
-
-/* TELEGRAM USER */
 
 const user = tg.initDataUnsafe?.user
 
@@ -163,24 +161,16 @@ document.getElementById("avatar").src = user.photo_url
 
 }
 
-/* NAVIGATION */
-
 function openMythicCase(){
-
 window.location.href = "casesscreen/mythic.html"
-
 }
 
 function openEyesCase(){
-
 window.location.href = "casesscreen/eyes.html"
-
 }
 
 function openProfile(){
-
 window.location.href = "profile.html"
-
 }
 
 </script>
