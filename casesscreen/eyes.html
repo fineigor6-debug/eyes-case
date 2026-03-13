@@ -236,16 +236,18 @@ window.location.href="../index.html"
 }
 
 const items = [
-"Bunny Maffin",
-"Crystal Ball",
-"Easter Egg",
-"Evil Eye",
-"Fresh Socks",
-"Happy Brownie",
-"Hex Pot",
-"Jelly Bunny",
-"Pet Snakes",
-"Voodoo Doll"
+
+{ name:"Bunny Maffin", img:"../nft/eyes-nft/bunny-maffin.png" },
+{ name:"Crystal Ball", img:"../nft/eyes-nft/crystall-ball.png" },
+{ name:"Easter Egg", img:"../nft/eyes-nft/easter-egg.png" },
+{ name:"Evil Eye", img:"../nft/eyes-nft/evil-eye.png" },
+{ name:"Fresh Socks", img:"../nft/eyes-nft/fresh-socks.png" },
+{ name:"Happy Brownie", img:"../nft/eyes-nft/happy-brownie.png" },
+{ name:"Hex Pot", img:"../nft/eyes-nft/hex-potjpg.png" },
+{ name:"Jelly Bunny", img:"../nft/eyes-nft/jelly-bunny.png" },
+{ name:"Pet Snakes", img:"../nft/eyes-nft/pet-snakes.png" },
+{ name:"Voodoo Doll", img:"../nft/eyes-nft/voodoo-doll.png" }
+
 ]
 
 const casePrice = 20
@@ -289,7 +291,11 @@ item.className="item"
 
 const rand = items[Math.floor(Math.random()*items.length)]
 
-item.innerText = rand
+item.innerHTML = `
+<img src="${rand.img}" style="width:55px">
+`
+item.dataset.name = rand.name
+item.dataset.img = rand.img
 
 roulette.appendChild(item)
 
