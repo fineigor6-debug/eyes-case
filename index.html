@@ -53,19 +53,21 @@ MYTHIC
 
 </div>
 
-<!-- CASE В РАЗРАБОТКЕ -->
-
-<div class="case case-disabled">
+<div class="case">
 
 <img src="CasesPhoto/image.png" class="case-img">
 
 <div class="case-title">
-DEMON
+EYES
 </div>
 
-<div class="dev-text">
-В разработке
+<button class="open-btn" onclick="openEyesCase()">
+Открыть кейс
+</button>
+
 </div>
+
+<!-- CASE В РАЗРАБОТКЕ -->
 
 </div>
 
@@ -166,6 +168,12 @@ document.getElementById("avatar").src = user.photo_url
 function openMythicCase(){
 
 window.location.href = "casesscreen/mythic.html"
+
+}
+
+function openEyesCase(){
+
+window.location.href = "casesscreen/eyes.html"
 
 }
 
