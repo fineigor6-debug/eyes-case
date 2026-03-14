@@ -149,17 +149,9 @@ animation:shine 4s linear infinite;
 
 @keyframes shine{
 
-0%{
-left:-120%;
-}
-
-60%{
-left:120%;
-}
-
-100%{
-left:120%;
-}
+0%{ left:-120%; }
+60%{ left:120%; }
+100%{ left:120%; }
 
 }
 
@@ -293,8 +285,8 @@ MYTHIC
 <div class="case-item"><div class="case-item-img"><img src="../nft/eyes-mythic-drop/Sleigh-Bell.png"></div><div class="case-item-name">Sleigh Bell</div></div>
 <div class="case-item"><div class="case-item-img"><img src="../nft/eyes-mythic-drop/Snoop-Dogg.png"></div><div class="case-item-name">Snoop Dogg</div></div>
 
-<div class="case-item"><div class="case-item-img"><img src="../icons/ton-red.svg"></div><div class="case-item-name">4 TON</div></div>
-<div class="case-item"><div class="case-item-img"><img src="../icons/ton-red.svg"></div><div class="case-item-name">1.5 TON</div></div>
+<div class="case-item"><div class="case-item-img"><img src="../nft/eyes-mythic-drop/4-TON.png"></div><div class="case-item-name">4 TON</div></div>
+<div class="case-item"><div class="case-item-img"><img src="../nft/eyes-mythic-drop/1.5-TON.png"></div><div class="case-item-name">1.5 TON</div></div>
 
 </div>
 
@@ -350,8 +342,8 @@ const items=[
 {name:"Sleigh Bell",img:"../nft/eyes-mythic-drop/Sleigh-Bell.png"},
 {name:"Snoop Dogg",img:"../nft/eyes-mythic-drop/Snoop-Dogg.png"},
 
-{name:"4 TON",img:"../icons/ton-red.svg"},
-{name:"1.5 TON",img:"../icons/ton-red.svg"}
+{name:"4 TON",img:"../nft/eyes-mythic-drop/4-TON.png"},
+{name:"1.5 TON",img:"../nft/eyes-mythic-drop/1.5-TON.png"}
 
 ]
 
@@ -381,7 +373,7 @@ roulette.style.transform="translateX(0px)"
 
 for(let i=0;i<50;i++){
 
-const rand = items[Math.floor(Math.random()*items.length)] || items[0]
+const rand=items[Math.floor(Math.random()*items.length)]
 
 const item=document.createElement("div")
 item.className="item"
@@ -394,10 +386,8 @@ roulette.appendChild(item)
 
 }
 
-const winIndex = 35 + Math.floor(Math.random()*5)
-
-const itemWidth = 80
-const offset = (winIndex * itemWidth) - 140
+const winIndex=35+Math.floor(Math.random()*5)
+const offset=winIndex*80
 
 setTimeout(()=>{
 roulette.style.transform="translateX(-"+offset+"px)"
@@ -407,10 +397,6 @@ setTimeout(()=>{
 
 const winItem=roulette.children[winIndex].dataset.name
 const winImg=roulette.children[winIndex].dataset.img
-
-if(winItem.includes("TON") && typeof addBalance === "function"){
-addBalance(parseFloat(winItem))
-}
 
 document.getElementById("winItem").innerHTML=
 `<img src="${winImg}"><br>${winItem}`
