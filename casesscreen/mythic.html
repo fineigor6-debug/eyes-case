@@ -167,13 +167,14 @@ top:0;
 left:0;
 width:100%;
 height:100%;
-background:rgba(0,0,0,0.85);
 display:flex;
 align-items:center;
 justify-content:center;
+background:rgba(0,0,0,0.88);
+backdrop-filter:blur(6px);
 opacity:0;
 pointer-events:none;
-transition:0.3s;
+transition:0.25s;
 }
 
 .win-popup.active{
@@ -181,36 +182,52 @@ opacity:1;
 pointer-events:auto;
 }
 
+/* BOX */
+
 .win-box{
-background:#111;
-border-radius:14px;
-padding:30px;
-text-align:center;
-border:1px solid rgba(255,0,0,0.4);
-box-shadow:0 0 20px rgba(255,0,0,0.4);
+display:flex;
+flex-direction:column;
+align-items:center;
+gap:18px;
+background:linear-gradient(180deg,#160000,#0c0c0c);
+padding:32px 28px;
+border-radius:18px;
+border:1px solid rgba(255,0,0,0.45);
+box-shadow:
+0 0 40px rgba(255,0,0,0.45),
+inset 0 0 15px rgba(255,0,0,0.2);
+animation:popupShow .35s ease;
+}
+
+/* TITLE */
+
+.win-title{
+font-size:16px;
+letter-spacing:1px;
+color:#ff3b3b;
+text-shadow:0 0 8px rgba(255,0,0,0.6);
 }
 
 /* WIN CARD */
 
 .win-card{
-background:linear-gradient(180deg,#1a0000,#0f0f0f);
-border-radius:14px;
-border:1px solid rgba(255,0,0,0.35);
+width:160px;
 display:flex;
 flex-direction:column;
 align-items:center;
-width:150px;
+border-radius:14px;
 overflow:hidden;
-margin-top:15px;
+background:linear-gradient(180deg,#1a0000,#101010);
+border:1px solid rgba(255,0,0,0.35);
 box-shadow:
-0 0 25px rgba(255,0,0,0.45),
-inset 0 0 10px rgba(255,0,0,0.15);
-animation:winPop 0.4s ease;
+0 0 30px rgba(255,0,0,0.55),
+inset 0 0 10px rgba(255,0,0,0.2);
+animation:itemReveal .4s ease;
 }
 
 .win-card-img{
-height:120px;
 width:100%;
+height:120px;
 display:flex;
 align-items:center;
 justify-content:center;
@@ -219,7 +236,7 @@ background:linear-gradient(180deg,#1b0000,#141414);
 
 .win-card-img img{
 width:90px;
-filter:drop-shadow(0 0 10px rgba(255,0,0,0.9));
+filter:drop-shadow(0 0 12px rgba(255,0,0,0.9));
 }
 
 .win-card-name{
@@ -228,18 +245,40 @@ padding:8px;
 font-size:12px;
 text-align:center;
 background:linear-gradient(180deg,#1c0000,#1a1a1a);
-border-top:1px solid rgba(255,0,0,0.3);
+border-top:1px solid rgba(255,0,0,0.35);
 }
 
-@keyframes winPop{
-0%{
-transform:scale(0.6);
-opacity:0;
+/* BUTTON */
+
+.win-btn{
+margin-top:5px;
+padding:10px 22px;
+background:linear-gradient(180deg,#ff3b3b,#b40000);
+border:none;
+border-radius:10px;
+font-family:'Orbitron',sans-serif;
+font-size:12px;
+color:white;
+cursor:pointer;
+box-shadow:0 0 12px rgba(255,0,0,0.7);
+transition:.2s;
 }
-100%{
-transform:scale(1);
-opacity:1;
+
+.win-btn:hover{
+transform:scale(1.05);
+box-shadow:0 0 18px rgba(255,0,0,1);
 }
+
+/* ANIMATIONS */
+
+@keyframes popupShow{
+0%{transform:scale(.75);opacity:0;}
+100%{transform:scale(1);opacity:1;}
+}
+
+@keyframes itemReveal{
+0%{transform:scale(.6);opacity:0;}
+100%{transform:scale(1);opacity:1;}
 }
 
 .open-btn:disabled{
@@ -285,29 +324,17 @@ cursor:not-allowed;
 <div class="case-items">
 
 <div class="case-item"><div class="case-item-img"><img src="../nft/eyes-mythic-drop/Big-Year.png"></div><div class="case-item-name">Big Year</div></div>
-
 <div class="case-item"><div class="case-item-img"><img src="../nft/eyes-mythic-drop/Clover-Pin.png"></div><div class="case-item-name">Clover Pin</div></div>
-
 <div class="case-item"><div class="case-item-img"><img src="../nft/eyes-mythic-drop/Diamond-Ring.png"></div><div class="case-item-name">Diamond Ring</div></div>
-
 <div class="case-item"><div class="case-item-img"><img src="../nft/eyes-mythic-drop/Evil-Eye.png"></div><div class="case-item-name">Evil Eye</div></div>
-
 <div class="case-item"><div class="case-item-img"><img src="../nft/eyes-mythic-drop/Ice-Cream.png"></div><div class="case-item-name">Ice Cream</div></div>
-
 <div class="case-item"><div class="case-item-img"><img src="../nft/eyes-mythic-drop/Input-Key.png"></div><div class="case-item-name">Input Key</div></div>
-
 <div class="case-item"><div class="case-item-img"><img src="../nft/eyes-mythic-drop/Love-Potion.png"></div><div class="case-item-name">Love Potion</div></div>
-
 <div class="case-item"><div class="case-item-img"><img src="../nft/eyes-mythic-drop/Mad-Pumpkin.png"></div><div class="case-item-name">Mad Pumpkin</div></div>
-
 <div class="case-item"><div class="case-item-img"><img src="../nft/eyes-mythic-drop/Money-Pot.png"></div><div class="case-item-name">Money Pot</div></div>
-
 <div class="case-item"><div class="case-item-img"><img src="../nft/eyes-mythic-drop/Mousse-Cake.png"></div><div class="case-item-name">Mousse Cake</div></div>
-
 <div class="case-item"><div class="case-item-img"><img src="../nft/eyes-mythic-drop/Sharp-Tongue.png"></div><div class="case-item-name">Sharp Tongue</div></div>
-
 <div class="case-item"><div class="case-item-img"><img src="../nft/eyes-mythic-drop/Sleigh-Bell.png"></div><div class="case-item-name">Sleigh Bell</div></div>
-
 <div class="case-item"><div class="case-item-img"><img src="../nft/eyes-mythic-drop/Snoop-Dogg.png"></div><div class="case-item-name">Snoop Dogg</div></div>
 
 </div>
@@ -320,11 +347,11 @@ cursor:not-allowed;
 
 <div class="win-box">
 
-<div>🎉 Вам выпало</div>
+<div class="win-title">YOU WON</div>
 
 <div id="winItem"></div>
 
-<button class="open-btn" onclick="closeWin()">Забрать</button>
+<button class="win-btn" onclick="closeWin()">Забрать</button>
 
 </div>
 
@@ -338,17 +365,11 @@ const tg = window.Telegram.WebApp
 tg.expand()
 
 function goBack(){
-
-if(spinning){
-return
-}
-
+if(spinning) return
 window.location.href="../index.html"
-
 }
 
 const items=[
-
 {name:"Big Year",img:"../nft/eyes-mythic-drop/Big-Year.png"},
 {name:"Clover Pin",img:"../nft/eyes-mythic-drop/Clover-Pin.png"},
 {name:"Diamond Ring",img:"../nft/eyes-mythic-drop/Diamond-Ring.png"},
@@ -362,7 +383,6 @@ const items=[
 {name:"Sharp Tongue",img:"../nft/eyes-mythic-drop/Sharp-Tongue.png"},
 {name:"Sleigh Bell",img:"../nft/eyes-mythic-drop/Sleigh-Bell.png"},
 {name:"Snoop Dogg",img:"../nft/eyes-mythic-drop/Snoop-Dogg.png"}
-
 ]
 
 const casePrice=25
@@ -417,19 +437,14 @@ const winItem=roulette.children[winIndex].dataset.name
 const winImg=roulette.children[winIndex].dataset.img
 
 document.getElementById("winItem").innerHTML = `
-
 <div class="win-card">
-
 <div class="win-card-img">
 <img src="${winImg}">
 </div>
-
 <div class="win-card-name">
 ${winItem}
 </div>
-
 </div>
-
 `
 
 document.getElementById("winPopup").classList.add("active")
