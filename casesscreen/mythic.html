@@ -24,6 +24,8 @@ gap:25px;
 padding:20px;
 }
 
+/* CASE */
+
 .case-area{
 position:relative;
 height:120px;
@@ -40,6 +42,8 @@ transition:0.5s;
 transform:scale(1.4);
 opacity:0;
 }
+
+/* ROULETTE */
 
 .roulette-container{
 position:absolute;
@@ -85,26 +89,53 @@ border:1px solid #333;
 width:55px;
 }
 
+/* DROP ITEMS GRID */
+
 .case-items{
 display:grid;
 grid-template-columns:repeat(4,1fr);
 gap:10px;
 margin-top:10px;
+width:100%;
+max-width:350px;
 }
 
 .case-item{
 background:#141414;
-border-radius:8px;
-padding:8px;
-font-size:11px;
-text-align:center;
+border-radius:10px;
 border:1px solid #333;
+overflow:hidden;
+display:flex;
+flex-direction:column;
+align-items:center;
 }
 
-.case-item img{
-width:40px;
-margin-bottom:4px;
+/* IMAGE AREA */
+
+.case-item-img{
+padding:8px;
+display:flex;
+justify-content:center;
+align-items:center;
+height:60px;
 }
+
+.case-item-img img{
+width:40px;
+}
+
+/* NAME AREA */
+
+.case-item-name{
+width:100%;
+background:#1d1d1d;
+font-size:10px;
+padding:4px 2px;
+text-align:center;
+border-top:1px solid #333;
+}
+
+/* WIN POPUP */
 
 .win-popup{
 position:fixed;
@@ -137,6 +168,13 @@ border:1px solid #333;
 .win-item img{
 width:90px;
 margin:10px 0;
+}
+
+/* BUTTON DISABLED */
+
+.open-btn:disabled{
+opacity:0.5;
+cursor:not-allowed;
 }
 
 </style>
@@ -183,19 +221,96 @@ MYTHIC
 
 <div class="case-items">
 
-<div class="case-item"><img src="../nft/eyes-mythic-drop/Big-Year.png">Big Year</div>
-<div class="case-item"><img src="../nft/eyes-mythic-drop/Clover-Pin.png">Clover Pin</div>
-<div class="case-item"><img src="../nft/eyes-mythic-drop/Diamond-Ring.png">Diamond Ring</div>
-<div class="case-item"><img src="../nft/eyes-mythic-drop/Evil-Eye.png">Evil Eye</div>
-<div class="case-item"><img src="../nft/eyes-mythic-drop/Ice-Cream.png">Ice Cream</div>
-<div class="case-item"><img src="../nft/eyes-mythic-drop/Input-Key.png">Input Key</div>
-<div class="case-item"><img src="../nft/eyes-mythic-drop/Love-Potion.png">Love Potion</div>
-<div class="case-item"><img src="../nft/eyes-mythic-drop/Mad-Pumpkin.png">Mad Pumpkin</div>
-<div class="case-item"><img src="../nft/eyes-mythic-drop/Money-Pot.png">Money Pot</div>
-<div class="case-item"><img src="../nft/eyes-mythic-drop/Mousse-Cake.png">Mousse Cake</div>
-<div class="case-item"><img src="../nft/eyes-mythic-drop/Sharp-Tongue.png">Sharp Tongue</div>
-<div class="case-item"><img src="../nft/eyes-mythic-drop/Sleigh-Bell.png">Sleigh Bell</div>
-<div class="case-item"><img src="../nft/eyes-mythic-drop/Snoop-Dogg.png">Snoop Dogg</div>
+<div class="case-item">
+<div class="case-item-img">
+<img src="../nft/eyes-mythic-drop/Big-Year.png">
+</div>
+<div class="case-item-name">Big Year</div>
+</div>
+
+<div class="case-item">
+<div class="case-item-img">
+<img src="../nft/eyes-mythic-drop/Clover-Pin.png">
+</div>
+<div class="case-item-name">Clover Pin</div>
+</div>
+
+<div class="case-item">
+<div class="case-item-img">
+<img src="../nft/eyes-mythic-drop/Diamond-Ring.png">
+</div>
+<div class="case-item-name">Diamond Ring</div>
+</div>
+
+<div class="case-item">
+<div class="case-item-img">
+<img src="../nft/eyes-mythic-drop/Evil-Eye.png">
+</div>
+<div class="case-item-name">Evil Eye</div>
+</div>
+
+<div class="case-item">
+<div class="case-item-img">
+<img src="../nft/eyes-mythic-drop/Ice-Cream.png">
+</div>
+<div class="case-item-name">Ice Cream</div>
+</div>
+
+<div class="case-item">
+<div class="case-item-img">
+<img src="../nft/eyes-mythic-drop/Input-Key.png">
+</div>
+<div class="case-item-name">Input Key</div>
+</div>
+
+<div class="case-item">
+<div class="case-item-img">
+<img src="../nft/eyes-mythic-drop/Love-Potion.png">
+</div>
+<div class="case-item-name">Love Potion</div>
+</div>
+
+<div class="case-item">
+<div class="case-item-img">
+<img src="../nft/eyes-mythic-drop/Mad-Pumpkin.png">
+</div>
+<div class="case-item-name">Mad Pumpkin</div>
+</div>
+
+<div class="case-item">
+<div class="case-item-img">
+<img src="../nft/eyes-mythic-drop/Money-Pot.png">
+</div>
+<div class="case-item-name">Money Pot</div>
+</div>
+
+<div class="case-item">
+<div class="case-item-img">
+<img src="../nft/eyes-mythic-drop/Mousse-Cake.png">
+</div>
+<div class="case-item-name">Mousse Cake</div>
+</div>
+
+<div class="case-item">
+<div class="case-item-img">
+<img src="../nft/eyes-mythic-drop/Sharp-Tongue.png">
+</div>
+<div class="case-item-name">Sharp Tongue</div>
+</div>
+
+<div class="case-item">
+<div class="case-item-img">
+<img src="../nft/eyes-mythic-drop/Sleigh-Bell.png">
+</div>
+<div class="case-item-name">Sleigh Bell</div>
+</div>
+
+<div class="case-item">
+<div class="case-item-img">
+<img src="../nft/eyes-mythic-drop/Snoop-Dogg.png">
+</div>
+<div class="case-item-name">Snoop Dogg</div>
+</div>
 
 </div>
 
@@ -225,14 +340,17 @@ const tg = window.Telegram.WebApp
 tg.expand()
 
 function goBack(){
+
 if(spinning){
 showNotice("Кейс уже открывается")
 return
 }
+
 window.location.href="../index.html"
+
 }
 
-const items = [
+const items=[
 
 {name:"Big Year",img:"../nft/eyes-mythic-drop/Big-Year.png"},
 {name:"Clover Pin",img:"../nft/eyes-mythic-drop/Clover-Pin.png"},
@@ -250,8 +368,8 @@ const items = [
 
 ]
 
-const casePrice = 25
-let spinning = false
+const casePrice=25
+let spinning=false
 
 function openCase(){
 
@@ -259,7 +377,11 @@ if(spinning) return
 
 if(!payForCase(casePrice)) return
 
-spinning = true
+let opened=localStorage.getItem("openedCases")||0
+opened++
+localStorage.setItem("openedCases",opened)
+
+spinning=true
 
 const caseImg=document.getElementById("caseImg")
 const roulette=document.getElementById("roulette")
@@ -267,6 +389,7 @@ const container=document.getElementById("rouletteContainer")
 const btn=document.getElementById("openBtn")
 
 btn.disabled=true
+
 caseImg.classList.add("active")
 
 setTimeout(()=>{
@@ -283,7 +406,6 @@ const item=document.createElement("div")
 item.className="item"
 
 item.innerHTML=`<img src="${rand.img}">`
-
 item.dataset.name=rand.name
 item.dataset.img=rand.img
 
