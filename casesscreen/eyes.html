@@ -84,6 +84,7 @@ transition:4s cubic-bezier(.1,.7,.1,1);
 
 .item{
 min-width:70px;
+max-width:70px;
 height:70px;
 background:#1a0000;
 border-radius:10px;
@@ -121,46 +122,48 @@ display:flex;
 flex-direction:column;
 align-items:center;
 position:relative;
-transition:0.25s;
+
 box-shadow:
 0 0 12px rgba(255,0,0,0.15),
 inset 0 0 8px rgba(255,0,0,0.1);
 }
 
-/* MIRROR EFFECT */
+/* AUTO MIRROR SHINE */
 
 .case-item::after{
 content:"";
 position:absolute;
 top:0;
-left:-60%;
+left:-120%;
 width:60%;
 height:100%;
 background:linear-gradient(
 120deg,
 transparent,
-rgba(255,255,255,0.15),
+rgba(255,255,255,0.18),
 transparent
 );
 transform:skewX(-20deg);
-transition:0.5s;
+animation:shine 4s linear infinite;
 }
 
-.case-item:hover::after{
+@keyframes shine{
+
+0%{
+left:-120%;
+}
+
+60%{
 left:120%;
 }
 
-/* HOVER */
-
-.case-item:hover{
-transform:translateY(-4px) scale(1.05);
-box-shadow:
-0 0 20px rgba(255,0,0,0.5),
-0 0 40px rgba(255,0,0,0.25);
-border-color:rgba(255,0,0,0.6);
+100%{
+left:120%;
 }
 
-/* IMAGE AREA */
+}
+
+/* IMAGE */
 
 .case-item-img{
 padding:14px;
@@ -277,72 +280,52 @@ EYES
 <div class="case-items">
 
 <div class="case-item">
-<div class="case-item-img">
-<img src="../nft/eyes-nft/bunny-maffin.png">
-</div>
+<div class="case-item-img"><img src="../nft/eyes-nft/bunny-maffin.png"></div>
 <div class="case-item-name">Bunny Maffin</div>
 </div>
 
 <div class="case-item">
-<div class="case-item-img">
-<img src="../nft/eyes-nft/crystall-ball.png">
-</div>
+<div class="case-item-img"><img src="../nft/eyes-nft/crystall-ball.png"></div>
 <div class="case-item-name">Crystal Ball</div>
 </div>
 
 <div class="case-item">
-<div class="case-item-img">
-<img src="../nft/eyes-nft/easter-egg.png">
-</div>
+<div class="case-item-img"><img src="../nft/eyes-nft/easter-egg.png"></div>
 <div class="case-item-name">Easter Egg</div>
 </div>
 
 <div class="case-item">
-<div class="case-item-img">
-<img src="../nft/eyes-nft/evil-eye.png">
-</div>
+<div class="case-item-img"><img src="../nft/eyes-nft/evil-eye.png"></div>
 <div class="case-item-name">Evil Eye</div>
 </div>
 
 <div class="case-item">
-<div class="case-item-img">
-<img src="../nft/eyes-nft/fresh-socks.png">
-</div>
+<div class="case-item-img"><img src="../nft/eyes-nft/fresh-socks.png"></div>
 <div class="case-item-name">Fresh Socks</div>
 </div>
 
 <div class="case-item">
-<div class="case-item-img">
-<img src="../nft/eyes-nft/happy-brownie.png">
-</div>
+<div class="case-item-img"><img src="../nft/eyes-nft/happy-brownie.png"></div>
 <div class="case-item-name">Happy Brownie</div>
 </div>
 
 <div class="case-item">
-<div class="case-item-img">
-<img src="../nft/eyes-nft/hex-potjpg.png">
-</div>
+<div class="case-item-img"><img src="../nft/eyes-nft/hex-potjpg.png"></div>
 <div class="case-item-name">Hex Pot</div>
 </div>
 
 <div class="case-item">
-<div class="case-item-img">
-<img src="../nft/eyes-nft/jelly-bunny.png">
-</div>
+<div class="case-item-img"><img src="../nft/eyes-nft/jelly-bunny.png"></div>
 <div class="case-item-name">Jelly Bunny</div>
 </div>
 
 <div class="case-item">
-<div class="case-item-img">
-<img src="../nft/eyes-nft/pet-snakes.png">
-</div>
+<div class="case-item-img"><img src="../nft/eyes-nft/pet-snakes.png"></div>
 <div class="case-item-name">Pet Snakes</div>
 </div>
 
 <div class="case-item">
-<div class="case-item-img">
-<img src="../nft/eyes-nft/voodoo-doll.png">
-</div>
+<div class="case-item-img"><img src="../nft/eyes-nft/voodoo-doll.png"></div>
 <div class="case-item-name">Voodoo Doll</div>
 </div>
 
@@ -405,12 +388,7 @@ let spinning=false
 function openCase(){
 
 if(spinning) return
-
 if(!payForCase(casePrice)) return
-
-let opened=localStorage.getItem("openedCases")||0
-opened++
-localStorage.setItem("openedCases",opened)
 
 spinning=true
 
