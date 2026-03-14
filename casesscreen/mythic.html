@@ -381,7 +381,7 @@ roulette.style.transform="translateX(0px)"
 
 for(let i=0;i<50;i++){
 
-const rand=items[Math.floor(Math.random()*items.length)]
+const rand = items[Math.floor(Math.random()*items.length)] || items[0]
 
 const item=document.createElement("div")
 item.className="item"
@@ -394,8 +394,10 @@ roulette.appendChild(item)
 
 }
 
-const winIndex=35+Math.floor(Math.random()*5)
-const offset=winIndex*80
+const winIndex = 35 + Math.floor(Math.random()*5)
+
+const itemWidth = 80
+const offset = (winIndex * itemWidth) - 140
 
 setTimeout(()=>{
 roulette.style.transform="translateX(-"+offset+"px)"
@@ -406,15 +408,10 @@ setTimeout(()=>{
 const winItem=roulette.children[winIndex].dataset.name
 const winImg=roulette.children[winIndex].dataset.img
 
-// начисление TON
-if(winItem === "4 TON"){
-addBalance(4)
+if(winItem.includes("TON") && typeof addBalance === "function"){
+addBalance(parseFloat(winItem))
 }
 
-if(winItem === "1.5 TON"){
-addBalance(1.5)
-}
-  
 document.getElementById("winItem").innerHTML=
 `<img src="${winImg}"><br>${winItem}`
 
