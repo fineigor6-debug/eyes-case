@@ -100,12 +100,6 @@ width:55px;
 filter:drop-shadow(0 0 5px rgba(255,0,0,0.6));
 }
 
-.ton-icon{
-width:40px;
-height:40px;
-filter:drop-shadow(0 0 6px red);
-}
-
 /* NFT GRID */
 
 .case-items{
@@ -116,6 +110,8 @@ margin-top:10px;
 width:100%;
 max-width:350px;
 }
+
+/* CARD */
 
 .case-item{
 background:linear-gradient(180deg,#1a0000,#0f0f0f);
@@ -132,6 +128,43 @@ box-shadow:
 inset 0 0 8px rgba(255,0,0,0.1);
 }
 
+/* AUTO MIRROR SHINE */
+
+.case-item::after{
+content:"";
+position:absolute;
+top:0;
+left:-120%;
+width:60%;
+height:100%;
+background:linear-gradient(
+120deg,
+transparent,
+rgba(255,255,255,0.18),
+transparent
+);
+transform:skewX(-20deg);
+animation:shine 4s linear infinite;
+}
+
+@keyframes shine{
+
+0%{
+left:-120%;
+}
+
+60%{
+left:120%;
+}
+
+100%{
+left:120%;
+}
+
+}
+
+/* IMAGE */
+
 .case-item-img{
 padding:14px;
 display:flex;
@@ -144,7 +177,11 @@ background:linear-gradient(180deg,#1b0000,#141414);
 
 .case-item-img img{
 width:70px;
+height:auto;
+filter:drop-shadow(0 0 8px rgba(255,0,0,0.6));
 }
+
+/* NAME */
 
 .case-item-name{
 width:100%;
@@ -190,6 +227,12 @@ box-shadow:0 0 20px rgba(255,0,0,0.4);
 .win-item img{
 width:90px;
 margin:10px 0;
+filter:drop-shadow(0 0 10px rgba(255,0,0,0.8));
+}
+
+.open-btn:disabled{
+opacity:0.5;
+cursor:not-allowed;
 }
 
 </style>
@@ -238,24 +281,20 @@ MYTHIC
 
 <div class="case-item"><div class="case-item-img"><img src="../nft/eyes-mythic-drop/Big-Year.png"></div><div class="case-item-name">Big Year</div></div>
 <div class="case-item"><div class="case-item-img"><img src="../nft/eyes-mythic-drop/Clover-Pin.png"></div><div class="case-item-name">Clover Pin</div></div>
+<div class="case-item"><div class="case-item-img"><img src="../nft/eyes-mythic-drop/Diamond-Ring.png"></div><div class="case-item-name">Diamond Ring</div></div>
+<div class="case-item"><div class="case-item-img"><img src="../nft/eyes-mythic-drop/Evil-Eye.png"></div><div class="case-item-name">Evil Eye</div></div>
+<div class="case-item"><div class="case-item-img"><img src="../nft/eyes-mythic-drop/Ice-Cream.png"></div><div class="case-item-name">Ice Cream</div></div>
+<div class="case-item"><div class="case-item-img"><img src="../nft/eyes-mythic-drop/Input-Key.png"></div><div class="case-item-name">Input Key</div></div>
+<div class="case-item"><div class="case-item-img"><img src="../nft/eyes-mythic-drop/Love-Potion.png"></div><div class="case-item-name">Love Potion</div></div>
+<div class="case-item"><div class="case-item-img"><img src="../nft/eyes-mythic-drop/Mad-Pumpkin.png"></div><div class="case-item-name">Mad Pumpkin</div></div>
+<div class="case-item"><div class="case-item-img"><img src="../nft/eyes-mythic-drop/Money-Pot.png"></div><div class="case-item-name">Money Pot</div></div>
+<div class="case-item"><div class="case-item-img"><img src="../nft/eyes-mythic-drop/Mousse-Cake.png"></div><div class="case-item-name">Mousse Cake</div></div>
+<div class="case-item"><div class="case-item-img"><img src="../nft/eyes-mythic-drop/Sharp-Tongue.png"></div><div class="case-item-name">Sharp Tongue</div></div>
+<div class="case-item"><div class="case-item-img"><img src="../nft/eyes-mythic-drop/Sleigh-Bell.png"></div><div class="case-item-name">Sleigh Bell</div></div>
+<div class="case-item"><div class="case-item-img"><img src="../nft/eyes-mythic-drop/Snoop-Dogg.png"></div><div class="case-item-name">Snoop Dogg</div></div>
 
-<div class="case-item">
-<div class="case-item-img">
-<svg class="ton-icon" viewBox="0 0 56 56">
-<path fill="red" d="M28 4L8 16l20 36 20-36L28 4z"/>
-</svg>
-</div>
-<div class="case-item-name">4 TON</div>
-</div>
-
-<div class="case-item">
-<div class="case-item-img">
-<svg class="ton-icon" viewBox="0 0 56 56">
-<path fill="red" d="M28 4L8 16l20 36 20-36L28 4z"/>
-</svg>
-</div>
-<div class="case-item-name">1.5 TON</div>
-</div>
+<div class="case-item"><div class="case-item-img"><img src="../icons/ton-red.svg"></div><div class="case-item-name">4 TON</div></div>
+<div class="case-item"><div class="case-item-img"><img src="../icons/ton-red.svg"></div><div class="case-item-name">1.5 TON</div></div>
 
 </div>
 
@@ -299,9 +338,20 @@ const items=[
 
 {name:"Big Year",img:"../nft/eyes-mythic-drop/Big-Year.png"},
 {name:"Clover Pin",img:"../nft/eyes-mythic-drop/Clover-Pin.png"},
+{name:"Diamond Ring",img:"../nft/eyes-mythic-drop/Diamond-Ring.png"},
+{name:"Evil Eye",img:"../nft/eyes-mythic-drop/Evil-Eye.png"},
+{name:"Ice Cream",img:"../nft/eyes-mythic-drop/Ice-Cream.png"},
+{name:"Input Key",img:"../nft/eyes-mythic-drop/Input-Key.png"},
+{name:"Love Potion",img:"../nft/eyes-mythic-drop/Love-Potion.png"},
+{name:"Mad Pumpkin",img:"../nft/eyes-mythic-drop/Mad-Pumpkin.png"},
+{name:"Money Pot",img:"../nft/eyes-mythic-drop/Money-Pot.png"},
+{name:"Mousse Cake",img:"../nft/eyes-mythic-drop/Mousse-Cake.png"},
+{name:"Sharp Tongue",img:"../nft/eyes-mythic-drop/Sharp-Tongue.png"},
+{name:"Sleigh Bell",img:"../nft/eyes-mythic-drop/Sleigh-Bell.png"},
+{name:"Snoop Dogg",img:"../nft/eyes-mythic-drop/Snoop-Dogg.png"},
 
-{name:"4 TON",ton:4},
-{name:"1.5 TON",ton:1.5}
+{name:"4 TON",img:"../icons/ton-red.svg"},
+{name:"1.5 TON",img:"../icons/ton-red.svg"}
 
 ]
 
@@ -315,11 +365,19 @@ if(!payForCase(casePrice)) return
 
 spinning=true
 
+const caseImg=document.getElementById("caseImg")
 const roulette=document.getElementById("roulette")
 const container=document.getElementById("rouletteContainer")
+const btn=document.getElementById("openBtn")
+
+btn.disabled=true
+caseImg.classList.add("active")
+
+setTimeout(()=>{
 
 container.style.display="block"
 roulette.innerHTML=""
+roulette.style.transform="translateX(0px)"
 
 for(let i=0;i<50;i++){
 
@@ -328,21 +386,10 @@ const rand=items[Math.floor(Math.random()*items.length)]
 const item=document.createElement("div")
 item.className="item"
 
-if(rand.ton){
-
-item.innerHTML=`<svg class="ton-icon" viewBox="0 0 56 56">
-<path fill="red" d="M28 4L8 16l20 36 20-36L28 4z"/>
-</svg>`
-
-item.dataset.ton=rand.ton
-
-}else{
-
 item.innerHTML=`<img src="${rand.img}">`
-item.dataset.img=rand.img
-}
-
 item.dataset.name=rand.name
+item.dataset.img=rand.img
+
 roulette.appendChild(item)
 
 }
@@ -356,27 +403,26 @@ roulette.style.transform="translateX(-"+offset+"px)"
 
 setTimeout(()=>{
 
-const winItem=roulette.children[winIndex]
+const winItem=roulette.children[winIndex].dataset.name
+const winImg=roulette.children[winIndex].dataset.img
 
-if(winItem.dataset.ton){
-
-addBalance(parseFloat(winItem.dataset.ton))
-
-document.getElementById("winItem").innerHTML=
-`<svg class="ton-icon" viewBox="0 0 56 56">
-<path fill="red" d="M28 4L8 16l20 36 20-36L28 4z"/>
-</svg><br>${winItem.dataset.ton} TON`
-
-}else{
-
-document.getElementById("winItem").innerHTML=
-`<img src="${winItem.dataset.img}"><br>${winItem.dataset.name}`
-
+// начисление TON
+if(winItem === "4 TON"){
+addBalance(4)
 }
+
+if(winItem === "1.5 TON"){
+addBalance(1.5)
+}
+  
+document.getElementById("winItem").innerHTML=
+`<img src="${winImg}"><br>${winItem}`
 
 document.getElementById("winPopup").classList.add("active")
 
 },4200)
+
+},500)
 
 }
 
@@ -384,10 +430,16 @@ function closeWin(){
 
 document.getElementById("winPopup").classList.remove("active")
 
-document.getElementById("roulette").innerHTML=""
+const caseImg=document.getElementById("caseImg")
+const roulette=document.getElementById("roulette")
+const container=document.getElementById("rouletteContainer")
+const btn=document.getElementById("openBtn")
 
-document.getElementById("rouletteContainer").style.display="none"
+caseImg.classList.remove("active")
+container.style.display="none"
+roulette.innerHTML=""
 
+btn.disabled=false
 spinning=false
 
 }
