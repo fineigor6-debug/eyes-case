@@ -78,8 +78,11 @@ border-radius:8px;
 display:flex;
 align-items:center;
 justify-content:center;
-font-size:12px;
 border:1px solid #333;
+}
+
+.item img{
+width:55px;
 }
 
 .case-items{
@@ -93,9 +96,14 @@ margin-top:10px;
 background:#141414;
 border-radius:8px;
 padding:8px;
-font-size:12px;
+font-size:11px;
 text-align:center;
 border:1px solid #333;
+}
+
+.case-item img{
+width:40px;
+margin-bottom:4px;
 }
 
 .win-popup{
@@ -126,16 +134,9 @@ text-align:center;
 border:1px solid #333;
 }
 
-.win-item{
-font-size:18px;
-margin:15px 0;
-color:#ff2b2b;
-font-family:'Orbitron';
-}
-
-.open-btn:disabled{
-opacity:0.5;
-cursor:not-allowed;
+.win-item img{
+width:90px;
+margin:10px 0;
 }
 
 </style>
@@ -182,14 +183,19 @@ MYTHIC
 
 <div class="case-items">
 
-<div class="case-item">NFT DEVIL</div>
-<div class="case-item">NFT DEMON</div>
-<div class="case-item">NFT DRAGON</div>
-<div class="case-item">NFT EYES</div>
-<div class="case-item">NFT SHADOW</div>
-<div class="case-item">NFT DARK</div>
-<div class="case-item">NFT BLOOD</div>
-<div class="case-item">NFT KING</div>
+<div class="case-item"><img src="../nft/eyes-mythic-drop/Big-Year.png">Big Year</div>
+<div class="case-item"><img src="../nft/eyes-mythic-drop/Clover-Pin.png">Clover Pin</div>
+<div class="case-item"><img src="../nft/eyes-mythic-drop/Diamond-Ring.png">Diamond Ring</div>
+<div class="case-item"><img src="../nft/eyes-mythic-drop/Evil-Eye.png">Evil Eye</div>
+<div class="case-item"><img src="../nft/eyes-mythic-drop/Ice-Cream.png">Ice Cream</div>
+<div class="case-item"><img src="../nft/eyes-mythic-drop/Input-Key.png">Input Key</div>
+<div class="case-item"><img src="../nft/eyes-mythic-drop/Love-Potion.png">Love Potion</div>
+<div class="case-item"><img src="../nft/eyes-mythic-drop/Mad-Pumpkin.png">Mad Pumpkin</div>
+<div class="case-item"><img src="../nft/eyes-mythic-drop/Money-Pot.png">Money Pot</div>
+<div class="case-item"><img src="../nft/eyes-mythic-drop/Mousse-Cake.png">Mousse Cake</div>
+<div class="case-item"><img src="../nft/eyes-mythic-drop/Sharp-Tongue.png">Sharp Tongue</div>
+<div class="case-item"><img src="../nft/eyes-mythic-drop/Sleigh-Bell.png">Sleigh Bell</div>
+<div class="case-item"><img src="../nft/eyes-mythic-drop/Snoop-Dogg.png">Snoop Dogg</div>
 
 </div>
 
@@ -203,13 +209,9 @@ MYTHIC
 
 <div>🎉 Вам выпало</div>
 
-<div class="win-item" id="winItem">
-NFT
-</div>
+<div class="win-item" id="winItem"></div>
 
-<button class="open-btn" onclick="closeWin()">
-Забрать
-</button>
+<button class="open-btn" onclick="closeWin()">Забрать</button>
 
 </div>
 
@@ -222,90 +224,75 @@ NFT
 const tg = window.Telegram.WebApp
 tg.expand()
 
-/* =========================
-   BACK BUTTON
-========================= */
-
 function goBack(){
-
 if(spinning){
 showNotice("Кейс уже открывается")
 return
 }
-
 window.location.href="../index.html"
-
 }
 
-/* =========================
-   ITEMS
-========================= */
-
 const items = [
-"DEVIL",
-"DEMON",
-"DRAGON",
-"EYES",
-"SHADOW",
-"DARK",
-"BLOOD",
-"KING"
+
+{name:"Big Year",img:"../nft/eyes-mythic-drop/Big-Year.png"},
+{name:"Clover Pin",img:"../nft/eyes-mythic-drop/Clover-Pin.png"},
+{name:"Diamond Ring",img:"../nft/eyes-mythic-drop/Diamond-Ring.png"},
+{name:"Evil Eye",img:"../nft/eyes-mythic-drop/Evil-Eye.png"},
+{name:"Ice Cream",img:"../nft/eyes-mythic-drop/Ice-Cream.png"},
+{name:"Input Key",img:"../nft/eyes-mythic-drop/Input-Key.png"},
+{name:"Love Potion",img:"../nft/eyes-mythic-drop/Love-Potion.png"},
+{name:"Mad Pumpkin",img:"../nft/eyes-mythic-drop/Mad-Pumpkin.png"},
+{name:"Money Pot",img:"../nft/eyes-mythic-drop/Money-Pot.png"},
+{name:"Mousse Cake",img:"../nft/eyes-mythic-drop/Mousse-Cake.png"},
+{name:"Sharp Tongue",img:"../nft/eyes-mythic-drop/Sharp-Tongue.png"},
+{name:"Sleigh Bell",img:"../nft/eyes-mythic-drop/Sleigh-Bell.png"},
+{name:"Snoop Dogg",img:"../nft/eyes-mythic-drop/Snoop-Dogg.png"}
+
 ]
 
 const casePrice = 25
-
 let spinning = false
-
-/* =========================
-   OPEN CASE
-========================= */
 
 function openCase(){
 
 if(spinning) return
 
-if(!payForCase(casePrice)){
-return
-}
-
-let opened = localStorage.getItem("openedCases") || 0
-opened++
-localStorage.setItem("openedCases", opened)
+if(!payForCase(casePrice)) return
 
 spinning = true
 
-const caseImg = document.getElementById("caseImg")
-const roulette = document.getElementById("roulette")
-const container = document.getElementById("rouletteContainer")
-const btn = document.getElementById("openBtn")
+const caseImg=document.getElementById("caseImg")
+const roulette=document.getElementById("roulette")
+const container=document.getElementById("rouletteContainer")
+const btn=document.getElementById("openBtn")
 
-btn.disabled = true
-
+btn.disabled=true
 caseImg.classList.add("active")
 
 setTimeout(()=>{
 
 container.style.display="block"
-
 roulette.innerHTML=""
 roulette.style.transform="translateX(0px)"
 
 for(let i=0;i<50;i++){
 
-const item = document.createElement("div")
+const rand=items[Math.floor(Math.random()*items.length)]
+
+const item=document.createElement("div")
 item.className="item"
 
-const rand = items[Math.floor(Math.random()*items.length)]
+item.innerHTML=`<img src="${rand.img}">`
 
-item.innerText = rand
+item.dataset.name=rand.name
+item.dataset.img=rand.img
 
 roulette.appendChild(item)
 
 }
 
-const winIndex = 35 + Math.floor(Math.random()*5)
-
-const offset = winIndex * 80
+const winIndex=35+Math.floor(Math.random()*5)
+const offset=winIndex*80
 
 setTimeout(()=>{
 roulette.style.transform="translateX(-"+offset+"px)"
@@ -313,9 +300,11 @@ roulette.style.transform="translateX(-"+offset+"px)"
 
 setTimeout(()=>{
 
-const winItem = roulette.children[winIndex].innerText
+const winItem=roulette.children[winIndex].dataset.name
+const winImg=roulette.children[winIndex].dataset.img
 
-document.getElementById("winItem").innerText = winItem
+document.getElementById("winItem").innerHTML=
+`<img src="${winImg}"><br>${winItem}`
 
 document.getElementById("winPopup").classList.add("active")
 
@@ -325,28 +314,21 @@ document.getElementById("winPopup").classList.add("active")
 
 }
 
-/* =========================
-   CLOSE WIN
-========================= */
-
 function closeWin(){
 
 document.getElementById("winPopup").classList.remove("active")
 
-const caseImg = document.getElementById("caseImg")
-const roulette = document.getElementById("roulette")
-const container = document.getElementById("rouletteContainer")
-const btn = document.getElementById("openBtn")
+const caseImg=document.getElementById("caseImg")
+const roulette=document.getElementById("roulette")
+const container=document.getElementById("rouletteContainer")
+const btn=document.getElementById("openBtn")
 
 caseImg.classList.remove("active")
-
 container.style.display="none"
-
 roulette.innerHTML=""
 
-btn.disabled = false
-
-spinning = false
+btn.disabled=false
+spinning=false
 
 }
 
