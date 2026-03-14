@@ -19,7 +19,6 @@
 body{
 background:#0b0b0b;
 font-family:'Orbitron',sans-serif;
-color:#fff;
 }
 
 /* SCREEN */
@@ -36,7 +35,7 @@ padding:20px;
 
 .case-area{
 position:relative;
-height:130px;
+height:120px;
 display:flex;
 align-items:center;
 justify-content:center;
@@ -47,7 +46,7 @@ transition:0.5s;
 }
 
 .case-open.active{
-transform:scale(1.35);
+transform:scale(1.4);
 opacity:0;
 }
 
@@ -56,51 +55,49 @@ opacity:0;
 .roulette-container{
 position:absolute;
 width:100%;
-max-width:360px;
+max-width:350px;
 overflow:hidden;
-border-radius:14px;
-background:linear-gradient(180deg,#1a0000,#0f0f0f);
-border:1px solid rgba(255,0,0,0.35);
-height:95px;
+border:2px solid #2a0000;
+border-radius:10px;
+background:#111;
+height:90px;
 display:none;
-box-shadow:
-0 0 20px rgba(255,0,0,0.35),
-inset 0 0 10px rgba(255,0,0,0.15);
+box-shadow:0 0 15px rgba(255,0,0,0.25);
 }
 
 .pointer{
 position:absolute;
-top:-12px;
+top:-10px;
 left:50%;
 transform:translateX(-50%);
-font-size:22px;
+font-size:20px;
 color:#ff2b2b;
 z-index:5;
-filter:drop-shadow(0 0 6px red);
 }
 
 .roulette{
 display:flex;
-gap:12px;
-padding:12px;
+gap:10px;
+padding:10px;
 transition:4s cubic-bezier(.1,.7,.1,1);
 }
 
 .item{
-min-width:72px;
-height:72px;
-background:linear-gradient(180deg,#1b0000,#141414);
+min-width:70px;
+max-width:70px;
+height:70px;
+background:#1a0000;
 border-radius:10px;
 display:flex;
 align-items:center;
 justify-content:center;
 border:1px solid rgba(255,0,0,0.25);
-box-shadow:0 0 8px rgba(255,0,0,0.25);
+box-shadow:0 0 6px rgba(255,0,0,0.2);
 }
 
 .item img{
-width:56px;
-filter:drop-shadow(0 0 6px rgba(255,0,0,0.6));
+width:55px;
+filter:drop-shadow(0 0 5px rgba(255,0,0,0.6));
 }
 
 /* NFT GRID */
@@ -131,7 +128,7 @@ box-shadow:
 inset 0 0 8px rgba(255,0,0,0.1);
 }
 
-/* SHINE EFFECT */
+/* AUTO MIRROR SHINE */
 
 .case-item::after{
 content:"";
@@ -140,14 +137,12 @@ top:0;
 left:-120%;
 width:60%;
 height:100%;
-
 background:linear-gradient(
 120deg,
 transparent,
 rgba(255,255,255,0.18),
 transparent
 );
-
 transform:skewX(-20deg);
 animation:shine 4s linear infinite;
 }
@@ -168,7 +163,7 @@ left:120%;
 
 }
 
-/* IMAGE AREA */
+/* IMAGE */
 
 .case-item-img{
 padding:14px;
@@ -206,14 +201,13 @@ top:0;
 left:0;
 width:100%;
 height:100%;
+background:rgba(0,0,0,0.8);
 display:flex;
 align-items:center;
 justify-content:center;
-background:rgba(0,0,0,0.88);
-backdrop-filter:blur(6px);
 opacity:0;
 pointer-events:none;
-transition:0.25s;
+transition:0.3s;
 }
 
 .win-popup.active{
@@ -221,101 +215,19 @@ opacity:1;
 pointer-events:auto;
 }
 
-/* BOX */
-
 .win-box{
-display:flex;
-flex-direction:column;
-align-items:center;
-gap:18px;
-background:linear-gradient(180deg,#160000,#0c0c0c);
-padding:32px 28px;
-border-radius:18px;
-border:1px solid rgba(255,0,0,0.45);
-box-shadow:
-0 0 40px rgba(255,0,0,0.45),
-inset 0 0 15px rgba(255,0,0,0.2);
-animation:popupShow .35s ease;
-}
-
-.win-title{
-font-size:16px;
-letter-spacing:1px;
-color:#ff3b3b;
-text-shadow:0 0 8px rgba(255,0,0,0.6);
-}
-
-/* WIN CARD */
-
-.win-card{
-width:160px;
-display:flex;
-flex-direction:column;
-align-items:center;
+background:#111;
 border-radius:14px;
-overflow:hidden;
-background:linear-gradient(180deg,#1a0000,#101010);
-border:1px solid rgba(255,0,0,0.35);
-box-shadow:
-0 0 30px rgba(255,0,0,0.55),
-inset 0 0 10px rgba(255,0,0,0.2);
-animation:itemReveal .4s ease;
-}
-
-.win-card-img{
-width:100%;
-height:120px;
-display:flex;
-align-items:center;
-justify-content:center;
-background:linear-gradient(180deg,#1b0000,#141414);
-}
-
-.win-card-img img{
-width:90px;
-filter:drop-shadow(0 0 12px rgba(255,0,0,0.9));
-}
-
-.win-card-name{
-width:100%;
-padding:8px;
-font-size:12px;
+padding:30px;
 text-align:center;
-background:linear-gradient(180deg,#1c0000,#1a1a1a);
-border-top:1px solid rgba(255,0,0,0.35);
+border:1px solid rgba(255,0,0,0.4);
+box-shadow:0 0 20px rgba(255,0,0,0.4);
 }
 
-/* BUTTON */
-
-.win-btn{
-margin-top:5px;
-padding:10px 22px;
-background:linear-gradient(180deg,#ff3b3b,#b40000);
-border:none;
-border-radius:10px;
-font-family:'Orbitron',sans-serif;
-font-size:12px;
-color:white;
-cursor:pointer;
-box-shadow:0 0 12px rgba(255,0,0,0.7);
-transition:.2s;
-}
-
-.win-btn:hover{
-transform:scale(1.05);
-box-shadow:0 0 18px rgba(255,0,0,1);
-}
-
-/* ANIMATIONS */
-
-@keyframes popupShow{
-0%{transform:scale(.75);opacity:0;}
-100%{transform:scale(1);opacity:1;}
-}
-
-@keyframes itemReveal{
-0%{transform:scale(.6);opacity:0;}
-100%{transform:scale(1);opacity:1;}
+.win-item img{
+width:90px;
+margin:10px 0;
+filter:drop-shadow(0 0 10px rgba(255,0,0,0.8));
 }
 
 .open-btn:disabled{
@@ -332,8 +244,13 @@ cursor:not-allowed;
 <div class="app">
 
 <div class="header">
+
 <button class="back-btn" onclick="goBack()">←</button>
-<div class="username">MYTHIC CASE</div>
+
+<div class="username">
+MYTHIC CASE
+</div>
+
 </div>
 
 <div class="case-screen">
@@ -343,13 +260,18 @@ cursor:not-allowed;
 <img id="caseImg" src="../CasesPhoto/image.png" class="case-img case-open">
 
 <div class="roulette-container" id="rouletteContainer">
+
 <div class="pointer">▼</div>
+
 <div class="roulette" id="roulette"></div>
-</div>
 
 </div>
 
-<div class="case-title">MYTHIC</div>
+</div>
+
+<div class="case-title">
+MYTHIC
+</div>
 
 <button class="open-btn" id="openBtn" onclick="openCase()">
 Открыть кейс • 25
@@ -376,6 +298,138 @@ cursor:not-allowed;
 </div>
 
 </div>
+
+<div class="win-popup" id="winPopup">
+
+<div class="win-box">
+
+<div>🎉 Вам выпало</div>
+
+<div class="win-item" id="winItem"></div>
+
+<button class="open-btn" onclick="closeWin()">Забрать</button>
+
+</div>
+
+</div>
+
+<script src="../app/app.js"></script>
+
+<script>
+
+const tg = window.Telegram.WebApp
+tg.expand()
+
+function goBack(){
+
+if(spinning){
+showNotice("Кейс уже открывается")
+return
+}
+
+window.location.href="../index.html"
+
+}
+
+const items=[
+
+{name:"Big Year",img:"../nft/eyes-mythic-drop/Big-Year.png"},
+{name:"Clover Pin",img:"../nft/eyes-mythic-drop/Clover-Pin.png"},
+{name:"Diamond Ring",img:"../nft/eyes-mythic-drop/Diamond-Ring.png"},
+{name:"Evil Eye",img:"../nft/eyes-mythic-drop/Evil-Eye.png"},
+{name:"Ice Cream",img:"../nft/eyes-mythic-drop/Ice-Cream.png"},
+{name:"Input Key",img:"../nft/eyes-mythic-drop/Input-Key.png"},
+{name:"Love Potion",img:"../nft/eyes-mythic-drop/Love-Potion.png"},
+{name:"Mad Pumpkin",img:"../nft/eyes-mythic-drop/Mad-Pumpkin.png"},
+{name:"Money Pot",img:"../nft/eyes-mythic-drop/Money-Pot.png"},
+{name:"Mousse Cake",img:"../nft/eyes-mythic-drop/Mousse-Cake.png"},
+{name:"Sharp Tongue",img:"../nft/eyes-mythic-drop/Sharp-Tongue.png"},
+{name:"Sleigh Bell",img:"../nft/eyes-mythic-drop/Sleigh-Bell.png"},
+{name:"Snoop Dogg",img:"../nft/eyes-mythic-drop/Snoop-Dogg.png"}
+
+]
+
+const casePrice=25
+let spinning=false
+
+function openCase(){
+
+if(spinning) return
+if(!payForCase(casePrice)) return
+
+spinning=true
+
+const caseImg=document.getElementById("caseImg")
+const roulette=document.getElementById("roulette")
+const container=document.getElementById("rouletteContainer")
+const btn=document.getElementById("openBtn")
+
+btn.disabled=true
+caseImg.classList.add("active")
+
+setTimeout(()=>{
+
+container.style.display="block"
+roulette.innerHTML=""
+roulette.style.transform="translateX(0px)"
+
+for(let i=0;i<50;i++){
+
+const rand=items[Math.floor(Math.random()*items.length)]
+
+const item=document.createElement("div")
+item.className="item"
+
+item.innerHTML=`<img src="${rand.img}">`
+item.dataset.name=rand.name
+item.dataset.img=rand.img
+
+roulette.appendChild(item)
+
+}
+
+const winIndex=35+Math.floor(Math.random()*5)
+const offset=winIndex*80
+
+setTimeout(()=>{
+roulette.style.transform="translateX(-"+offset+"px)"
+},100)
+
+setTimeout(()=>{
+
+const winItem=roulette.children[winIndex].dataset.name
+const winImg=roulette.children[winIndex].dataset.img
+
+document.getElementById("winItem").innerHTML=
+`<img src="${winImg}"><br>${winItem}`
+
+document.getElementById("winPopup").classList.add("active")
+
+},4200)
+
+},500)
+
+}
+
+function closeWin(){
+
+document.getElementById("winPopup").classList.remove("active")
+
+const caseImg=document.getElementById("caseImg")
+const roulette=document.getElementById("roulette")
+const container=document.getElementById("rouletteContainer")
+const btn=document.getElementById("openBtn")
+
+caseImg.classList.remove("active")
+container.style.display="none"
+roulette.innerHTML=""
+
+btn.disabled=false
+spinning=false
+
+}
+
+</script>
 
 </body>
 </html>
