@@ -24,6 +24,8 @@ gap:25px;
 padding:20px;
 }
 
+/* CASE */
+
 .case-area{
 position:relative;
 height:120px;
@@ -40,6 +42,8 @@ transition:0.5s;
 transform:scale(1.4);
 opacity:0;
 }
+
+/* ROULETTE */
 
 .roulette-container{
 position:absolute;
@@ -85,26 +89,53 @@ border:1px solid #333;
 width:55px;
 }
 
+/* DROP GRID */
+
 .case-items{
 display:grid;
 grid-template-columns:repeat(4,1fr);
 gap:10px;
 margin-top:10px;
+width:100%;
+max-width:350px;
 }
 
 .case-item{
 background:#141414;
-border-radius:8px;
-padding:8px;
-font-size:11px;
-text-align:center;
+border-radius:10px;
 border:1px solid #333;
+overflow:hidden;
+display:flex;
+flex-direction:column;
+align-items:center;
 }
 
-.case-item img{
-width:40px;
-margin-bottom:4px;
+/* IMAGE */
+
+.case-item-img{
+padding:8px;
+display:flex;
+justify-content:center;
+align-items:center;
+height:60px;
 }
+
+.case-item-img img{
+width:40px;
+}
+
+/* NAME */
+
+.case-item-name{
+width:100%;
+background:#1d1d1d;
+font-size:10px;
+padding:4px 2px;
+text-align:center;
+border-top:1px solid #333;
+}
+
+/* WIN POPUP */
 
 .win-popup{
 position:fixed;
@@ -138,6 +169,8 @@ border:1px solid #333;
 width:90px;
 margin:10px 0;
 }
+
+/* BUTTON */
 
 .open-btn:disabled{
 opacity:0.5;
@@ -189,53 +222,73 @@ EYES
 <div class="case-items">
 
 <div class="case-item">
+<div class="case-item-img">
 <img src="../nft/eyes-nft/bunny-maffin.png">
-Bunny Maffin
+</div>
+<div class="case-item-name">Bunny Maffin</div>
 </div>
 
 <div class="case-item">
+<div class="case-item-img">
 <img src="../nft/eyes-nft/crystall-ball.png">
-Crystal Ball
+</div>
+<div class="case-item-name">Crystal Ball</div>
 </div>
 
 <div class="case-item">
+<div class="case-item-img">
 <img src="../nft/eyes-nft/easter-egg.png">
-Easter Egg
+</div>
+<div class="case-item-name">Easter Egg</div>
 </div>
 
 <div class="case-item">
+<div class="case-item-img">
 <img src="../nft/eyes-nft/evil-eye.png">
-Evil Eye
+</div>
+<div class="case-item-name">Evil Eye</div>
 </div>
 
 <div class="case-item">
+<div class="case-item-img">
 <img src="../nft/eyes-nft/fresh-socks.png">
-Fresh Socks
+</div>
+<div class="case-item-name">Fresh Socks</div>
 </div>
 
 <div class="case-item">
+<div class="case-item-img">
 <img src="../nft/eyes-nft/happy-brownie.png">
-Happy Brownie
+</div>
+<div class="case-item-name">Happy Brownie</div>
 </div>
 
 <div class="case-item">
+<div class="case-item-img">
 <img src="../nft/eyes-nft/hex-potjpg.png">
-Hex Pot
+</div>
+<div class="case-item-name">Hex Pot</div>
 </div>
 
 <div class="case-item">
+<div class="case-item-img">
 <img src="../nft/eyes-nft/jelly-bunny.png">
-Jelly Bunny
+</div>
+<div class="case-item-name">Jelly Bunny</div>
 </div>
 
 <div class="case-item">
+<div class="case-item-img">
 <img src="../nft/eyes-nft/pet-snakes.png">
-Pet Snakes
+</div>
+<div class="case-item-name">Pet Snakes</div>
 </div>
 
 <div class="case-item">
+<div class="case-item-img">
 <img src="../nft/eyes-nft/voodoo-doll.png">
-Voodoo Doll
+</div>
+<div class="case-item-name">Voodoo Doll</div>
 </div>
 
 </div>
@@ -252,9 +305,7 @@ Voodoo Doll
 
 <div class="win-item" id="winItem"></div>
 
-<button class="open-btn" onclick="closeWin()">
-Забрать
-</button>
+<button class="open-btn" onclick="closeWin()">Забрать</button>
 
 </div>
 
@@ -278,7 +329,7 @@ window.location.href="../index.html"
 
 }
 
-const items = [
+const items=[
 
 {name:"Bunny Maffin",img:"../nft/eyes-nft/bunny-maffin.png"},
 {name:"Crystal Ball",img:"../nft/eyes-nft/crystall-ball.png"},
@@ -293,49 +344,43 @@ const items = [
 
 ]
 
-const casePrice = 25
-
-let spinning = false
+const casePrice=25
+let spinning=false
 
 function openCase(){
 
 if(spinning) return
 
-if(!payForCase(casePrice)){
-return
-}
+if(!payForCase(casePrice)) return
 
-let opened = localStorage.getItem("openedCases") || 0
+let opened=localStorage.getItem("openedCases")||0
 opened++
-localStorage.setItem("openedCases", opened)
+localStorage.setItem("openedCases",opened)
 
-spinning = true
+spinning=true
 
-const caseImg = document.getElementById("caseImg")
-const roulette = document.getElementById("roulette")
-const container = document.getElementById("rouletteContainer")
-const btn = document.getElementById("openBtn")
+const caseImg=document.getElementById("caseImg")
+const roulette=document.getElementById("roulette")
+const container=document.getElementById("rouletteContainer")
+const btn=document.getElementById("openBtn")
 
-btn.disabled = true
-
+btn.disabled=true
 caseImg.classList.add("active")
 
 setTimeout(()=>{
 
 container.style.display="block"
-
 roulette.innerHTML=""
 roulette.style.transform="translateX(0px)"
 
 for(let i=0;i<50;i++){
 
-const item = document.createElement("div")
+const rand=items[Math.floor(Math.random()*items.length)]
+
+const item=document.createElement("div")
 item.className="item"
 
-const rand = items[Math.floor(Math.random()*items.length)]
-
 item.innerHTML=`<img src="${rand.img}">`
-
 item.dataset.name=rand.name
 item.dataset.img=rand.img
 
@@ -343,9 +388,8 @@ roulette.appendChild(item)
 
 }
 
-const winIndex = 35 + Math.floor(Math.random()*5)
-
-const offset = winIndex * 80
+const winIndex=35+Math.floor(Math.random()*5)
+const offset=winIndex*80
 
 setTimeout(()=>{
 roulette.style.transform="translateX(-"+offset+"px)"
@@ -353,14 +397,11 @@ roulette.style.transform="translateX(-"+offset+"px)"
 
 setTimeout(()=>{
 
-const winItem = roulette.children[winIndex].dataset.name
-const winImg = roulette.children[winIndex].dataset.img
+const winItem=roulette.children[winIndex].dataset.name
+const winImg=roulette.children[winIndex].dataset.img
 
-document.getElementById("winItem").innerHTML=`
-<img src="${winImg}">
-<br>
-${winItem}
-`
+document.getElementById("winItem").innerHTML=
+`<img src="${winImg}"><br>${winItem}`
 
 document.getElementById("winPopup").classList.add("active")
 
@@ -374,19 +415,16 @@ function closeWin(){
 
 document.getElementById("winPopup").classList.remove("active")
 
-const caseImg = document.getElementById("caseImg")
-const roulette = document.getElementById("roulette")
-const container = document.getElementById("rouletteContainer")
-const btn = document.getElementById("openBtn")
+const caseImg=document.getElementById("caseImg")
+const roulette=document.getElementById("roulette")
+const container=document.getElementById("rouletteContainer")
+const btn=document.getElementById("openBtn")
 
 caseImg.classList.remove("active")
-
 container.style.display="none"
-
 roulette.innerHTML=""
 
 btn.disabled=false
-
 spinning=false
 
 }
