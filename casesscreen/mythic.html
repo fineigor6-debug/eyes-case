@@ -124,9 +124,48 @@ overflow:hidden;
 display:flex;
 flex-direction:column;
 align-items:center;
+position:relative;
+
 box-shadow:
 0 0 12px rgba(255,0,0,0.15),
 inset 0 0 8px rgba(255,0,0,0.1);
+}
+
+/* SHINE EFFECT */
+
+.case-item::after{
+content:"";
+position:absolute;
+top:0;
+left:-120%;
+width:60%;
+height:100%;
+
+background:linear-gradient(
+120deg,
+transparent,
+rgba(255,255,255,0.18),
+transparent
+);
+
+transform:skewX(-20deg);
+animation:shine 4s linear infinite;
+}
+
+@keyframes shine{
+
+0%{
+left:-120%;
+}
+
+60%{
+left:120%;
+}
+
+100%{
+left:120%;
+}
+
 }
 
 /* IMAGE AREA */
@@ -198,8 +237,6 @@ box-shadow:
 inset 0 0 15px rgba(255,0,0,0.2);
 animation:popupShow .35s ease;
 }
-
-/* TITLE */
 
 .win-title{
 font-size:16px;
@@ -306,11 +343,8 @@ cursor:not-allowed;
 <img id="caseImg" src="../CasesPhoto/image.png" class="case-img case-open">
 
 <div class="roulette-container" id="rouletteContainer">
-
 <div class="pointer">▼</div>
-
 <div class="roulette" id="roulette"></div>
-
 </div>
 
 </div>
@@ -342,138 +376,6 @@ cursor:not-allowed;
 </div>
 
 </div>
-
-<div class="win-popup" id="winPopup">
-
-<div class="win-box">
-
-<div class="win-title">YOU WON</div>
-
-<div id="winItem"></div>
-
-<button class="win-btn" onclick="closeWin()">Забрать</button>
-
-</div>
-
-</div>
-
-<script src="../app/app.js"></script>
-
-<script>
-
-const tg = window.Telegram.WebApp
-tg.expand()
-
-function goBack(){
-if(spinning) return
-window.location.href="../index.html"
-}
-
-const items=[
-{name:"Big Year",img:"../nft/eyes-mythic-drop/Big-Year.png"},
-{name:"Clover Pin",img:"../nft/eyes-mythic-drop/Clover-Pin.png"},
-{name:"Diamond Ring",img:"../nft/eyes-mythic-drop/Diamond-Ring.png"},
-{name:"Evil Eye",img:"../nft/eyes-mythic-drop/Evil-Eye.png"},
-{name:"Ice Cream",img:"../nft/eyes-mythic-drop/Ice-Cream.png"},
-{name:"Input Key",img:"../nft/eyes-mythic-drop/Input-Key.png"},
-{name:"Love Potion",img:"../nft/eyes-mythic-drop/Love-Potion.png"},
-{name:"Mad Pumpkin",img:"../nft/eyes-mythic-drop/Mad-Pumpkin.png"},
-{name:"Money Pot",img:"../nft/eyes-mythic-drop/Money-Pot.png"},
-{name:"Mousse Cake",img:"../nft/eyes-mythic-drop/Mousse-Cake.png"},
-{name:"Sharp Tongue",img:"../nft/eyes-mythic-drop/Sharp-Tongue.png"},
-{name:"Sleigh Bell",img:"../nft/eyes-mythic-drop/Sleigh-Bell.png"},
-{name:"Snoop Dogg",img:"../nft/eyes-mythic-drop/Snoop-Dogg.png"}
-]
-
-const casePrice=25
-let spinning=false
-
-function openCase(){
-
-if(spinning) return
-if(!payForCase(casePrice)) return
-
-spinning=true
-
-const caseImg=document.getElementById("caseImg")
-const roulette=document.getElementById("roulette")
-const container=document.getElementById("rouletteContainer")
-const btn=document.getElementById("openBtn")
-
-btn.disabled=true
-caseImg.classList.add("active")
-
-setTimeout(()=>{
-
-container.style.display="block"
-roulette.innerHTML=""
-roulette.style.transform="translateX(0px)"
-
-for(let i=0;i<50;i++){
-
-const rand=items[Math.floor(Math.random()*items.length)]
-
-const item=document.createElement("div")
-item.className="item"
-
-item.innerHTML=`<img src="${rand.img}">`
-item.dataset.name=rand.name
-item.dataset.img=rand.img
-
-roulette.appendChild(item)
-
-}
-
-const winIndex=35+Math.floor(Math.random()*5)
-const offset=winIndex*84
-
-setTimeout(()=>{
-roulette.style.transform="translateX(-"+offset+"px)"
-},100)
-
-setTimeout(()=>{
-
-const winItem=roulette.children[winIndex].dataset.name
-const winImg=roulette.children[winIndex].dataset.img
-
-document.getElementById("winItem").innerHTML = `
-<div class="win-card">
-<div class="win-card-img">
-<img src="${winImg}">
-</div>
-<div class="win-card-name">
-${winItem}
-</div>
-</div>
-`
-
-document.getElementById("winPopup").classList.add("active")
-
-},4200)
-
-},500)
-
-}
-
-function closeWin(){
-
-document.getElementById("winPopup").classList.remove("active")
-
-const caseImg=document.getElementById("caseImg")
-const roulette=document.getElementById("roulette")
-const container=document.getElementById("rouletteContainer")
-const btn=document.getElementById("openBtn")
-
-caseImg.classList.remove("active")
-container.style.display="none"
-roulette.innerHTML=""
-
-btn.disabled=false
-spinning=false
-
-}
-
-</script>
 
 </body>
 </html>
