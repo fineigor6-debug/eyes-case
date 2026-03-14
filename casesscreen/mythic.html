@@ -16,6 +16,13 @@
 
 <style>
 
+body{
+background:#0b0b0b;
+font-family:'Orbitron',sans-serif;
+}
+
+/* SCREEN */
+
 .case-screen{
 display:flex;
 flex-direction:column;
@@ -50,11 +57,12 @@ position:absolute;
 width:100%;
 max-width:350px;
 overflow:hidden;
-border:2px solid #333;
+border:2px solid #2a0000;
 border-radius:10px;
 background:#111;
 height:90px;
 display:none;
+box-shadow:0 0 15px rgba(255,0,0,0.25);
 }
 
 .pointer{
@@ -63,7 +71,7 @@ top:-10px;
 left:50%;
 transform:translateX(-50%);
 font-size:20px;
-color:red;
+color:#ff2b2b;
 z-index:5;
 }
 
@@ -77,39 +85,79 @@ transition:4s cubic-bezier(.1,.7,.1,1);
 .item{
 min-width:70px;
 height:70px;
-background:#1a1a1a;
-border-radius:8px;
+background:#1a0000;
+border-radius:10px;
 display:flex;
 align-items:center;
 justify-content:center;
-border:1px solid #333;
+border:1px solid rgba(255,0,0,0.25);
+box-shadow:0 0 6px rgba(255,0,0,0.2);
 }
 
 .item img{
 width:55px;
+filter:drop-shadow(0 0 5px rgba(255,0,0,0.6));
 }
 
-/* DROP ITEMS GRID */
+/* NFT GRID */
 
 .case-items{
 display:grid;
 grid-template-columns:repeat(3,1fr);
-gap:14px;
+gap:16px;
 margin-top:10px;
 width:100%;
 max-width:350px;
 }
 
+/* CARD */
+
 .case-item{
-background:#121212;
+background:linear-gradient(180deg,#1a0000,#0f0f0f);
 border-radius:14px;
-border:1px solid #2a2a2a;
+border:1px solid rgba(255,0,0,0.25);
 overflow:hidden;
 display:flex;
 flex-direction:column;
 align-items:center;
-transition:0.2s;
-box-shadow:0 0 0 rgba(0,0,0,0);
+position:relative;
+transition:0.25s;
+box-shadow:
+0 0 12px rgba(255,0,0,0.15),
+inset 0 0 8px rgba(255,0,0,0.1);
+}
+
+/* MIRROR EFFECT */
+
+.case-item::after{
+content:"";
+position:absolute;
+top:0;
+left:-60%;
+width:60%;
+height:100%;
+background:linear-gradient(
+120deg,
+transparent,
+rgba(255,255,255,0.15),
+transparent
+);
+transform:skewX(-20deg);
+transition:0.5s;
+}
+
+.case-item:hover::after{
+left:120%;
+}
+
+/* HOVER */
+
+.case-item:hover{
+transform:translateY(-4px) scale(1.05);
+box-shadow:
+0 0 20px rgba(255,0,0,0.5),
+0 0 40px rgba(255,0,0,0.25);
+border-color:rgba(255,0,0,0.6);
 }
 
 /* IMAGE AREA */
@@ -119,31 +167,27 @@ padding:14px;
 display:flex;
 justify-content:center;
 align-items:center;
-height:90px;
+height:95px;
 width:100%;
-background:#161616;
+background:linear-gradient(180deg,#1b0000,#141414);
 }
 
 .case-item-img img{
-width:65px;
+width:70px;
 height:auto;
+filter:drop-shadow(0 0 8px rgba(255,0,0,0.6));
 }
 
-/* NAME AREA */
+/* NAME */
 
 .case-item-name{
 width:100%;
-background:#1e1e1e;
+background:linear-gradient(180deg,#1c0000,#1a1a1a);
 font-size:11px;
 padding:6px 4px;
 text-align:center;
-border-top:1px solid #2a2a2a;
-color:#dcdcdc;
-}
-
-.case-item:hover{
-transform:scale(1.05);
-border-color:#444;
+border-top:1px solid rgba(255,0,0,0.25);
+color:#f2f2f2;
 }
 
 /* WIN POPUP */
@@ -173,15 +217,15 @@ background:#111;
 border-radius:14px;
 padding:30px;
 text-align:center;
-border:1px solid #333;
+border:1px solid rgba(255,0,0,0.4);
+box-shadow:0 0 20px rgba(255,0,0,0.4);
 }
 
 .win-item img{
 width:90px;
 margin:10px 0;
+filter:drop-shadow(0 0 10px rgba(255,0,0,0.8));
 }
-
-/* BUTTON DISABLED */
 
 .open-btn:disabled{
 opacity:0.5;
@@ -400,7 +444,6 @@ const container=document.getElementById("rouletteContainer")
 const btn=document.getElementById("openBtn")
 
 btn.disabled=true
-
 caseImg.classList.add("active")
 
 setTimeout(()=>{
