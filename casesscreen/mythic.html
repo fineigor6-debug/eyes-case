@@ -19,6 +19,7 @@
 body{
 background:#0b0b0b;
 font-family:'Orbitron',sans-serif;
+color:#fff;
 }
 
 /* SCREEN */
@@ -35,7 +36,7 @@ padding:20px;
 
 .case-area{
 position:relative;
-height:120px;
+height:130px;
 display:flex;
 align-items:center;
 justify-content:center;
@@ -46,7 +47,7 @@ transition:0.5s;
 }
 
 .case-open.active{
-transform:scale(1.4);
+transform:scale(1.35);
 opacity:0;
 }
 
@@ -55,49 +56,51 @@ opacity:0;
 .roulette-container{
 position:absolute;
 width:100%;
-max-width:350px;
+max-width:360px;
 overflow:hidden;
-border:2px solid #2a0000;
-border-radius:10px;
-background:#111;
-height:90px;
+border-radius:14px;
+background:linear-gradient(180deg,#1a0000,#0f0f0f);
+border:1px solid rgba(255,0,0,0.35);
+height:95px;
 display:none;
-box-shadow:0 0 15px rgba(255,0,0,0.25);
+box-shadow:
+0 0 20px rgba(255,0,0,0.35),
+inset 0 0 10px rgba(255,0,0,0.15);
 }
 
 .pointer{
 position:absolute;
-top:-10px;
+top:-12px;
 left:50%;
 transform:translateX(-50%);
-font-size:20px;
+font-size:22px;
 color:#ff2b2b;
 z-index:5;
+filter:drop-shadow(0 0 6px red);
 }
 
 .roulette{
 display:flex;
-gap:10px;
-padding:10px;
+gap:12px;
+padding:12px;
 transition:4s cubic-bezier(.1,.7,.1,1);
 }
 
 .item{
-min-width:70px;
-max-width:70px;
-height:70px;
-background:#1a0000;
+min-width:72px;
+height:72px;
+background:linear-gradient(180deg,#1b0000,#141414);
 border-radius:10px;
 display:flex;
 align-items:center;
 justify-content:center;
 border:1px solid rgba(255,0,0,0.25);
-box-shadow:0 0 6px rgba(255,0,0,0.2);
+box-shadow:0 0 8px rgba(255,0,0,0.25);
 }
 
 .item img{
-width:55px;
-filter:drop-shadow(0 0 5px rgba(255,0,0,0.6));
+width:56px;
+filter:drop-shadow(0 0 6px rgba(255,0,0,0.6));
 }
 
 /* NFT GRID */
@@ -190,74 +193,53 @@ box-shadow:0 0 20px rgba(255,0,0,0.4);
 /* WIN CARD */
 
 .win-card{
-
 background:linear-gradient(180deg,#1a0000,#0f0f0f);
 border-radius:14px;
 border:1px solid rgba(255,0,0,0.35);
-
 display:flex;
 flex-direction:column;
 align-items:center;
-
-width:140px;
+width:150px;
 overflow:hidden;
-
 margin-top:15px;
-
 box-shadow:
-0 0 20px rgba(255,0,0,0.4),
+0 0 25px rgba(255,0,0,0.45),
 inset 0 0 10px rgba(255,0,0,0.15);
-
 animation:winPop 0.4s ease;
-
 }
 
 .win-card-img{
-
-height:110px;
+height:120px;
 width:100%;
-
 display:flex;
 align-items:center;
 justify-content:center;
-
 background:linear-gradient(180deg,#1b0000,#141414);
-
 }
 
 .win-card-img img{
-
-width:85px;
+width:90px;
 filter:drop-shadow(0 0 10px rgba(255,0,0,0.9));
-
 }
 
 .win-card-name{
-
 width:100%;
 padding:8px;
-
 font-size:12px;
 text-align:center;
-
 background:linear-gradient(180deg,#1c0000,#1a1a1a);
-
 border-top:1px solid rgba(255,0,0,0.3);
-
 }
 
 @keyframes winPop{
-
 0%{
 transform:scale(0.6);
 opacity:0;
 }
-
 100%{
 transform:scale(1);
 opacity:1;
 }
-
 }
 
 .open-btn:disabled{
@@ -274,13 +256,8 @@ cursor:not-allowed;
 <div class="app">
 
 <div class="header">
-
 <button class="back-btn" onclick="goBack()">←</button>
-
-<div class="username">
-MYTHIC CASE
-</div>
-
+<div class="username">MYTHIC CASE</div>
 </div>
 
 <div class="case-screen">
@@ -299,9 +276,7 @@ MYTHIC CASE
 
 </div>
 
-<div class="case-title">
-MYTHIC
-</div>
+<div class="case-title">MYTHIC</div>
 
 <button class="open-btn" id="openBtn" onclick="openCase()">
 Открыть кейс • 25
@@ -310,17 +285,29 @@ MYTHIC
 <div class="case-items">
 
 <div class="case-item"><div class="case-item-img"><img src="../nft/eyes-mythic-drop/Big-Year.png"></div><div class="case-item-name">Big Year</div></div>
+
 <div class="case-item"><div class="case-item-img"><img src="../nft/eyes-mythic-drop/Clover-Pin.png"></div><div class="case-item-name">Clover Pin</div></div>
+
 <div class="case-item"><div class="case-item-img"><img src="../nft/eyes-mythic-drop/Diamond-Ring.png"></div><div class="case-item-name">Diamond Ring</div></div>
+
 <div class="case-item"><div class="case-item-img"><img src="../nft/eyes-mythic-drop/Evil-Eye.png"></div><div class="case-item-name">Evil Eye</div></div>
+
 <div class="case-item"><div class="case-item-img"><img src="../nft/eyes-mythic-drop/Ice-Cream.png"></div><div class="case-item-name">Ice Cream</div></div>
+
 <div class="case-item"><div class="case-item-img"><img src="../nft/eyes-mythic-drop/Input-Key.png"></div><div class="case-item-name">Input Key</div></div>
+
 <div class="case-item"><div class="case-item-img"><img src="../nft/eyes-mythic-drop/Love-Potion.png"></div><div class="case-item-name">Love Potion</div></div>
+
 <div class="case-item"><div class="case-item-img"><img src="../nft/eyes-mythic-drop/Mad-Pumpkin.png"></div><div class="case-item-name">Mad Pumpkin</div></div>
+
 <div class="case-item"><div class="case-item-img"><img src="../nft/eyes-mythic-drop/Money-Pot.png"></div><div class="case-item-name">Money Pot</div></div>
+
 <div class="case-item"><div class="case-item-img"><img src="../nft/eyes-mythic-drop/Mousse-Cake.png"></div><div class="case-item-name">Mousse Cake</div></div>
+
 <div class="case-item"><div class="case-item-img"><img src="../nft/eyes-mythic-drop/Sharp-Tongue.png"></div><div class="case-item-name">Sharp Tongue</div></div>
+
 <div class="case-item"><div class="case-item-img"><img src="../nft/eyes-mythic-drop/Sleigh-Bell.png"></div><div class="case-item-name">Sleigh Bell</div></div>
+
 <div class="case-item"><div class="case-item-img"><img src="../nft/eyes-mythic-drop/Snoop-Dogg.png"></div><div class="case-item-name">Snoop Dogg</div></div>
 
 </div>
@@ -353,7 +340,6 @@ tg.expand()
 function goBack(){
 
 if(spinning){
-showNotice("Кейс уже открывается")
 return
 }
 
@@ -419,7 +405,7 @@ roulette.appendChild(item)
 }
 
 const winIndex=35+Math.floor(Math.random()*5)
-const offset=winIndex*80
+const offset=winIndex*84
 
 setTimeout(()=>{
 roulette.style.transform="translateX(-"+offset+"px)"
