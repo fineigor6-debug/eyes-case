@@ -112,7 +112,10 @@ display:flex;
 flex-direction:column;
 align-items:center;
 position:relative;
-box-shadow:0 0 12px rgba(255,0,0,0.15), inset 0 0 8px rgba(255,0,0,0.1);
+
+box-shadow:
+0 0 12px rgba(255,0,0,0.15),
+inset 0 0 8px rgba(255,0,0,0.1);
 }
 
 .case-item::after{
@@ -162,12 +165,6 @@ padding:6px 4px;
 text-align:center;
 border-top:1px solid rgba(255,0,0,0.25);
 color:#f2f2f2;
-}
-
-.price{
-font-size:10px;
-color:#00d4ff;
-margin-top:2px;
 }
 
 .win-popup{
@@ -254,27 +251,17 @@ GOLD
 
 <div class="case-items">
 
-<div class="case-item"><div class="case-item-img"><img src="../nft/gold-nft/Desk-Calendar.png"></div><div class="case-item-name">Desk Calendar<div class="price">+6.56 TON</div></div></div>
-
-<div class="case-item"><div class="case-item-img"><img src="../nft/gold-nft/Easter-Egg.png"></div><div class="case-item-name">Easter Egg<div class="price">+5.62 TON</div></div></div>
-
-<div class="case-item"><div class="case-item-img"><img src="../nft/gold-nft/Ice-Cream.png"></div><div class="case-item-name">Ice Cream<div class="price">+4.67 TON</div></div></div>
-
-<div class="case-item"><div class="case-item-img"><img src="../nft/gold-nft/Jingle-Bells.png"></div><div class="case-item-name">Jingle Bells<div class="price">+9.29 TON</div></div></div>
-
-<div class="case-item"><div class="case-item-img"><img src="../nft/gold-nft/Moon-Pendant.png"></div><div class="case-item-name">Moon Pendant<div class="price">+5.34 TON</div></div></div>
-
-<div class="case-item"><div class="case-item-img"><img src="../nft/gold-nft/Pet-Snake.png"></div><div class="case-item-name">Pet Snake<div class="price">+4.61 TON</div></div></div>
-
-<div class="case-item"><div class="case-item-img"><img src="../nft/gold-nft/Rare-Bird.png"></div><div class="case-item-name">Rare Bird<div class="price">+28.14 TON</div></div></div>
-
-<div class="case-item"><div class="case-item-img"><img src="../nft/gold-nft/Snoop-Dogg.png"></div><div class="case-item-name">Snoop Dogg<div class="price">+5.26 TON</div></div></div>
-
-<div class="case-item"><div class="case-item-img"><img src="../nft/gold-nft/Spring-Basket.png"></div><div class="case-item-name">Spring Basket<div class="price">+5.81 TON</div></div></div>
-
-<div class="case-item"><div class="case-item-img"><img src="../nft/gold-nft/Swag-Bag.png"></div><div class="case-item-name">Swag Bag<div class="price">+5.27 TON</div></div></div>
-
-<div class="case-item"><div class="case-item-img"><img src="../nft/gold-nft/Top-Hat.png"></div><div class="case-item-name">Top Hat<div class="price">+11.11 TON</div></div></div>
+<div class="case-item"><div class="case-item-img"><img src="../nft/gold-nft/Desk-Calendar.png"></div><div class="case-item-name">Desk Calendar • +6.56 TON</div></div>
+<div class="case-item"><div class="case-item-img"><img src="../nft/gold-nft/Easter-Egg.png"></div><div class="case-item-name">Easter Egg • +5.62 TON</div></div>
+<div class="case-item"><div class="case-item-img"><img src="../nft/gold-nft/Ice-Cream.png"></div><div class="case-item-name">Ice Cream • +4.67 TON</div></div>
+<div class="case-item"><div class="case-item-img"><img src="../nft/gold-nft/Jingle-Bells.png"></div><div class="case-item-name">Jingle Bells • +9.29 TON</div></div>
+<div class="case-item"><div class="case-item-img"><img src="../nft/gold-nft/Moon-Pendant.png"></div><div class="case-item-name">Moon Pendant • +5.34 TON</div></div>
+<div class="case-item"><div class="case-item-img"><img src="../nft/gold-nft/Pet-Snake.png"></div><div class="case-item-name">Pet Snake • +4.61 TON</div></div>
+<div class="case-item"><div class="case-item-img"><img src="../nft/gold-nft/Rare-Bird.png"></div><div class="case-item-name">Rare Bird • +28.14 TON</div></div>
+<div class="case-item"><div class="case-item-img"><img src="../nft/gold-nft/Snoop-Dogg.png"></div><div class="case-item-name">Snoop Dogg • +5.26 TON</div></div>
+<div class="case-item"><div class="case-item-img"><img src="../nft/gold-nft/Spring-Basket.png"></div><div class="case-item-name">Spring Basket • +5.81 TON</div></div>
+<div class="case-item"><div class="case-item-img"><img src="../nft/gold-nft/Swag-Bag.png"></div><div class="case-item-name">Swag Bag • +5.27 TON</div></div>
+<div class="case-item"><div class="case-item-img"><img src="../nft/gold-nft/Top-Hat.png"></div><div class="case-item-name">Top Hat • +11.11 TON</div></div>
 
 </div>
 
@@ -296,23 +283,119 @@ GOLD
 
 </div>
 
+<script src="../app/app.js"></script>
+
 <script>
+
+const tg = window.Telegram.WebApp
+tg.expand()
+
+function goBack(){
+
+if(spinning){
+showNotice("Кейс уже открывается")
+return
+}
+
+window.location.href="../index.html"
+
+}
 
 const items=[
 
-{name:"Desk Calendar",img:"../nft/gold-nft/Desk-Calendar.png",price:"+6.56 TON"},
-{name:"Easter Egg",img:"../nft/gold-nft/Easter-Egg.png",price:"+5.62 TON"},
-{name:"Ice Cream",img:"../nft/gold-nft/Ice-Cream.png",price:"+4.67 TON"},
-{name:"Jingle Bells",img:"../nft/gold-nft/Jingle-Bells.png",price:"+9.29 TON"},
-{name:"Moon Pendant",img:"../nft/gold-nft/Moon-Pendant.png",price:"+5.34 TON"},
-{name:"Pet Snake",img:"../nft/gold-nft/Pet-Snake.png",price:"+4.61 TON"},
-{name:"Rare Bird",img:"../nft/gold-nft/Rare-Bird.png",price:"+28.14 TON"},
-{name:"Snoop Dogg",img:"../nft/gold-nft/Snoop-Dogg.png",price:"+5.26 TON"},
-{name:"Spring Basket",img:"../nft/gold-nft/Spring-Basket.png",price:"+5.81 TON"},
-{name:"Swag Bag",img:"../nft/gold-nft/Swag-Bag.png",price:"+5.27 TON"},
-{name:"Top Hat",img:"../nft/gold-nft/Top-Hat.png",price:"+11.11 TON"}
+{name:"Desk Calendar",img:"../nft/gold-nft/Desk-Calendar.png"},
+{name:"Easter Egg",img:"../nft/gold-nft/Easter-Egg.png"},
+{name:"Ice Cream",img:"../nft/gold-nft/Ice-Cream.png"},
+{name:"Jingle Bells",img:"../nft/gold-nft/Jingle-Bells.png"},
+{name:"Moon Pendant",img:"../nft/gold-nft/Moon-Pendant.png"},
+{name:"Pet Snake",img:"../nft/gold-nft/Pet-Snake.png"},
+{name:"Rare Bird",img:"../nft/gold-nft/Rare-Bird.png"},
+{name:"Snoop Dogg",img:"../nft/gold-nft/Snoop-Dogg.png"},
+{name:"Spring Basket",img:"../nft/gold-nft/Spring-Basket.png"},
+{name:"Swag Bag",img:"../nft/gold-nft/Swag-Bag.png"},
+{name:"Top Hat",img:"../nft/gold-nft/Top-Hat.png"}
 
 ]
+
+const casePrice=25
+let spinning=false
+
+function openCase(){
+
+if(spinning) return
+if(!payForCase(casePrice)) return
+
+spinning=true
+
+const caseImg=document.getElementById("caseImg")
+const roulette=document.getElementById("roulette")
+const container=document.getElementById("rouletteContainer")
+const btn=document.getElementById("openBtn")
+
+btn.disabled=true
+caseImg.classList.add("active")
+
+setTimeout(()=>{
+
+container.style.display="block"
+roulette.innerHTML=""
+roulette.style.transform="translateX(0px)"
+
+for(let i=0;i<50;i++){
+
+const rand=items[Math.floor(Math.random()*items.length)]
+
+const item=document.createElement("div")
+item.className="item"
+
+item.innerHTML=`<img src="${rand.img}">`
+item.dataset.name=rand.name
+item.dataset.img=rand.img
+
+roulette.appendChild(item)
+
+}
+
+const winIndex=35+Math.floor(Math.random()*5)
+const offset=winIndex*80
+
+setTimeout(()=>{
+roulette.style.transform="translateX(-"+offset+"px)"
+},100)
+
+setTimeout(()=>{
+
+const winItem=roulette.children[winIndex].dataset.name
+const winImg=roulette.children[winIndex].dataset.img
+
+document.getElementById("winItem").innerHTML=
+`<img src="${winImg}"><br>${winItem}`
+
+document.getElementById("winPopup").classList.add("active")
+
+},4200)
+
+},500)
+
+}
+
+function closeWin(){
+
+document.getElementById("winPopup").classList.remove("active")
+
+const caseImg=document.getElementById("caseImg")
+const roulette=document.getElementById("roulette")
+const container=document.getElementById("rouletteContainer")
+const btn=document.getElementById("openBtn")
+
+caseImg.classList.remove("active")
+container.style.display="none"
+roulette.innerHTML=""
+
+btn.disabled=false
+spinning=false
+
+}
 
 </script>
 
