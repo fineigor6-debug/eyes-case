@@ -94,76 +94,6 @@ width:55px;
 filter:drop-shadow(0 0 5px rgba(255,0,0,0.6));
 }
 
-.case-items{
-display:grid;
-grid-template-columns:repeat(3,1fr);
-gap:16px;
-margin-top:10px;
-width:100%;
-max-width:350px;
-}
-
-.case-item{
-background:linear-gradient(180deg,#1a0000,#0f0f0f);
-border-radius:14px;
-border:1px solid rgba(255,0,0,0.25);
-overflow:hidden;
-display:flex;
-flex-direction:column;
-align-items:center;
-position:relative;
-box-shadow:0 0 12px rgba(255,0,0,0.15), inset 0 0 8px rgba(255,0,0,0.1);
-}
-
-.case-item::after{
-content:"";
-position:absolute;
-top:0;
-left:-120%;
-width:60%;
-height:100%;
-background:linear-gradient(
-120deg,
-transparent,
-rgba(255,255,255,0.18),
-transparent
-);
-transform:skewX(-20deg);
-animation:shine 4s linear infinite;
-}
-
-@keyframes shine{
-0%{ left:-120%; }
-60%{ left:120%; }
-100%{ left:120%; }
-}
-
-.case-item-img{
-padding:14px;
-display:flex;
-justify-content:center;
-align-items:center;
-height:95px;
-width:100%;
-background:linear-gradient(180deg,#1b0000,#141414);
-}
-
-.case-item-img img{
-width:70px;
-height:auto;
-filter:drop-shadow(0 0 8px rgba(255,0,0,0.6));
-}
-
-.case-item-name{
-width:100%;
-background:linear-gradient(180deg,#1c0000,#1a1a1a);
-font-size:11px;
-padding:6px 4px;
-text-align:center;
-border-top:1px solid rgba(255,0,0,0.25);
-color:#f2f2f2;
-}
-
 .win-popup{
 position:fixed;
 top:0;
@@ -196,12 +126,6 @@ box-shadow:0 0 20px rgba(255,0,0,0.4);
 .win-item img{
 width:90px;
 margin:10px 0;
-filter:drop-shadow(0 0 10px rgba(255,0,0,0.8));
-}
-
-.open-btn:disabled{
-opacity:0.5;
-cursor:not-allowed;
 }
 
 </style>
@@ -243,33 +167,8 @@ TOXIC
 </div>
 
 <button class="open-btn" id="openBtn" onclick="openCase()">
-Открыть кейс • 25
+Открыть кейс • 9 TON
 </button>
-
-<div class="case-items">
-
-<!-- TON -->
-
-<div class="case-item"><div class="case-item-img"><img src="../nft/eyes-mythic-drop/AA91F33F-9FED-4F7E-B660-578A4AB4F015.png"></div><div class="case-item-name">4 TON</div></div>
-<div class="case-item"><div class="case-item-img"><img src="../nft/eyes-mythic-drop/AA91F33F-9FED-4F7E-B660-578A4AB4F015.png"></div><div class="case-item-name">1.5 TON</div></div>
-<div class="case-item"><div class="case-item-img"><img src="../nft/eyes-mythic-drop/AA91F33F-9FED-4F7E-B660-578A4AB4F015.png"></div><div class="case-item-name">0.85 TON</div></div>
-
-<!-- NFT -->
-
-<div class="case-item"><div class="case-item-img"><img src="../nft/toxic-nft/Berry-Box.png"></div><div class="case-item-name">Berry Box</div></div>
-<div class="case-item"><div class="case-item-img"><img src="../nft/toxic-nft/Cupid-Charm.png"></div><div class="case-item-name">Cupid Charm</div></div>
-<div class="case-item"><div class="case-item-img"><img src="../nft/toxic-nft/Hex-Pot.png"></div><div class="case-item-name">Hex Pot</div></div>
-<div class="case-item"><div class="case-item-img"><img src="../nft/toxic-nft/Instant-Ramen.png"></div><div class="case-item-name">Instant Ramen</div></div>
-<div class="case-item"><div class="case-item-img"><img src="../nft/toxic-nft/Love-Potion.png"></div><div class="case-item-name">Love Potion</div></div>
-<div class="case-item"><div class="case-item-img"><img src="../nft/toxic-nft/Magic-Potion.png"></div><div class="case-item-name">Magic Potion</div></div>
-<div class="case-item"><div class="case-item-img"><img src="../nft/toxic-nft/Money-Pot.png"></div><div class="case-item-name">Money Pot</div></div>
-<div class="case-item"><div class="case-item-img"><img src="../nft/toxic-nft/Restless-Jar.png"></div><div class="case-item-name">Restless Jar</div></div>
-<div class="case-item"><div class="case-item-img"><img src="../nft/toxic-nft/Santa-Hat.png"></div><div class="case-item-name">Santa Hat</div></div>
-<div class="case-item"><div class="case-item-img"><img src="../nft/toxic-nft/Sharp-Tongue.png"></div><div class="case-item-name">Sharp Tongue</div></div>
-<div class="case-item"><div class="case-item-img"><img src="../nft/toxic-nft/Snow-Globe.png"></div><div class="case-item-name">Snow Globe</div></div>
-<div class="case-item"><div class="case-item-img"><img src="../nft/toxic-nft/Swag-Bag.png"></div><div class="case-item-name">Swag Bag</div></div>
-
-</div>
 
 </div>
 
@@ -289,8 +188,6 @@ TOXIC
 
 </div>
 
-<script src="../app/app.js"></script>
-
 <script>
 
 const tg = window.Telegram.WebApp
@@ -299,7 +196,6 @@ tg.expand()
 function goBack(){
 
 if(spinning){
-showNotice("Кейс уже открывается")
 return
 }
 
@@ -307,34 +203,53 @@ window.location.href="../index.html"
 
 }
 
-/* ДРОПЫ ОТСОРТИРОВАНЫ ОТ ДОРОГОГО К ДЕШЁВОМУ */
+/* ШАНСЫ */
 
 const items=[
 
-{name:"Cupid Charm",img:"../nft/toxic-nft/Cupid-Charm.png"},
-{name:"Money Pot",img:"../nft/toxic-nft/Money-Pot.png"},
-{name:"Santa Hat",img:"../nft/toxic-nft/Santa-Hat.png"},
+{name:"Cupid Charm",img:"../nft/toxic-nft/Cupid-Charm.png",weight:0.5},
+{name:"Money Pot",img:"../nft/toxic-nft/Money-Pot.png",weight:0.7},
+{name:"Santa Hat",img:"../nft/toxic-nft/Santa-Hat.png",weight:1},
 
-{name:"Magic Potion",img:"../nft/toxic-nft/Magic-Potion.png"},
-{name:"Sharp Tongue",img:"../nft/toxic-nft/Sharp-Tongue.png"},
-{name:"Hex Pot",img:"../nft/toxic-nft/Hex-Pot.png"},
+{name:"Magic Potion",img:"../nft/toxic-nft/Magic-Potion.png",weight:3},
+{name:"Sharp Tongue",img:"../nft/toxic-nft/Sharp-Tongue.png",weight:4},
+{name:"Hex Pot",img:"../nft/toxic-nft/Hex-Pot.png",weight:5},
 
-{name:"Berry Box",img:"../nft/toxic-nft/Berry-Box.png"},
-{name:"Love Potion",img:"../nft/toxic-nft/Love-Potion.png"},
-{name:"Snow Globe",img:"../nft/toxic-nft/Snow-Globe.png"},
+{name:"Berry Box",img:"../nft/toxic-nft/Berry-Box.png",weight:7},
+{name:"Love Potion",img:"../nft/toxic-nft/Love-Potion.png",weight:9},
+{name:"Snow Globe",img:"../nft/toxic-nft/Snow-Globe.png",weight:11},
 
-{name:"Instant Ramen",img:"../nft/toxic-nft/Instant-Ramen.png"},
-{name:"Restless Jar",img:"../nft/toxic-nft/Restless-Jar.png"},
-{name:"Swag Bag",img:"../nft/toxic-nft/Swag-Bag.png"},
+{name:"Instant Ramen",img:"../nft/toxic-nft/Instant-Ramen.png",weight:13},
+{name:"Restless Jar",img:"../nft/toxic-nft/Restless-Jar.png",weight:15},
+{name:"Swag Bag",img:"../nft/toxic-nft/Swag-Bag.png",weight:17},
 
-{name:"4 TON",img:"../nft/eyes-mythic-drop/AA91F33F-9FED-4F7E-B660-578A4AB4F015.png"},
-{name:"1.5 TON",img:"../nft/eyes-mythic-drop/AA91F33F-9FED-4F7E-B660-578A4AB4F015.png"},
-{name:"0.85 TON",img:"../nft/eyes-mythic-drop/AA91F33F-9FED-4F7E-B660-578A4AB4F015.png"}
+{name:"4 TON",img:"../nft/eyes-mythic-drop/AA91F33F-9FED-4F7E-B660-578A4AB4F015.png",weight:25},
+{name:"1.5 TON",img:"../nft/eyes-mythic-drop/AA91F33F-9FED-4F7E-B660-578A4AB4F015.png",weight:30},
+{name:"0.85 TON",img:"../nft/eyes-mythic-drop/AA91F33F-9FED-4F7E-B660-578A4AB4F015.png",weight:35}
 
 ]
 
-const casePrice=25
+const casePrice=9
 let spinning=false
+
+function getRandomItem(){
+
+let total=0
+items.forEach(i=> total+=i.weight)
+
+let rand=Math.random()*total
+
+for(let item of items){
+
+if(rand<item.weight){
+return item
+}
+
+rand-=item.weight
+
+}
+
+}
 
 function openCase(){
 
@@ -359,7 +274,7 @@ roulette.style.transform="translateX(0px)"
 
 for(let i=0;i<50;i++){
 
-const rand=items[Math.floor(Math.random()*items.length)]
+const rand=getRandomItem()
 
 const item=document.createElement("div")
 item.className="item"
@@ -369,6 +284,21 @@ item.dataset.name=rand.name
 item.dataset.img=rand.img
 
 roulette.appendChild(item)
+
+}
+
+/* ПОЧТИ ВЫПАЛ ДОРОГОЙ NFT */
+
+if(Math.random()<0.4){
+
+const rare=items.slice(0,3)
+const near=rare[Math.floor(Math.random()*rare.length)]
+
+const fake=document.createElement("div")
+fake.className="item"
+fake.innerHTML=`<img src="${near.img}">`
+
+roulette.insertBefore(fake,roulette.children[34])
 
 }
 
