@@ -16,7 +16,7 @@ body { margin:0; background:#0b0b0b; font-family:'Orbitron',sans-serif; color:#f
 .multiplier { font-size:52px; color:#ff2b2b; text-shadow:0 0 20px rgba(255,0,0,0.8); }
 .canvas-container { position:relative; width:360px; height:400px; overflow:hidden; border-radius:12px; border:1px solid rgba(255,0,0,0.3); box-shadow:0 0 15px rgba(255,0,0,0.2); }
 canvas { position:absolute; left:0; top:0; background:#0b0b0b; }
-#rocket { position:absolute; width:40px; height:60px; z-index:5; transform:translateX(-50%); }
+#rocket { position:absolute; width:50px; height:50px; z-index:5; transform:translate(-50%, -50%) rotate(0deg); transition: transform 0.05s linear; }
 .bet-box { display:flex; gap:10px; margin-top:10px; }
 .bet-input { width:100px; padding:10px; background:#111; border:1px solid #333; color:white; border-radius:8px; text-align:center; }
 .crash-btn { padding:12px 20px; background:#ff2b2b; border:none; border-radius:10px; color:white; font-weight:bold; box-shadow:0 0 10px rgba(255,0,0,0.5); cursor:pointer; }
@@ -130,11 +130,14 @@ function animate(){
   ctx.lineWidth=3;
   ctx.stroke();
 
-  // ракета по графику
+  // ракета по графику с наклоном вверх
   const rocketX = canvas.width/2;
-  const rocketY = canvas.height - Math.min(points[points.length-1]*30, canvas.height-60);
+  const rocketY = canvas.height - Math.min(points[points.length-1]*30, canvas.height-50);
   rocket.style.left = rocketX+"px";
   rocket.style.top = rocketY+"px";
+
+  // вращение ракеты для эффекта взлета
+  rocket.style.transform = `translate(-50%, -50%) rotate(${Math.min(animMultiplier*5,45)}deg)`;
 
   document.getElementById("multiplier").innerText = animMultiplier.toFixed(2)+"x";
 
