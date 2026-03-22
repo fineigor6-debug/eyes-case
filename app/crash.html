@@ -9,7 +9,6 @@
 
 <script src="https://telegram.org/js/telegram-web-app.js"></script>
 <link rel="stylesheet" href="style/style.css">
-
 <link href="https://fonts.googleapis.com/css2?family=Orbitron:wght@600;800&display=swap" rel="stylesheet">
 
 <style>
@@ -79,6 +78,26 @@ font-size:22px;
 transform:rotate(45deg);
 }
 
+/* HISTORY */
+.history{
+display:flex;
+gap:6px;
+flex-wrap:wrap;
+justify-content:center;
+max-width:320px;
+}
+
+.history-item{
+padding:4px 8px;
+border-radius:6px;
+font-size:12px;
+font-weight:bold;
+}
+
+.h-red{ background:#3a0000; color:#ff4d4d; }
+.h-orange{ background:#3a1f00; color:#ff9a2b; }
+.h-green{ background:#003a0a; color:#2bff88; }
+
 </style>
 
 </head>
@@ -88,7 +107,7 @@ transform:rotate(45deg);
 <div class="app">
 
 <div class="header">
-<button class="back-btn" onclick="goHome()">←</button>
+<button class="back-btn" onclick="goBack()">←</button>
 <div class="username">CRASH</div>
 </div>
 
@@ -101,7 +120,7 @@ transform:rotate(45deg);
 <div class="multiplier" id="multiplier">1.00x</div>
 
 <div class="history" id="history"></div>
-  
+
 <div style="position:relative;">
 <canvas id="graph" width="320" height="200"></canvas>
 <div class="rocket" id="rocket">🚀</div>
@@ -134,13 +153,17 @@ const canvas = document.getElementById("graph")
 const ctx = canvas.getContext("2d")
 const rocket = document.getElementById("rocket")
 
-/* БАЛАНС */
-function updateBalance(){
-document.getElementById("balance").innerText = getBalance()
-}
-updateBalance()
+/* INIT */
+updateBalanceUI()
+renderCrashHistory()
 
-function goHome(){
+function goBack(){
+
+if(gameRunning){
+showNotice("Игра уже идёт")
+return
+}
+
 window.location.href="index.html"
 }
 
@@ -154,7 +177,7 @@ rocket.style.left = (x+10)+"px"
 rocket.style.top = (canvas.height - y - 10)+"px"
 }
 
-/* СТАРТ ИГРЫ */
+/* СТАРТ */
 function startGame(){
 
 if(gameRunning) return
@@ -163,10 +186,10 @@ betAmount = Number(document.getElementById("bet").value)
 
 if(!payForCase(betAmount)) return
 
-updateBalance()
+updateBalanceUI()
 
 multiplier = 1
-crashPoint = generateCrash()
+crashPoint = generateCrashPoint()
 gameRunning = true
 
 ctx.clearRect(0,0,canvas.width,canvas.height)
@@ -202,16 +225,21 @@ clearInterval(interval)
 gameRunning = false
 
 let win = betAmount * multiplier
+
 addBalance(win)
-updateBalance()
+addCrashHistory(multiplier)
+addGameStat(win, betAmount)
+
+updateBalanceUI()
+renderCrashHistory()
 
 tg.HapticFeedback.notificationOccurred("success")
 
-alert("Вы забрали " + win.toFixed(2) + " TON")
+showNotice("Вы забрали " + win.toFixed(2) + " TON")
 
 }
 
-/* КРАШ */
+/* CRASH */
 function endGame(){
 
 clearInterval(interval)
@@ -219,13 +247,13 @@ gameRunning = false
 
 document.getElementById("multiplier").innerText = "CRASH"
 
+addCrashHistory(multiplier)
+addGameStat(0, betAmount)
+
+renderCrashHistory()
+
 tg.HapticFeedback.notificationOccurred("error")
 
-}
-
-/* РЕАЛЬНАЯ ФОРМУЛА CRASH */
-function generateCrash(){
-return Math.pow(1 - Math.random(), -1.2)
 }
 
 </script>
