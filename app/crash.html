@@ -3,7 +3,7 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>Crash Game Ultra</title>
+<title>Crash Game Ultra Pro</title>
 <script src="https://telegram.org/js/telegram-web-app.js"></script>
 <link href="https://fonts.googleapis.com/css2?family=Orbitron:wght@600;800&display=swap" rel="stylesheet">
 <style>
@@ -16,7 +16,7 @@ body{margin:0;background:#0b0b0b;font-family:'Orbitron',sans-serif;color:#fff;ov
 .multiplier{font-size:52px;color:#ff2b2b;text-shadow:0 0 20px rgba(255,0,0,0.8);}
 .canvas-container{position:relative;width:320px;height:400px;overflow:hidden;border-radius:12px;border:1px solid rgba(255,0,0,0.3);box-shadow:0 0 15px rgba(255,0,0,0.2);}
 canvas{position:absolute;left:0;top:0;}
-#rocket{position:absolute;width:60px;height:60px;left:50%;transform:translateX(-50%);bottom:60px;z-index:5;transition: transform 0.05s;filter:drop-shadow(0 0 15px rgba(255,43,43,0.7));}
+#rocket{position:absolute;width:60px;height:60px;left:50%;bottom:60px;transform:translateX(-50%);z-index:5;filter:drop-shadow(0 0 15px rgba(255,43,43,0.7));}
 .bet-box{display:flex;gap:10px;}
 .bet-input{width:100px;padding:10px;background:#111;border:1px solid #333;color:white;border-radius:8px;text-align:center;}
 .crash-btn{padding:12px 20px;background:#ff2b2b;border:none;border-radius:10px;color:white;font-weight:bold;box-shadow:0 0 10px rgba(255,0,0,0.5);cursor:pointer;}
@@ -89,12 +89,11 @@ const ctx=canvas.getContext("2d");
 const rocket=document.getElementById("rocket");
 
 let gameRunning=false;
-let animMultiplier=1;
+let multiplier=1;
 let crashPoint=0;
 let betAmount=0;
 let points=[];
-let shakeIntensity=0;
-let smokeParticles=[];
+let smoke=[];
 
 function generateCrash(){ return Math.pow(1-Math.random(),-1.5); }
 
@@ -103,31 +102,23 @@ function startGame(){
   betAmount=Number(document.getElementById("bet").value);
   if(betAmount<=0 || betAmount>getBalance()){ alert("Недостаточно баланса"); return; }
   subtractBalance(betAmount);
-
-  animMultiplier=1; crashPoint=generateCrash(); points=[]; gameRunning=true;
-  shakeIntensity=0;
-  smokeParticles=[];
+  multiplier=1; crashPoint=generateCrash(); points=[]; smoke=[]; gameRunning=true;
   ctx.clearRect(0,0,canvas.width,canvas.height);
   requestAnimationFrame(animate);
 }
 
-/* генерация дыма ракеты */
+/* SMOKE PARTICLES */
 function addSmoke(){
-  smokeParticles.push({
-    x:canvas.width/2 + (Math.random()-0.5)*20,
-    y:canvas.height-60,
-    size:5+Math.random()*5,
-    alpha:1
-  });
-  smokeParticles.forEach(p=>p.y-=1.5, p.alpha-=0.02);
-  smokeParticles=smokeParticles.filter(p=>p.alpha>0);
+  smoke.push({x:canvas.width/2 + (Math.random()-0.5)*15, y:canvas.height-60, r:5+Math.random()*5, a:1});
+  smoke.forEach(p=>{p.y-=1.5; p.a-=0.02;});
+  smoke = smoke.filter(p=>p.a>0);
 }
 
 function drawSmoke(){
-  smokeParticles.forEach(p=>{
+  smoke.forEach(p=>{
     ctx.beginPath();
-    ctx.arc(p.x,p.y,p.size,0,2*Math.PI);
-    ctx.fillStyle=`rgba(255,100,50,${p.alpha})`;
+    ctx.arc(p.x,p.y,p.r,0,2*Math.PI);
+    ctx.fillStyle=`rgba(255,120,50,${p.a})`;
     ctx.fill();
   });
 }
@@ -135,14 +126,14 @@ function drawSmoke(){
 function animate(){
   if(!gameRunning) return;
 
-  animMultiplier*=1+0.005+0.002*Math.random(); // плавное ускорение
-  points.push(animMultiplier);
+  multiplier *= 1 + 0.005 + Math.random()*0.002;
+  points.push(multiplier);
   if(points.length>canvas.height) points.shift();
 
-  // График 3D-подобный
+  // clear & draw graph
   ctx.clearRect(0,0,canvas.width,canvas.height);
   let grad=ctx.createLinearGradient(0,0,0,canvas.height);
-  grad.addColorStop(0,"#ff6b6b");
+  grad.addColorStop(0,"#ff4d4d");
   grad.addColorStop(1,"#8b0000");
   ctx.strokeStyle=grad;
   ctx.lineWidth=3;
@@ -158,23 +149,23 @@ function animate(){
   addSmoke();
   drawSmoke();
 
-  // Тряска ракеты
-  shakeIntensity= Math.max(0, Math.min(5, (animMultiplier/crashPoint-0.85)*60));
-  rocket.style.transform=`translateX(-50%) translate(${(Math.random()-0.5)*shakeIntensity}px,${(Math.random()-0.5)*shakeIntensity}px)`;
-
+  // rocket shake
+  let shake = Math.min(5,(multiplier/crashPoint-0.85)*40);
+  rocket.style.transform = `translateX(-50%) translate(${(Math.random()-0.5)*shake}px,${(Math.random()-0.5)*shake}px)`;
   rocket.style.bottom='60px';
-  document.getElementById("multiplier").innerText=animMultiplier.toFixed(2)+"x";
 
-  if(animMultiplier>=crashPoint){ endGame(); return; }
+  document.getElementById("multiplier").innerText=multiplier.toFixed(2)+"x";
+
+  if(multiplier>=crashPoint){ endGame(); return; }
   requestAnimationFrame(animate);
 }
 
 function cashOut(){
   if(!gameRunning) return;
   gameRunning=false;
-  const win=betAmount*animMultiplier;
+  const win=betAmount*multiplier;
   addBalance(win);
-  addCrashHistory(animMultiplier);
+  addCrashHistory(multiplier);
   tg.HapticFeedback.notificationOccurred("success");
   alert("Вы забрали "+win.toFixed(2)+" TON");
 }
@@ -182,8 +173,7 @@ function cashOut(){
 function endGame(){
   gameRunning=false;
   document.getElementById("multiplier").innerText="CRASH";
-  addCrashHistory(animMultiplier);
-  shakeIntensity=10;
+  addCrashHistory(multiplier);
   tg.HapticFeedback.notificationOccurred("error");
 }
 </script>
