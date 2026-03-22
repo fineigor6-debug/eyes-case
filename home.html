@@ -1,0 +1,150 @@
+<!DOCTYPE html>
+<html lang="ru">
+
+<head>
+
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no">
+
+<title>Devil</title>
+
+<script src="https://telegram.org/js/telegram-web-app.js"></script>
+
+<link rel="stylesheet" href="style/style.css">
+
+<link href="https://fonts.googleapis.com/css2?family=Orbitron:wght@600;800&display=swap" rel="stylesheet">
+
+<style>
+
+.modes{
+display:flex;
+flex-direction:column;
+gap:20px;
+padding:20px;
+margin-top:20px;
+}
+
+.mode-card{
+background:linear-gradient(180deg,#1a0000,#0f0f0f);
+border-radius:16px;
+padding:30px;
+text-align:center;
+border:1px solid rgba(255,0,0,0.3);
+box-shadow:0 0 15px rgba(255,0,0,0.15);
+font-size:20px;
+cursor:pointer;
+transition:0.3s;
+}
+
+.mode-card:hover{
+transform:scale(1.03);
+box-shadow:0 0 20px rgba(255,0,0,0.3);
+}
+
+</style>
+
+</head>
+
+<body>
+
+<div class="app">
+
+<!-- HEADER -->
+<div class="header">
+
+<img id="avatar" class="avatar" src="https://placehold.co/100">
+
+<div id="username" class="username">
+Loading...
+</div>
+
+</div>
+
+<!-- MODES -->
+<div class="modes">
+
+<div class="mode-card" onclick="openCases()">
+🎁 Кейсы
+</div>
+
+<div class="mode-card" onclick="openCrash()">
+📈 Краш
+</div>
+
+</div>
+
+<!-- NAVIGATION (КАК БЫЛО) -->
+<div class="nav">
+
+<button class="nav-btn" onclick="goHome()">
+
+<svg class="nav-icon" viewBox="0 0 24 24">
+<path d="M12 3L2 12h3v8h6v-5h2v5h6v-8h3z"/>
+</svg>
+
+<span>Главная</span>
+
+</button>
+
+<button class="nav-btn disabled">
+
+<svg class="nav-icon" viewBox="0 0 24 24">
+<path d="M12 17.27L18.18 21l-1.64-7.03L22 9.24l-7.19-.61L12 2 9.19 8.63 2 9.24l5.46 4.73L5.82 21z"/>
+</svg>
+
+<span>Лидерборд</span>
+
+</button>
+
+<button class="nav-btn" onclick="openProfile()">
+
+<svg class="nav-icon" viewBox="0 0 24 24">
+<path d="M12 12c2.7 0 5-2.3 5-5s-2.3-5-5-5-5 2.3-5 5 2.3 5 5 5zm0 2c-3.3 0-10 1.7-10 5v3h20v-3c0-3.3-6.7-5-10-5z"/>
+</svg>
+
+<span>Профиль</span>
+
+</button>
+
+</div>
+
+</div>
+
+<script>
+
+const tg = window.Telegram.WebApp
+tg.expand()
+
+const user = tg.initDataUnsafe?.user
+
+if(user){
+
+document.getElementById("username").innerText =
+user.first_name + (user.username ? " @" + user.username : "")
+
+if(user.photo_url){
+document.getElementById("avatar").src = user.photo_url
+}
+
+}
+
+function openCases(){
+window.location.href = "index.html"
+}
+
+function openCrash(){
+window.location.href = "crash.html"
+}
+
+function openProfile(){
+window.location.href = "profile.html"
+}
+
+function goHome(){
+window.location.href = "home.html"
+}
+
+</script>
+
+</body>
+</html>
