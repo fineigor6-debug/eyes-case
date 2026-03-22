@@ -14,6 +14,8 @@ body {
     background:#0b0b0b;
     font-family:'Orbitron',sans-serif;
     color:#fff;
+    overflow:hidden;
+    margin:0;
 }
 
 /* HEADER */
@@ -62,11 +64,31 @@ body {
 }
 
 /* GRAPH */
-canvas{
-    background:#0f0f0f;
+.canvas-container {
+    position:relative;
+    width:320px;
+    height:200px;
+    overflow:hidden;
     border-radius:12px;
     border:1px solid rgba(255,0,0,0.3);
     box-shadow:0 0 15px rgba(255,0,0,0.2);
+}
+canvas{
+    position:absolute;
+    left:0;
+    top:0;
+}
+
+/* ROCKET IMAGE */
+#rocket{
+    position:absolute;
+    width:40px;
+    height:40px;
+    border-radius:50%;
+    left:50%;
+    transform:translateX(-50%);
+    bottom:20px;
+    z-index:5;
 }
 
 /* BETS */
@@ -94,15 +116,6 @@ canvas{
     cursor:pointer;
 }
 
-/* ROCKET IMAGE */
-#rocket{
-    position:absolute;
-    width:40px;
-    height:40px;
-    border-radius:50%;
-    transform:rotate(0deg);
-}
-
 /* HISTORY */
 .history{
     display:flex;
@@ -121,7 +134,6 @@ canvas{
 .h-orange{ background:#3a1f00; color:#ff9a2b; }
 .h-green{ background:#003a0a; color:#2bff88; }
 </style>
-
 </head>
 
 <body>
@@ -143,9 +155,9 @@ canvas{
 
     <div class="history" id="history"></div>
 
-    <div style="position:relative;">
-        <canvas id="graph" width="320" height="200"></canvas>
-        <img id="rocket" src="your-photo.jpg" alt="Rocket">
+    <div class="canvas-container">
+        <canvas id="graph" width="320" height="400"></canvas>
+        <img id="rocket" src="casesscreen/IMG_1044.png" alt="Rocket">
     </div>
 
     <div class="bet-box">
@@ -196,10 +208,10 @@ const rocket = document.getElementById("rocket");
 
 /* ------------------- GAME ------------------- */
 let gameRunning = false;
-let animX = 0;
 let animMultiplier = 1;
 let crashPoint = 0;
 let betAmount = 0;
+let graphOffset = 0;
 
 function generateCrash(){ return Math.pow(1 - Math.random(), -1.2); }
 
@@ -210,13 +222,13 @@ function startGame(){
     subtractBalance(betAmount);
 
     animMultiplier=1;
-    animX=0;
     crashPoint = generateCrash();
+    graphOffset = 0;
     gameRunning = true;
 
     ctx.clearRect(0,0,canvas.width,canvas.height);
     ctx.beginPath();
-    ctx.moveTo(0,canvas.height);
+    ctx.moveTo(canvas.width/2, canvas.height);
 
     requestAnimationFrame(animate);
 }
@@ -225,14 +237,20 @@ function animate(){
     if(!gameRunning) return;
 
     animMultiplier += 0.02;
-    animX += 2;
+    graphOffset = animMultiplier*10;
 
-    ctx.lineTo(animX, canvas.height - animMultiplier*25);
+    // Смещаем график вверх, ракета фиксирована
+    ctx.clearRect(0,0,canvas.width,canvas.height);
+    ctx.beginPath();
+    ctx.moveTo(canvas.width/2, canvas.height);
+
+    for(let i=0;i<canvas.height;i+=2){
+        let y = canvas.height - i - graphOffset;
+        let x = canvas.width/2;
+        ctx.lineTo(x, y);
+    }
     ctx.strokeStyle="red";
     ctx.stroke();
-
-    rocket.style.left = (animX+10)+"px";
-    rocket.style.top = (canvas.height - animMultiplier*25 - 10)+"px";
 
     document.getElementById("multiplier").innerText = animMultiplier.toFixed(2)+"x";
 
