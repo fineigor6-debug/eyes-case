@@ -4,27 +4,48 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-
-<title>Crash</title>
+<title>Crash Game</title>
 
 <script src="https://telegram.org/js/telegram-web-app.js"></script>
-<link rel="stylesheet" href="style/style.css">
 <link href="https://fonts.googleapis.com/css2?family=Orbitron:wght@600;800&display=swap" rel="stylesheet">
 
 <style>
-body{
+body {
     background:#0b0b0b;
     font-family:'Orbitron',sans-serif;
+    color:#fff;
 }
 
+/* HEADER */
+.header {
+    display:flex;
+    align-items:center;
+    padding:10px 20px;
+    gap:15px;
+}
+.back-btn {
+    background:none;
+    border:none;
+    color:#ff3b3b;
+    font-size:24px;
+    cursor:pointer;
+}
+.username {
+    font-weight:bold;
+    font-size:18px;
+    color:#ff2b2b;
+}
+
+/* CONTAINER */
 .crash-container{
     display:flex;
     flex-direction:column;
     align-items:center;
-    padding:20px;
     gap:20px;
+    padding:20px;
 }
 
+/* BALANCE */
 .balance-box{
     background:#111;
     padding:10px 20px;
@@ -33,12 +54,14 @@ body{
     box-shadow:0 0 10px rgba(255,0,0,0.2);
 }
 
+/* MULTIPLIER */
 .multiplier{
     font-size:52px;
     color:#ff2b2b;
     text-shadow:0 0 20px rgba(255,0,0,0.8);
 }
 
+/* GRAPH */
 canvas{
     background:#0f0f0f;
     border-radius:12px;
@@ -46,11 +69,11 @@ canvas{
     box-shadow:0 0 15px rgba(255,0,0,0.2);
 }
 
+/* BETS */
 .bet-box{
     display:flex;
     gap:10px;
 }
-
 .bet-input{
     width:100px;
     padding:10px;
@@ -60,7 +83,6 @@ canvas{
     border-radius:8px;
     text-align:center;
 }
-
 .crash-btn{
     padding:12px 20px;
     background:#ff2b2b;
@@ -69,14 +91,19 @@ canvas{
     color:white;
     font-weight:bold;
     box-shadow:0 0 10px rgba(255,0,0,0.5);
+    cursor:pointer;
 }
 
-.rocket{
+/* ROCKET IMAGE */
+#rocket{
     position:absolute;
-    font-size:22px;
-    transform:rotate(45deg);
+    width:40px;
+    height:40px;
+    border-radius:50%;
+    transform:rotate(0deg);
 }
 
+/* HISTORY */
 .history{
     display:flex;
     gap:6px;
@@ -84,18 +111,15 @@ canvas{
     justify-content:center;
     max-width:320px;
 }
-
 .history-item{
     padding:4px 8px;
     border-radius:6px;
     font-size:12px;
     font-weight:bold;
 }
-
 .h-red{ background:#3a0000; color:#ff4d4d; }
 .h-orange{ background:#3a1f00; color:#ff9a2b; }
 .h-green{ background:#003a0a; color:#2bff88; }
-
 </style>
 
 </head>
@@ -105,7 +129,7 @@ canvas{
 <div class="app">
 
 <div class="header">
-    <button class="back-btn" onclick="goHome()">←</button>
+    <button class="back-btn" onclick="goBack()">←</button>
     <div class="username">CRASH</div>
 </div>
 
@@ -121,7 +145,7 @@ canvas{
 
     <div style="position:relative;">
         <canvas id="graph" width="320" height="200"></canvas>
-        <div class="rocket" id="rocket">🚀</div>
+        <img id="rocket" src="your-photo.jpg" alt="Rocket">
     </div>
 
     <div class="bet-box">
@@ -138,145 +162,99 @@ canvas{
 const tg = window.Telegram.WebApp;
 tg.expand();
 
-let gameRunning = false;
-let multiplier = 1;
-let crashPoint = 0;
-let betAmount = 0;
-let crashHistory = [];
-
-// Canvas
-const canvas = document.getElementById("graph");
-const ctx = canvas.getContext("2d");
-const rocket = document.getElementById("rocket");
-
 /* ------------------- BALANCE ------------------- */
-function getBalance(){
-    return Number(localStorage.getItem("balance") || 0);
-}
-
-function addBalance(amount){
-    const newBalance = getBalance() + amount;
-    localStorage.setItem("balance", newBalance);
-    updateBalanceUI();
-}
-
-function subtractBalance(amount){
-    addBalance(-amount);
-}
-
-function updateBalanceUI(){
-    document.getElementById("balance").innerText = getBalance().toFixed(2);
-}
-
+function getBalance(){ return Number(localStorage.getItem("balance") || 100); }
+function addBalance(amount){ localStorage.setItem("balance", getBalance() + amount); updateBalanceUI(); }
+function subtractBalance(amount){ addBalance(-amount); }
+function updateBalanceUI(){ document.getElementById("balance").innerText = getBalance().toFixed(2); }
 updateBalanceUI();
 
 /* ------------------- HISTORY ------------------- */
-function addCrashHistory(value){
-    crashHistory.push(value);
-    if(crashHistory.length > 20) crashHistory.shift();
-    renderCrashHistory();
-}
-
+let crashHistory = [];
+function addCrashHistory(value){ crashHistory.push(value); if(crashHistory.length>20) crashHistory.shift(); renderCrashHistory(); }
 function renderCrashHistory(){
     const historyEl = document.getElementById("history");
     historyEl.innerHTML = "";
     crashHistory.forEach(v=>{
         const item = document.createElement("div");
         item.classList.add("history-item");
-        if(v < 1.5) item.classList.add("h-red");
-        else if(v < 3) item.classList.add("h-orange");
+        if(v<1.5)item.classList.add("h-red");
+        else if(v<3)item.classList.add("h-orange");
         else item.classList.add("h-green");
-        item.innerText = v.toFixed(2) + "x";
+        item.innerText=v.toFixed(2)+"x";
         historyEl.appendChild(item);
     });
 }
 
-/* ------------------- BACK BUTTON ------------------- */
-function goHome(){
-    window.location.href = "index.html"; // оставлено как есть
-}
+/* ------------------- BACK ------------------- */
+function goBack(){ window.location.href="index.html"; }
 
 /* ------------------- GRAPH ------------------- */
-function drawGraph(x, y){
-    ctx.lineTo(x, canvas.height - y);
-    ctx.strokeStyle = "red";
-    ctx.stroke();
+const canvas = document.getElementById("graph");
+const ctx = canvas.getContext("2d");
+const rocket = document.getElementById("rocket");
 
-    rocket.style.left = (x+10) + "px";
-    rocket.style.top = (canvas.height - y - 10) + "px";
-}
-
-/* ------------------- CRASH POINT ------------------- */
-function generateCrash(){
-    return Math.pow(1 - Math.random(), -1.2);
-}
-
-/* ------------------- START GAME ------------------- */
+/* ------------------- GAME ------------------- */
+let gameRunning = false;
 let animX = 0;
 let animMultiplier = 1;
+let crashPoint = 0;
+let betAmount = 0;
+
+function generateCrash(){ return Math.pow(1 - Math.random(), -1.2); }
 
 function startGame(){
     if(gameRunning) return;
-
     betAmount = Number(document.getElementById("bet").value);
-    if(betAmount <= 0 || betAmount > getBalance()){
-        alert("Недостаточно баланса");
-        return;
-    }
-
+    if(betAmount<=0 || betAmount>getBalance()){ alert("Недостаточно баланса"); return; }
     subtractBalance(betAmount);
 
-    multiplier = 1;
-    animMultiplier = 1;
-    animX = 0;
+    animMultiplier=1;
+    animX=0;
     crashPoint = generateCrash();
     gameRunning = true;
 
-    ctx.clearRect(0, 0, canvas.width, canvas.height);
+    ctx.clearRect(0,0,canvas.width,canvas.height);
     ctx.beginPath();
-    ctx.moveTo(0, canvas.height);
+    ctx.moveTo(0,canvas.height);
 
     requestAnimationFrame(animate);
 }
 
-/* ------------------- ANIMATE ------------------- */
 function animate(){
     if(!gameRunning) return;
 
     animMultiplier += 0.02;
     animX += 2;
 
-    drawGraph(animX, animMultiplier*25);
-    document.getElementById("multiplier").innerText = animMultiplier.toFixed(2) + "x";
+    ctx.lineTo(animX, canvas.height - animMultiplier*25);
+    ctx.strokeStyle="red";
+    ctx.stroke();
 
-    if(animMultiplier >= crashPoint){
-        endGame();
-        return;
-    }
+    rocket.style.left = (animX+10)+"px";
+    rocket.style.top = (canvas.height - animMultiplier*25 - 10)+"px";
+
+    document.getElementById("multiplier").innerText = animMultiplier.toFixed(2)+"x";
+
+    if(animMultiplier >= crashPoint){ endGame(); return; }
 
     requestAnimationFrame(animate);
 }
 
-/* ------------------- CASH OUT ------------------- */
 function cashOut(){
     if(!gameRunning) return;
-
-    gameRunning = false;
+    gameRunning=false;
     const win = betAmount * animMultiplier;
     addBalance(win);
     addCrashHistory(animMultiplier);
-
     tg.HapticFeedback.notificationOccurred("success");
-    alert("Вы забрали " + win.toFixed(2) + " TON");
+    alert("Вы забрали "+win.toFixed(2)+" TON");
 }
 
-/* ------------------- END GAME ------------------- */
 function endGame(){
-    gameRunning = false;
-
-    document.getElementById("multiplier").innerText = "CRASH";
+    gameRunning=false;
+    document.getElementById("multiplier").innerText="CRASH";
     addCrashHistory(animMultiplier);
-
     tg.HapticFeedback.notificationOccurred("error");
 }
 </script>
