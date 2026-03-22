@@ -648,3 +648,22 @@ height:16px;
 color:#ff2b2b;
 filter:drop-shadow(0 0 5px red);
 }
+
+.history{
+display:flex;
+gap:6px;
+flex-wrap:wrap;
+justify-content:center;
+max-width:320px;
+}
+
+.history-item{
+padding:4px 8px;
+border-radius:6px;
+font-size:12px;
+font-weight:bold;
+}
+
+.h-red{ background:#3a0000; color:#ff4d4d; }
+.h-orange{ background:#3a1f00; color:#ff9a2b; }
+.h-green{ background:#003a0a; color:#2bff88; }
