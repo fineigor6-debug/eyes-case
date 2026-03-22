@@ -9,11 +9,9 @@
 
 <style>
 body { margin:0; background:#0b0b0b; font-family:'Orbitron',sans-serif; color:#fff; overflow:hidden; }
-
 .header { display:flex; align-items:center; padding:10px 20px; gap:15px; }
 .back-btn { background:none; border:none; color:#ff3b3b; font-size:24px; cursor:pointer; }
 .username { font-weight:bold; font-size:18px; color:#ff2b2b; }
-
 .crash-container { display:flex; flex-direction:column; align-items:center; gap:15px; padding:20px; }
 
 .balance-box {
@@ -21,7 +19,6 @@ body { margin:0; background:#0b0b0b; font-family:'Orbitron',sans-serif; color:#f
   padding:10px 20px;
   border-radius:12px;
   border:1px solid rgba(255,0,0,0.3);
-  box-shadow:0 0 10px rgba(255,0,0,0.2);
 }
 
 .multiplier {
@@ -37,7 +34,6 @@ body { margin:0; background:#0b0b0b; font-family:'Orbitron',sans-serif; color:#f
   overflow:hidden;
   border-radius:12px;
   border:1px solid rgba(255,0,0,0.3);
-  box-shadow:0 0 15px rgba(255,0,0,0.2);
 }
 
 canvas { position:absolute; left:0; top:0; }
@@ -45,16 +41,34 @@ canvas { position:absolute; left:0; top:0; }
 #rocket {
   position:absolute;
   width:90px;
-  height:90px;
   left:50%;
   top:50%;
-  z-index:10;
   transform:translate(-50%, -50%);
+  z-index:10;
   pointer-events:none;
   filter: drop-shadow(0 0 20px rgba(255,50,50,0.7));
 }
 
-.bet-box { display:flex; gap:10px; margin-top:10px; }
+.history {
+  display:flex;
+  gap:6px;
+  flex-wrap:wrap;
+  justify-content:center;
+  max-width:360px;
+}
+
+.history-item {
+  padding:4px 8px;
+  border-radius:6px;
+  font-size:12px;
+  font-weight:bold;
+}
+
+.h-red{ background:#3a0000; color:#ff4d4d; }
+.h-orange{ background:#3a1f00; color:#ff9a2b; }
+.h-green{ background:#003a0a; color:#2bff88; }
+
+.bet-box { display:flex; gap:10px; }
 
 .bet-input {
   width:100px;
@@ -73,29 +87,17 @@ canvas { position:absolute; left:0; top:0; }
   border-radius:10px;
   color:white;
   font-weight:bold;
-  box-shadow:0 0 10px rgba(255,0,0,0.5);
-  cursor:pointer;
 }
 
-.history {
-  display:flex;
-  gap:6px;
-  flex-wrap:wrap;
-  justify-content:center;
-  max-width:360px;
-  margin-top:10px;
+/* COUNTDOWN */
+#countdown {
+  position:absolute;
+  top:50%;
+  left:50%;
+  transform:translate(-50%,-50%);
+  font-size:80px;
+  display:none;
 }
-
-.history-item {
-  padding:4px 8px;
-  border-radius:6px;
-  font-size:12px;
-  font-weight:bold;
-}
-
-.h-red{ background:#3a0000; color:#ff4d4d; }
-.h-orange{ background:#3a1f00; color:#ff9a2b; }
-.h-green{ background:#003a0a; color:#2bff88; }
 
 /* WIN SCREEN */
 #winScreen {
@@ -118,7 +120,6 @@ canvas { position:absolute; left:0; top:0; }
   height:20px;
   background:orange;
   border-radius:50%;
-  pointer-events:none;
 }
 </style>
 </head>
@@ -139,40 +140,36 @@ canvas { position:absolute; left:0; top:0; }
     <div class="canvas-container" id="gameArea">
       <canvas id="graph" width="360" height="400"></canvas>
       <img id="rocket" src="IMG_1059.png">
+      <div id="countdown">3</div>
 
-      <!-- WIN SCREEN -->
       <div id="winScreen">
         <div style="font-size:28px;margin-bottom:20px;">ВЫ ЗАБРАЛИ</div>
-
-        <img src="IMG_1064.png" style="
-        width:120px;
-        height:120px;
-        border-radius:50%;
-        margin-bottom:20px;
-        box-shadow:0 0 25px red;
-        ">
-
-        <div id="winAmount" style="font-size:32px;color:#2bff88;margin-bottom:25px;">
-        0 TON
-        </div>
-
-        <button onclick="closeWinScreen()" class="crash-btn">
-        ПРОДОЛЖИТЬ
-        </button>
+        <img src="IMG_1064.png" style="width:160px;margin-bottom:20px;">
+        <div id="winAmount" style="font-size:32px;color:#2bff88;margin-bottom:25px;">0 TON</div>
+        <button onclick="closeWinScreen()" class="crash-btn">ПРОДОЛЖИТЬ</button>
       </div>
     </div>
 
     <div class="bet-box">
       <input class="bet-input" id="bet" value="5">
-      <button class="crash-btn" onclick="startGame()">СТАВКА</button>
+      <button class="crash-btn" onclick="startCountdown()">СТАВКА</button>
       <button class="crash-btn" onclick="cashOut()">ЗАБРАТЬ</button>
     </div>
   </div>
 </div>
 
 <script>
-const tg = window.Telegram.WebApp;
-tg.expand();
+const canvas=document.getElementById("graph");
+const ctx=canvas.getContext("2d");
+const rocket=document.getElementById("rocket");
+const gameArea=document.getElementById("gameArea");
+
+let gameRunning=false;
+let animMultiplier=1;
+let crashPoint=0;
+let betAmount=0;
+let points=[];
+let cashedOut=false;
 
 /* BALANCE */
 function getBalance(){ return Number(localStorage.getItem("balance")||100); }
@@ -197,36 +194,40 @@ function renderCrashHistory(){
   });
 }
 
-/* BACK */
-function goBack(){ window.location.href="index.html"; }
-
-/* GAME */
-const canvas=document.getElementById("graph");
-const ctx=canvas.getContext("2d");
-const rocket=document.getElementById("rocket");
-const gameArea=document.getElementById("gameArea");
-
-let gameRunning=false;
-let animMultiplier=1;
-let crashPoint=0;
-let betAmount=0;
-let points=[];
-
-function generateCrash(){ return Math.pow(1-Math.random(),-1.5); }
-
-function startGame(){
+/* COUNTDOWN */
+function startCountdown(){
   if(gameRunning) return;
+
   betAmount=Number(document.getElementById("bet").value);
   if(betAmount<=0 || betAmount>getBalance()){ alert("Недостаточно баланса"); return; }
   subtractBalance(betAmount);
 
+  let count=3;
+  const cd=document.getElementById("countdown");
+  cd.style.display="block";
+  cd.innerText=count;
+
+  let interval=setInterval(()=>{
+    count--;
+    if(count<=0){
+      clearInterval(interval);
+      cd.style.display="none";
+      startGame();
+    } else {
+      cd.innerText=count;
+    }
+  },1000);
+}
+
+/* GAME */
+function generateCrash(){ return Math.pow(1-Math.random(),-1.5); }
+
+function startGame(){
   animMultiplier=1;
   crashPoint=generateCrash();
   points=[];
   gameRunning=true;
-  rocket.style.display="block";
-
-  ctx.clearRect(0,0,canvas.width,canvas.height);
+  cashedOut=false;
   requestAnimationFrame(animate);
 }
 
@@ -249,7 +250,6 @@ function animate(){
   ctx.lineWidth=3;
   ctx.stroke();
 
-  // деформация ракеты
   let stretch = 1 + Math.sin(animMultiplier*2)*0.05;
   let squash = 1 - Math.sin(animMultiplier*2)*0.05;
   let shakeX = (Math.random()-0.5)*4;
@@ -263,7 +263,12 @@ function animate(){
 
   document.getElementById("multiplier").innerText = animMultiplier.toFixed(2)+"x";
 
-  if(animMultiplier>=crashPoint){ explode(); endGame(); return; }
+  if(animMultiplier>=crashPoint){
+    explode();
+    endGame();
+    return;
+  }
+
   requestAnimationFrame(animate);
 }
 
@@ -299,12 +304,11 @@ function explode(){
 
 /* CASH OUT */
 function cashOut(){
-  if(!gameRunning) return;
-  gameRunning=false;
+  if(!gameRunning || cashedOut) return;
 
+  cashedOut=true;
   const win=betAmount*animMultiplier;
   addBalance(win);
-  addCrashHistory(animMultiplier);
 
   document.getElementById("winAmount").innerText =
     win.toFixed(2) + " TON";
@@ -312,7 +316,7 @@ function cashOut(){
   document.getElementById("winScreen").style.display="flex";
 }
 
-/* CLOSE WIN SCREEN */
+/* CLOSE WIN */
 function closeWinScreen(){
   document.getElementById("winScreen").style.display="none";
 }
@@ -323,6 +327,9 @@ function endGame(){
   document.getElementById("multiplier").innerText="CRASH";
   addCrashHistory(animMultiplier);
 }
+
+/* BACK */
+function goBack(){ window.location.href="index.html"; }
 </script>
 
 </body>
