@@ -7,7 +7,7 @@
 <script src="https://telegram.org/js/telegram-web-app.js"></script>
 <link href="https://fonts.googleapis.com/css2?family=Orbitron:wght@600;800&display=swap" rel="stylesheet">
 <style>
-body { margin:0; background:#0b0b0b; font-family:'Orbitron',sans-serif; color:#fff; }
+body { margin:0; background:#0b0b0b; font-family:'Orbitron',sans-serif; color:#fff; overflow:hidden; }
 .header { display:flex; align-items:center; padding:10px 20px; gap:15px; }
 .back-btn { background:none; border:none; color:#ff3b3b; font-size:24px; cursor:pointer; }
 .username { font-weight:bold; font-size:18px; color:#ff2b2b; }
@@ -15,8 +15,8 @@ body { margin:0; background:#0b0b0b; font-family:'Orbitron',sans-serif; color:#f
 .balance-box { background:#111; padding:10px 20px; border-radius:12px; border:1px solid rgba(255,0,0,0.3); box-shadow:0 0 10px rgba(255,0,0,0.2);}
 .multiplier { font-size:52px; color:#ff2b2b; text-shadow:0 0 20px rgba(255,0,0,0.8); }
 .canvas-container { position:relative; width:360px; height:400px; overflow:hidden; border-radius:12px; border:1px solid rgba(255,0,0,0.3); box-shadow:0 0 15px rgba(255,0,0,0.2); }
-canvas { position:absolute; left:0; top:0; background:#0b0b0b; }
-#rocket { position:absolute; width:50px; height:50px; z-index:5; transform:translate(-50%, -50%) rotate(0deg); transition: transform 0.05s linear; }
+canvas { position:absolute; left:0; top:0; }
+#rocket { position:absolute; width:50px; height:50px; z-index:10; transform:translate(-50%, -50%) rotate(0deg); transition: transform 0.05s linear; display:block; }
 .bet-box { display:flex; gap:10px; margin-top:10px; }
 .bet-input { width:100px; padding:10px; background:#111; border:1px solid #333; color:white; border-radius:8px; text-align:center; }
 .crash-btn { padding:12px 20px; background:#ff2b2b; border:none; border-radius:10px; color:white; font-weight:bold; box-shadow:0 0 10px rgba(255,0,0,0.5); cursor:pointer; }
@@ -102,10 +102,7 @@ function startGame(){
   if(betAmount<=0 || betAmount>getBalance()){ alert("Недостаточно баланса"); return; }
   subtractBalance(betAmount);
 
-  animMultiplier=1; 
-  crashPoint=generateCrash(); 
-  points=[]; 
-  gameRunning=true;
+  animMultiplier=1; crashPoint=generateCrash(); points=[]; gameRunning=true;
   ctx.clearRect(0,0,canvas.width,canvas.height);
   requestAnimationFrame(animate);
 }
@@ -113,7 +110,7 @@ function startGame(){
 function animate(){
   if(!gameRunning) return;
 
-  animMultiplier *= 1.02; // плавный рост
+  animMultiplier*=1.01; // плавный рост
   points.push(animMultiplier);
   if(points.length>canvas.width) points.shift();
 
@@ -130,14 +127,12 @@ function animate(){
   ctx.lineWidth=3;
   ctx.stroke();
 
-  // ракета по графику с наклоном вверх
+  // ракета по графику
   const rocketX = canvas.width/2;
-  const rocketY = canvas.height - Math.min(points[points.length-1]*30, canvas.height-50);
+  const rocketY = canvas.height - points[points.length-1]*30;
   rocket.style.left = rocketX+"px";
   rocket.style.top = rocketY+"px";
-
-  // вращение ракеты для эффекта взлета
-  rocket.style.transform = `translate(-50%, -50%) rotate(${Math.min(animMultiplier*5,45)}deg)`;
+  rocket.style.transform = `translate(-50%, -50%) rotate(${Math.min(animMultiplier*5, 45)}deg)`;
 
   document.getElementById("multiplier").innerText = animMultiplier.toFixed(2)+"x";
 
