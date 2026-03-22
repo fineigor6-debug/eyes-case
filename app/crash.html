@@ -15,12 +15,12 @@ body { margin:0; background:#0b0b0b; font-family:'Orbitron',sans-serif; color:#f
 .balance-box { background:#111; padding:10px 20px; border-radius:12px; border:1px solid rgba(255,0,0,0.3); box-shadow:0 0 10px rgba(255,0,0,0.2);}
 .multiplier { font-size:52px; color:#ff2b2b; text-shadow:0 0 20px rgba(255,0,0,0.8); }
 .canvas-container { position:relative; width:360px; height:400px; overflow:hidden; border-radius:12px; border:1px solid rgba(255,0,0,0.3); box-shadow:0 0 15px rgba(255,0,0,0.2); }
-canvas { position:absolute; left:0; top:0; }
+canvas { position:absolute; left:0; top:0; background:#0b0b0b; }
 #rocket { position:absolute; width:40px; height:60px; z-index:5; transform:translateX(-50%); }
-.bet-box { display:flex; gap:10px; }
+.bet-box { display:flex; gap:10px; margin-top:10px; }
 .bet-input { width:100px; padding:10px; background:#111; border:1px solid #333; color:white; border-radius:8px; text-align:center; }
 .crash-btn { padding:12px 20px; background:#ff2b2b; border:none; border-radius:10px; color:white; font-weight:bold; box-shadow:0 0 10px rgba(255,0,0,0.5); cursor:pointer; }
-.history { display:flex; gap:6px; flex-wrap:wrap; justify-content:center; max-width:360px; }
+.history { display:flex; gap:6px; flex-wrap:wrap; justify-content:center; max-width:360px; margin-top:10px; }
 .history-item { padding:4px 8px; border-radius:6px; font-size:12px; font-weight:bold; }
 .h-red{ background:#3a0000; color:#ff4d4d; }
 .h-orange{ background:#3a1f00; color:#ff9a2b; }
@@ -102,7 +102,10 @@ function startGame(){
   if(betAmount<=0 || betAmount>getBalance()){ alert("Недостаточно баланса"); return; }
   subtractBalance(betAmount);
 
-  animMultiplier=1; crashPoint=generateCrash(); points=[]; gameRunning=true;
+  animMultiplier=1; 
+  crashPoint=generateCrash(); 
+  points=[]; 
+  gameRunning=true;
   ctx.clearRect(0,0,canvas.width,canvas.height);
   requestAnimationFrame(animate);
 }
@@ -110,17 +113,17 @@ function startGame(){
 function animate(){
   if(!gameRunning) return;
 
-  animMultiplier*=1.01; // плавный рост
+  animMultiplier *= 1.02; // плавный рост
   points.push(animMultiplier);
   if(points.length>canvas.width) points.shift();
 
   // график
   ctx.clearRect(0,0,canvas.width,canvas.height);
   ctx.beginPath();
-  ctx.moveTo(0, canvas.height - points[0]*40);
+  ctx.moveTo(0, canvas.height - points[0]*30);
   for(let i=0;i<points.length;i++){
     let x=i*(canvas.width/points.length);
-    let y=canvas.height - points[i]*40;
+    let y=canvas.height - points[i]*30;
     ctx.lineTo(x,y);
   }
   ctx.strokeStyle="red";
@@ -129,9 +132,9 @@ function animate(){
 
   // ракета по графику
   const rocketX = canvas.width/2;
-  const rocketY = canvas.height - points[points.length-1]*40;
+  const rocketY = canvas.height - Math.min(points[points.length-1]*30, canvas.height-60);
   rocket.style.left = rocketX+"px";
-  rocket.style.bottom = (canvas.height - rocketY)+"px";
+  rocket.style.top = rocketY+"px";
 
   document.getElementById("multiplier").innerText = animMultiplier.toFixed(2)+"x";
 
