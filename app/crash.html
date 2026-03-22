@@ -1,281 +1,191 @@
 <!DOCTYPE html>
 <html lang="ru">
-
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>Crash Game</title>
-
+<title>Crash Game Ultra</title>
 <script src="https://telegram.org/js/telegram-web-app.js"></script>
 <link href="https://fonts.googleapis.com/css2?family=Orbitron:wght@600;800&display=swap" rel="stylesheet">
-
 <style>
-body {
-    background:#0b0b0b;
-    font-family:'Orbitron',sans-serif;
-    color:#fff;
-    overflow:hidden;
-    margin:0;
-}
-
-/* HEADER */
-.header {
-    display:flex;
-    align-items:center;
-    padding:10px 20px;
-    gap:15px;
-}
-.back-btn {
-    background:none;
-    border:none;
-    color:#ff3b3b;
-    font-size:24px;
-    cursor:pointer;
-}
-.username {
-    font-weight:bold;
-    font-size:18px;
-    color:#ff2b2b;
-}
-
-/* CONTAINER */
-.crash-container{
-    display:flex;
-    flex-direction:column;
-    align-items:center;
-    gap:20px;
-    padding:20px;
-}
-
-/* BALANCE */
-.balance-box{
-    background:#111;
-    padding:10px 20px;
-    border-radius:12px;
-    border:1px solid rgba(255,0,0,0.3);
-    box-shadow:0 0 10px rgba(255,0,0,0.2);
-}
-
-/* MULTIPLIER */
-.multiplier{
-    font-size:52px;
-    color:#ff2b2b;
-    text-shadow:0 0 20px rgba(255,0,0,0.8);
-}
-
-/* GRAPH */
-.canvas-container {
-    position:relative;
-    width:320px;
-    height:200px;
-    overflow:hidden;
-    border-radius:12px;
-    border:1px solid rgba(255,0,0,0.3);
-    box-shadow:0 0 15px rgba(255,0,0,0.2);
-}
-canvas{
-    position:absolute;
-    left:0;
-    top:0;
-}
-
-/* ROCKET IMAGE */
-#rocket{
-    position:absolute;
-    width:40px;
-    height:40px;
-    border-radius:50%;
-    left:50%;
-    transform:translateX(-50%);
-    bottom:20px;
-    z-index:5;
-}
-
-/* BETS */
-.bet-box{
-    display:flex;
-    gap:10px;
-}
-.bet-input{
-    width:100px;
-    padding:10px;
-    background:#111;
-    border:1px solid #333;
-    color:white;
-    border-radius:8px;
-    text-align:center;
-}
-.crash-btn{
-    padding:12px 20px;
-    background:#ff2b2b;
-    border:none;
-    border-radius:10px;
-    color:white;
-    font-weight:bold;
-    box-shadow:0 0 10px rgba(255,0,0,0.5);
-    cursor:pointer;
-}
-
-/* HISTORY */
-.history{
-    display:flex;
-    gap:6px;
-    flex-wrap:wrap;
-    justify-content:center;
-    max-width:320px;
-}
-.history-item{
-    padding:4px 8px;
-    border-radius:6px;
-    font-size:12px;
-    font-weight:bold;
-}
+body{margin:0;background:#0b0b0b;font-family:'Orbitron',sans-serif;color:#fff;overflow:hidden;}
+.header{display:flex;align-items:center;padding:10px 20px;gap:15px;}
+.back-btn{background:none;border:none;color:#ff3b3b;font-size:24px;cursor:pointer;}
+.username{font-weight:bold;font-size:18px;color:#ff2b2b;}
+.crash-container{display:flex;flex-direction:column;align-items:center;gap:15px;padding:20px;}
+.balance-box{background:#111;padding:10px 20px;border-radius:12px;border:1px solid rgba(255,0,0,0.3);box-shadow:0 0 10px rgba(255,0,0,0.2);}
+.multiplier{font-size:52px;color:#ff2b2b;text-shadow:0 0 20px rgba(255,0,0,0.8);}
+.canvas-container{position:relative;width:320px;height:400px;overflow:hidden;border-radius:12px;border:1px solid rgba(255,0,0,0.3);box-shadow:0 0 15px rgba(255,0,0,0.2);}
+canvas{position:absolute;left:0;top:0;}
+#rocket{position:absolute;width:60px;height:60px;left:50%;transform:translateX(-50%);bottom:60px;z-index:5;transition: transform 0.05s;filter:drop-shadow(0 0 15px rgba(255,43,43,0.7));}
+.bet-box{display:flex;gap:10px;}
+.bet-input{width:100px;padding:10px;background:#111;border:1px solid #333;color:white;border-radius:8px;text-align:center;}
+.crash-btn{padding:12px 20px;background:#ff2b2b;border:none;border-radius:10px;color:white;font-weight:bold;box-shadow:0 0 10px rgba(255,0,0,0.5);cursor:pointer;}
+.history{display:flex;gap:6px;flex-wrap:wrap;justify-content:center;max-width:320px;}
+.history-item{padding:4px 8px;border-radius:6px;font-size:12px;font-weight:bold;}
 .h-red{ background:#3a0000; color:#ff4d4d; }
 .h-orange{ background:#3a1f00; color:#ff9a2b; }
 .h-green{ background:#003a0a; color:#2bff88; }
 </style>
 </head>
-
 <body>
 
 <div class="app">
-
 <div class="header">
-    <button class="back-btn" onclick="goBack()">←</button>
-    <div class="username">CRASH</div>
+<button class="back-btn" onclick="goBack()">←</button>
+<div class="username">CRASH</div>
 </div>
 
 <div class="crash-container">
+<div class="balance-box">Баланс: <span id="balance">0</span> TON</div>
+<div class="multiplier" id="multiplier">1.00x</div>
+<div class="history" id="history"></div>
 
-    <div class="balance-box">
-        Баланс: <span id="balance">0</span> TON
-    </div>
-
-    <div class="multiplier" id="multiplier">1.00x</div>
-
-    <div class="history" id="history"></div>
-
-    <div class="canvas-container">
-        <canvas id="graph" width="320" height="400"></canvas>
-        <img id="rocket" src="casesscreen/IMG_1044.png" alt="Rocket">
-    </div>
-
-    <div class="bet-box">
-        <input class="bet-input" id="bet" value="5">
-        <button class="crash-btn" onclick="startGame()">СТАВКА</button>
-        <button class="crash-btn" onclick="cashOut()">ЗАБРАТЬ</button>
-    </div>
-
+<div class="canvas-container">
+<canvas id="graph" width="320" height="400"></canvas>
+<img id="rocket" src="casesscreen/IMG_1044.png" alt="Rocket">
 </div>
 
+<div class="bet-box">
+<input class="bet-input" id="bet" value="5">
+<button class="crash-btn" onclick="startGame()">СТАВКА</button>
+<button class="crash-btn" onclick="cashOut()">ЗАБРАТЬ</button>
+</div>
+</div>
 </div>
 
 <script>
 const tg = window.Telegram.WebApp;
 tg.expand();
 
-/* ------------------- BALANCE ------------------- */
-function getBalance(){ return Number(localStorage.getItem("balance") || 100); }
-function addBalance(amount){ localStorage.setItem("balance", getBalance() + amount); updateBalanceUI(); }
-function subtractBalance(amount){ addBalance(-amount); }
-function updateBalanceUI(){ document.getElementById("balance").innerText = getBalance().toFixed(2); }
+/* BALANCE */
+function getBalance(){ return Number(localStorage.getItem("balance")||100); }
+function addBalance(amount){ localStorage.setItem("balance", getBalance()+amount); updateBalanceUI();}
+function subtractBalance(amount){ addBalance(-amount);}
+function updateBalanceUI(){ document.getElementById("balance").innerText=getBalance().toFixed(2);}
 updateBalanceUI();
 
-/* ------------------- HISTORY ------------------- */
-let crashHistory = [];
+/* HISTORY */
+let crashHistory=[];
 function addCrashHistory(value){ crashHistory.push(value); if(crashHistory.length>20) crashHistory.shift(); renderCrashHistory(); }
 function renderCrashHistory(){
-    const historyEl = document.getElementById("history");
-    historyEl.innerHTML = "";
-    crashHistory.forEach(v=>{
-        const item = document.createElement("div");
-        item.classList.add("history-item");
-        if(v<1.5)item.classList.add("h-red");
-        else if(v<3)item.classList.add("h-orange");
-        else item.classList.add("h-green");
-        item.innerText=v.toFixed(2)+"x";
-        historyEl.appendChild(item);
-    });
+  const historyEl=document.getElementById("history"); historyEl.innerHTML="";
+  crashHistory.forEach(v=>{
+    const item=document.createElement("div");
+    item.classList.add("history-item");
+    if(v<1.5)item.classList.add("h-red");
+    else if(v<3)item.classList.add("h-orange");
+    else item.classList.add("h-green");
+    item.innerText=v.toFixed(2)+"x";
+    historyEl.appendChild(item);
+  });
 }
 
-/* ------------------- BACK ------------------- */
+/* BACK */
 function goBack(){ window.location.href="index.html"; }
 
-/* ------------------- GRAPH ------------------- */
-const canvas = document.getElementById("graph");
-const ctx = canvas.getContext("2d");
-const rocket = document.getElementById("rocket");
+/* GAME & GRAPH */
+const canvas=document.getElementById("graph");
+const ctx=canvas.getContext("2d");
+const rocket=document.getElementById("rocket");
 
-/* ------------------- GAME ------------------- */
-let gameRunning = false;
-let animMultiplier = 1;
-let crashPoint = 0;
-let betAmount = 0;
-let graphOffset = 0;
+let gameRunning=false;
+let animMultiplier=1;
+let crashPoint=0;
+let betAmount=0;
+let points=[];
+let shakeIntensity=0;
+let smokeParticles=[];
 
-function generateCrash(){ return Math.pow(1 - Math.random(), -1.2); }
+function generateCrash(){ return Math.pow(1-Math.random(),-1.5); }
 
 function startGame(){
-    if(gameRunning) return;
-    betAmount = Number(document.getElementById("bet").value);
-    if(betAmount<=0 || betAmount>getBalance()){ alert("Недостаточно баланса"); return; }
-    subtractBalance(betAmount);
+  if(gameRunning) return;
+  betAmount=Number(document.getElementById("bet").value);
+  if(betAmount<=0 || betAmount>getBalance()){ alert("Недостаточно баланса"); return; }
+  subtractBalance(betAmount);
 
-    animMultiplier=1;
-    crashPoint = generateCrash();
-    graphOffset = 0;
-    gameRunning = true;
+  animMultiplier=1; crashPoint=generateCrash(); points=[]; gameRunning=true;
+  shakeIntensity=0;
+  smokeParticles=[];
+  ctx.clearRect(0,0,canvas.width,canvas.height);
+  requestAnimationFrame(animate);
+}
 
-    ctx.clearRect(0,0,canvas.width,canvas.height);
+/* генерация дыма ракеты */
+function addSmoke(){
+  smokeParticles.push({
+    x:canvas.width/2 + (Math.random()-0.5)*20,
+    y:canvas.height-60,
+    size:5+Math.random()*5,
+    alpha:1
+  });
+  smokeParticles.forEach(p=>p.y-=1.5, p.alpha-=0.02);
+  smokeParticles=smokeParticles.filter(p=>p.alpha>0);
+}
+
+function drawSmoke(){
+  smokeParticles.forEach(p=>{
     ctx.beginPath();
-    ctx.moveTo(canvas.width/2, canvas.height);
-
-    requestAnimationFrame(animate);
+    ctx.arc(p.x,p.y,p.size,0,2*Math.PI);
+    ctx.fillStyle=`rgba(255,100,50,${p.alpha})`;
+    ctx.fill();
+  });
 }
 
 function animate(){
-    if(!gameRunning) return;
+  if(!gameRunning) return;
 
-    animMultiplier += 0.02;
-    graphOffset = animMultiplier*10;
+  animMultiplier*=1+0.005+0.002*Math.random(); // плавное ускорение
+  points.push(animMultiplier);
+  if(points.length>canvas.height) points.shift();
 
-    // Смещаем график вверх, ракета фиксирована
-    ctx.clearRect(0,0,canvas.width,canvas.height);
-    ctx.beginPath();
-    ctx.moveTo(canvas.width/2, canvas.height);
+  // График 3D-подобный
+  ctx.clearRect(0,0,canvas.width,canvas.height);
+  let grad=ctx.createLinearGradient(0,0,0,canvas.height);
+  grad.addColorStop(0,"#ff6b6b");
+  grad.addColorStop(1,"#8b0000");
+  ctx.strokeStyle=grad;
+  ctx.lineWidth=3;
+  ctx.beginPath();
+  ctx.moveTo(canvas.width/2, canvas.height);
+  for(let i=0;i<points.length;i++){
+    let x=i*(canvas.width/points.length);
+    let y=canvas.height - points[i]*40;
+    ctx.lineTo(x,y);
+  }
+  ctx.stroke();
 
-    for(let i=0;i<canvas.height;i+=2){
-        let y = canvas.height - i - graphOffset;
-        let x = canvas.width/2;
-        ctx.lineTo(x, y);
-    }
-    ctx.strokeStyle="red";
-    ctx.stroke();
+  addSmoke();
+  drawSmoke();
 
-    document.getElementById("multiplier").innerText = animMultiplier.toFixed(2)+"x";
+  // Тряска ракеты
+  shakeIntensity= Math.max(0, Math.min(5, (animMultiplier/crashPoint-0.85)*60));
+  rocket.style.transform=`translateX(-50%) translate(${(Math.random()-0.5)*shakeIntensity}px,${(Math.random()-0.5)*shakeIntensity}px)`;
 
-    if(animMultiplier >= crashPoint){ endGame(); return; }
+  rocket.style.bottom='60px';
+  document.getElementById("multiplier").innerText=animMultiplier.toFixed(2)+"x";
 
-    requestAnimationFrame(animate);
+  if(animMultiplier>=crashPoint){ endGame(); return; }
+  requestAnimationFrame(animate);
 }
 
 function cashOut(){
-    if(!gameRunning) return;
-    gameRunning=false;
-    const win = betAmount * animMultiplier;
-    addBalance(win);
-    addCrashHistory(animMultiplier);
-    tg.HapticFeedback.notificationOccurred("success");
-    alert("Вы забрали "+win.toFixed(2)+" TON");
+  if(!gameRunning) return;
+  gameRunning=false;
+  const win=betAmount*animMultiplier;
+  addBalance(win);
+  addCrashHistory(animMultiplier);
+  tg.HapticFeedback.notificationOccurred("success");
+  alert("Вы забрали "+win.toFixed(2)+" TON");
 }
 
 function endGame(){
-    gameRunning=false;
-    document.getElementById("multiplier").innerText="CRASH";
-    addCrashHistory(animMultiplier);
-    tg.HapticFeedback.notificationOccurred("error");
+  gameRunning=false;
+  document.getElementById("multiplier").innerText="CRASH";
+  addCrashHistory(animMultiplier);
+  shakeIntensity=10;
+  tg.HapticFeedback.notificationOccurred("error");
 }
 </script>
-
 </body>
 </html>
