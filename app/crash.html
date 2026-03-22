@@ -141,7 +141,6 @@ tg.expand();
 let gameRunning = false;
 let multiplier = 1;
 let crashPoint = 0;
-let interval;
 let betAmount = 0;
 let crashHistory = [];
 
@@ -207,7 +206,15 @@ function drawGraph(x, y){
     rocket.style.top = (canvas.height - y - 10) + "px";
 }
 
+/* ------------------- CRASH POINT ------------------- */
+function generateCrash(){
+    return Math.pow(1 - Math.random(), -1.2);
+}
+
 /* ------------------- START GAME ------------------- */
+let animX = 0;
+let animMultiplier = 1;
+
 function startGame(){
     if(gameRunning) return;
 
@@ -220,6 +227,8 @@ function startGame(){
     subtractBalance(betAmount);
 
     multiplier = 1;
+    animMultiplier = 1;
+    animX = 0;
     crashPoint = generateCrash();
     gameRunning = true;
 
@@ -227,51 +236,48 @@ function startGame(){
     ctx.beginPath();
     ctx.moveTo(0, canvas.height);
 
-    let x = 0;
+    requestAnimationFrame(animate);
+}
 
-    interval = setInterval(()=>{
-        multiplier += 0.02;
-        document.getElementById("multiplier").innerText = multiplier.toFixed(2) + "x";
+/* ------------------- ANIMATE ------------------- */
+function animate(){
+    if(!gameRunning) return;
 
-        x += 2;
-        drawGraph(x, multiplier*25);
+    animMultiplier += 0.02;
+    animX += 2;
 
-        if(multiplier >= crashPoint){
-            endGame();
-        }
-    }, 50);
+    drawGraph(animX, animMultiplier*25);
+    document.getElementById("multiplier").innerText = animMultiplier.toFixed(2) + "x";
+
+    if(animMultiplier >= crashPoint){
+        endGame();
+        return;
+    }
+
+    requestAnimationFrame(animate);
 }
 
 /* ------------------- CASH OUT ------------------- */
 function cashOut(){
     if(!gameRunning) return;
 
-    clearInterval(interval);
     gameRunning = false;
-
-    const win = betAmount * multiplier;
+    const win = betAmount * animMultiplier;
     addBalance(win);
-    addCrashHistory(multiplier);
+    addCrashHistory(animMultiplier);
 
     tg.HapticFeedback.notificationOccurred("success");
-
     alert("Вы забрали " + win.toFixed(2) + " TON");
 }
 
 /* ------------------- END GAME ------------------- */
 function endGame(){
-    clearInterval(interval);
     gameRunning = false;
 
     document.getElementById("multiplier").innerText = "CRASH";
-    addCrashHistory(multiplier);
+    addCrashHistory(animMultiplier);
 
     tg.HapticFeedback.notificationOccurred("error");
-}
-
-/* ------------------- CRASH POINT ------------------- */
-function generateCrash(){
-    return Math.pow(1 - Math.random(), -1.2);
 }
 </script>
 
