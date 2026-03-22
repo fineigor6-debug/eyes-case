@@ -12,86 +12,84 @@
 <link href="https://fonts.googleapis.com/css2?family=Orbitron:wght@600;800&display=swap" rel="stylesheet">
 
 <style>
-
 body{
-background:#0b0b0b;
-font-family:'Orbitron',sans-serif;
+    background:#0b0b0b;
+    font-family:'Orbitron',sans-serif;
 }
 
 .crash-container{
-display:flex;
-flex-direction:column;
-align-items:center;
-padding:20px;
-gap:20px;
+    display:flex;
+    flex-direction:column;
+    align-items:center;
+    padding:20px;
+    gap:20px;
 }
 
 .balance-box{
-background:#111;
-padding:10px 20px;
-border-radius:12px;
-border:1px solid rgba(255,0,0,0.3);
-box-shadow:0 0 10px rgba(255,0,0,0.2);
+    background:#111;
+    padding:10px 20px;
+    border-radius:12px;
+    border:1px solid rgba(255,0,0,0.3);
+    box-shadow:0 0 10px rgba(255,0,0,0.2);
 }
 
 .multiplier{
-font-size:52px;
-color:#ff2b2b;
-text-shadow:0 0 20px rgba(255,0,0,0.8);
+    font-size:52px;
+    color:#ff2b2b;
+    text-shadow:0 0 20px rgba(255,0,0,0.8);
 }
 
 canvas{
-background:#0f0f0f;
-border-radius:12px;
-border:1px solid rgba(255,0,0,0.3);
-box-shadow:0 0 15px rgba(255,0,0,0.2);
+    background:#0f0f0f;
+    border-radius:12px;
+    border:1px solid rgba(255,0,0,0.3);
+    box-shadow:0 0 15px rgba(255,0,0,0.2);
 }
 
 .bet-box{
-display:flex;
-gap:10px;
+    display:flex;
+    gap:10px;
 }
 
 .bet-input{
-width:100px;
-padding:10px;
-background:#111;
-border:1px solid #333;
-color:white;
-border-radius:8px;
-text-align:center;
+    width:100px;
+    padding:10px;
+    background:#111;
+    border:1px solid #333;
+    color:white;
+    border-radius:8px;
+    text-align:center;
 }
 
 .crash-btn{
-padding:12px 20px;
-background:#ff2b2b;
-border:none;
-border-radius:10px;
-color:white;
-font-weight:bold;
-box-shadow:0 0 10px rgba(255,0,0,0.5);
+    padding:12px 20px;
+    background:#ff2b2b;
+    border:none;
+    border-radius:10px;
+    color:white;
+    font-weight:bold;
+    box-shadow:0 0 10px rgba(255,0,0,0.5);
 }
 
 .rocket{
-position:absolute;
-font-size:22px;
-transform:rotate(45deg);
+    position:absolute;
+    font-size:22px;
+    transform:rotate(45deg);
 }
 
-/* HISTORY */
 .history{
-display:flex;
-gap:6px;
-flex-wrap:wrap;
-justify-content:center;
-max-width:320px;
+    display:flex;
+    gap:6px;
+    flex-wrap:wrap;
+    justify-content:center;
+    max-width:320px;
 }
 
 .history-item{
-padding:4px 8px;
-border-radius:6px;
-font-size:12px;
-font-weight:bold;
+    padding:4px 8px;
+    border-radius:6px;
+    font-size:12px;
+    font-weight:bold;
 }
 
 .h-red{ background:#3a0000; color:#ff4d4d; }
@@ -107,155 +105,174 @@ font-weight:bold;
 <div class="app">
 
 <div class="header">
-<button class="back-btn" onclick="goBack()">←</button>
-<div class="username">CRASH</div>
+    <button class="back-btn" onclick="goHome()">←</button>
+    <div class="username">CRASH</div>
 </div>
 
 <div class="crash-container">
 
-<div class="balance-box">
-Баланс: <span id="balance">0</span> TON
-</div>
+    <div class="balance-box">
+        Баланс: <span id="balance">0</span> TON
+    </div>
 
-<div class="multiplier" id="multiplier">1.00x</div>
+    <div class="multiplier" id="multiplier">1.00x</div>
 
-<div class="history" id="history"></div>
+    <div class="history" id="history"></div>
 
-<div style="position:relative;">
-<canvas id="graph" width="320" height="200"></canvas>
-<div class="rocket" id="rocket">🚀</div>
-</div>
+    <div style="position:relative;">
+        <canvas id="graph" width="320" height="200"></canvas>
+        <div class="rocket" id="rocket">🚀</div>
+    </div>
 
-<div class="bet-box">
-<input class="bet-input" id="bet" value="5">
-<button class="crash-btn" onclick="startGame()">СТАВКА</button>
-<button class="crash-btn" onclick="cashOut()">ЗАБРАТЬ</button>
-</div>
-
-</div>
+    <div class="bet-box">
+        <input class="bet-input" id="bet" value="5">
+        <button class="crash-btn" onclick="startGame()">СТАВКА</button>
+        <button class="crash-btn" onclick="cashOut()">ЗАБРАТЬ</button>
+    </div>
 
 </div>
 
-<script src="app/app.js"></script>
+</div>
 
 <script>
+const tg = window.Telegram.WebApp;
+tg.expand();
 
-const tg = window.Telegram.WebApp
-tg.expand()
+let gameRunning = false;
+let multiplier = 1;
+let crashPoint = 0;
+let interval;
+let betAmount = 0;
+let crashHistory = [];
 
-let gameRunning = false
-let multiplier = 1
-let crashPoint = 0
-let interval
-let betAmount = 0
+// Canvas
+const canvas = document.getElementById("graph");
+const ctx = canvas.getContext("2d");
+const rocket = document.getElementById("rocket");
 
-const canvas = document.getElementById("graph")
-const ctx = canvas.getContext("2d")
-const rocket = document.getElementById("rocket")
-
-/* INIT */
-updateBalanceUI()
-renderCrashHistory()
-
-function goBack(){
-
-if(gameRunning){
-showNotice("Игра уже идёт")
-return
+/* ------------------- BALANCE ------------------- */
+function getBalance(){
+    return Number(localStorage.getItem("balance") || 0);
 }
 
-window.location.href="index.html"
+function addBalance(amount){
+    const newBalance = getBalance() + amount;
+    localStorage.setItem("balance", newBalance);
+    updateBalanceUI();
 }
 
-/* ГРАФИК */
+function subtractBalance(amount){
+    addBalance(-amount);
+}
+
+function updateBalanceUI(){
+    document.getElementById("balance").innerText = getBalance().toFixed(2);
+}
+
+updateBalanceUI();
+
+/* ------------------- HISTORY ------------------- */
+function addCrashHistory(value){
+    crashHistory.push(value);
+    if(crashHistory.length > 20) crashHistory.shift();
+    renderCrashHistory();
+}
+
+function renderCrashHistory(){
+    const historyEl = document.getElementById("history");
+    historyEl.innerHTML = "";
+    crashHistory.forEach(v=>{
+        const item = document.createElement("div");
+        item.classList.add("history-item");
+        if(v < 1.5) item.classList.add("h-red");
+        else if(v < 3) item.classList.add("h-orange");
+        else item.classList.add("h-green");
+        item.innerText = v.toFixed(2) + "x";
+        historyEl.appendChild(item);
+    });
+}
+
+/* ------------------- BACK BUTTON ------------------- */
+function goHome(){
+    window.location.href = "index.html"; // оставлено как есть
+}
+
+/* ------------------- GRAPH ------------------- */
 function drawGraph(x, y){
-ctx.lineTo(x, canvas.height - y)
-ctx.strokeStyle = "red"
-ctx.stroke()
+    ctx.lineTo(x, canvas.height - y);
+    ctx.strokeStyle = "red";
+    ctx.stroke();
 
-rocket.style.left = (x+10)+"px"
-rocket.style.top = (canvas.height - y - 10)+"px"
+    rocket.style.left = (x+10) + "px";
+    rocket.style.top = (canvas.height - y - 10) + "px";
 }
 
-/* СТАРТ */
+/* ------------------- START GAME ------------------- */
 function startGame(){
+    if(gameRunning) return;
 
-if(gameRunning) return
+    betAmount = Number(document.getElementById("bet").value);
+    if(betAmount <= 0 || betAmount > getBalance()){
+        alert("Недостаточно баланса");
+        return;
+    }
 
-betAmount = Number(document.getElementById("bet").value)
+    subtractBalance(betAmount);
 
-if(!payForCase(betAmount)) return
+    multiplier = 1;
+    crashPoint = generateCrash();
+    gameRunning = true;
 
-updateBalanceUI()
+    ctx.clearRect(0, 0, canvas.width, canvas.height);
+    ctx.beginPath();
+    ctx.moveTo(0, canvas.height);
 
-multiplier = 1
-crashPoint = generateCrashPoint()
-gameRunning = true
+    let x = 0;
 
-ctx.clearRect(0,0,canvas.width,canvas.height)
-ctx.beginPath()
-ctx.moveTo(0, canvas.height)
+    interval = setInterval(()=>{
+        multiplier += 0.02;
+        document.getElementById("multiplier").innerText = multiplier.toFixed(2) + "x";
 
-let x = 0
+        x += 2;
+        drawGraph(x, multiplier*25);
 
-interval = setInterval(()=>{
-
-multiplier += 0.02
-
-document.getElementById("multiplier").innerText =
-multiplier.toFixed(2) + "x"
-
-x += 2
-drawGraph(x, multiplier*25)
-
-if(multiplier >= crashPoint){
-endGame()
+        if(multiplier >= crashPoint){
+            endGame();
+        }
+    }, 50);
 }
 
-},50)
-
-}
-
-/* ЗАБРАТЬ */
+/* ------------------- CASH OUT ------------------- */
 function cashOut(){
+    if(!gameRunning) return;
 
-if(!gameRunning) return
+    clearInterval(interval);
+    gameRunning = false;
 
-clearInterval(interval)
-gameRunning = false
+    const win = betAmount * multiplier;
+    addBalance(win);
+    addCrashHistory(multiplier);
 
-let win = betAmount * multiplier
+    tg.HapticFeedback.notificationOccurred("success");
 
-addBalance(win)
-addCrashHistory(multiplier)
-addGameStat(win, betAmount)
-
-updateBalanceUI()
-renderCrashHistory()
-
-tg.HapticFeedback.notificationOccurred("success")
-
-showNotice("Вы забрали " + win.toFixed(2) + " TON")
-
+    alert("Вы забрали " + win.toFixed(2) + " TON");
 }
 
-/* CRASH */
+/* ------------------- END GAME ------------------- */
 function endGame(){
+    clearInterval(interval);
+    gameRunning = false;
 
-clearInterval(interval)
-gameRunning = false
+    document.getElementById("multiplier").innerText = "CRASH";
+    addCrashHistory(multiplier);
 
-document.getElementById("multiplier").innerText = "CRASH"
-
-addCrashHistory(multiplier)
-addGameStat(0, betAmount)
-
-renderCrashHistory()
-
-tg.HapticFeedback.notificationOccurred("error")
-
+    tg.HapticFeedback.notificationOccurred("error");
 }
 
+/* ------------------- CRASH POINT ------------------- */
+function generateCrash(){
+    return Math.pow(1 - Math.random(), -1.2);
+}
 </script>
 
 </body>
