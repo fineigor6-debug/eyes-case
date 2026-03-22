@@ -13,29 +13,14 @@ body { margin:0; background:#0b0b0b; font-family:'Orbitron',sans-serif; color:#f
 .username { font-weight:bold; font-size:18px; color:#ff2b2b; }
 .crash-container { display:flex; flex-direction:column; align-items:center; gap:15px; padding:20px; }
 
-.balance-box {
-  background:#111; padding:10px 20px; border-radius:12px;
-  border:1px solid rgba(255,0,0,0.3);
-}
-
+.balance-box { background:#111; padding:10px 20px; border-radius:12px; border:1px solid rgba(255,0,0,0.3);}
 .multiplier { font-size:52px; color:#ff2b2b; text-shadow:0 0 20px rgba(255,0,0,0.8); }
-
-.canvas-container {
-  position:relative; width:360px; height:400px; overflow:hidden;
-  border-radius:12px; border:1px solid rgba(255,0,0,0.3);
-}
-
+.canvas-container { position:relative; width:360px; height:400px; overflow:hidden; border-radius:12px; border:1px solid rgba(255,0,0,0.3); }
 canvas { position:absolute; left:0; top:0; }
 
-#rocket {
-  position:absolute; width:90px; left:50%; top:50%;
-  transform:translate(-50%, -50%); z-index:10;
-  pointer-events:none; filter: drop-shadow(0 0 20px rgba(255,50,50,0.7));
-  display:none; /* скрыта до countdown */
-}
+#rocket { position:absolute; width:90px; left:50%; top:50%; transform:translate(-50%, -50%); z-index:10; pointer-events:none; filter: drop-shadow(0 0 20px rgba(255,50,50,0.7)); display:none; }
 
 .history { display:flex; gap:6px; flex-wrap:wrap; justify-content:center; max-width:360px; }
-
 .history-item { padding:4px 8px; border-radius:6px; font-size:12px; font-weight:bold; }
 .h-red{ background:#3a0000; color:#ff4d4d; }
 .h-orange{ background:#3a1f00; color:#ff9a2b; }
@@ -45,17 +30,8 @@ canvas { position:absolute; left:0; top:0; }
 .bet-input { width:100px; padding:10px; background:#111; border:1px solid #333; color:white; border-radius:8px; text-align:center; }
 .crash-btn { padding:12px 20px; background:#ff2b2b; border:none; border-radius:10px; color:white; font-weight:bold; }
 
-#countdown {
-  position:absolute; top:50%; left:50%; transform:translate(-50%,-50%);
-  font-size:80px; display:none;
-}
-
-#winScreen {
-  position:absolute; top:0; left:0; width:100%; height:100%;
-  background:rgba(0,0,0,0.9); display:none; flex-direction:column;
-  align-items:center; justify-content:center; z-index:50;
-}
-
+#countdown { position:absolute; top:50%; left:50%; transform:translate(-50%,-50%); font-size:80px; display:none; }
+#winScreen { position:absolute; top:0; left:0; width:100%; height:100%; background:rgba(0,0,0,0.9); display:none; flex-direction:column; align-items:center; justify-content:center; z-index:50; }
 .explosion { position:absolute; width:20px; height:20px; background:orange; border-radius:50%; }
 </style>
 </head>
@@ -132,7 +108,7 @@ function renderCrashHistory(){
 
 /* COUNTDOWN + одна ставка */
 function startCountdown(){
-  if(!canBet) return; // можно только одну ставку
+  if(!canBet) return; 
   canBet=false;
 
   betAmount=Number(document.getElementById("bet").value);
@@ -149,7 +125,7 @@ function startCountdown(){
     if(count<=0){
       clearInterval(interval);
       cd.style.display="none";
-      rocket.style.display="block"; // ракета появляется после countdown
+      rocket.style.display="block";
       startGame();
     } else {
       cd.innerText=count;
@@ -172,7 +148,7 @@ function startGame(){
 function animate(){
   if(!gameRunning) return;
 
-  animMultiplier*=1.01;
+  animMultiplier*=1.007; 
   points.push(animMultiplier);
   if(points.length>canvas.width) points.shift();
 
@@ -260,7 +236,7 @@ function endGame(){
   gameRunning=false;
   document.getElementById("multiplier").innerText="CRASH";
   addCrashHistory(animMultiplier);
-  canBet=true; // новая ставка разрешена
+  canBet=true;
 }
 
 /* BACK */
