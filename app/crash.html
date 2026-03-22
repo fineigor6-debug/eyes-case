@@ -14,6 +14,11 @@
 
 <style>
 
+body{
+background:#0b0b0b;
+font-family:'Orbitron',sans-serif;
+}
+
 .crash-container{
 display:flex;
 flex-direction:column;
@@ -22,16 +27,25 @@ padding:20px;
 gap:20px;
 }
 
+.balance-box{
+background:#111;
+padding:10px 20px;
+border-radius:12px;
+border:1px solid rgba(255,0,0,0.3);
+box-shadow:0 0 10px rgba(255,0,0,0.2);
+}
+
 .multiplier{
-font-size:48px;
+font-size:52px;
 color:#ff2b2b;
-text-shadow:0 0 15px rgba(255,0,0,0.7);
+text-shadow:0 0 20px rgba(255,0,0,0.8);
 }
 
 canvas{
 background:#0f0f0f;
 border-radius:12px;
 border:1px solid rgba(255,0,0,0.3);
+box-shadow:0 0 15px rgba(255,0,0,0.2);
 }
 
 .bet-box{
@@ -56,6 +70,13 @@ border:none;
 border-radius:10px;
 color:white;
 font-weight:bold;
+box-shadow:0 0 10px rgba(255,0,0,0.5);
+}
+
+.rocket{
+position:absolute;
+font-size:22px;
+transform:rotate(45deg);
 }
 
 </style>
@@ -73,12 +94,19 @@ font-weight:bold;
 
 <div class="crash-container">
 
+<div class="balance-box">
+Баланс: <span id="balance">0</span> TON
+</div>
+
 <div class="multiplier" id="multiplier">1.00x</div>
 
+<div style="position:relative;">
 <canvas id="graph" width="320" height="200"></canvas>
+<div class="rocket" id="rocket">🚀</div>
+</div>
 
 <div class="bet-box">
-<input class="bet-input" id="bet" value="10">
+<input class="bet-input" id="bet" value="5">
 <button class="crash-btn" onclick="startGame()">СТАВКА</button>
 <button class="crash-btn" onclick="cashOut()">ЗАБРАТЬ</button>
 </div>
@@ -86,6 +114,8 @@ font-weight:bold;
 </div>
 
 </div>
+
+<script src="app/app.js"></script>
 
 <script>
 
@@ -96,26 +126,45 @@ let gameRunning = false
 let multiplier = 1
 let crashPoint = 0
 let interval
+let betAmount = 0
 
 const canvas = document.getElementById("graph")
 const ctx = canvas.getContext("2d")
+const rocket = document.getElementById("rocket")
+
+/* БАЛАНС */
+function updateBalance(){
+document.getElementById("balance").innerText = getBalance()
+}
+updateBalance()
 
 function goHome(){
-window.location.href="home.html"
+window.location.href="index.html"
 }
 
+/* ГРАФИК */
 function drawGraph(x, y){
 ctx.lineTo(x, canvas.height - y)
 ctx.strokeStyle = "red"
 ctx.stroke()
+
+rocket.style.left = (x+10)+"px"
+rocket.style.top = (canvas.height - y - 10)+"px"
 }
 
+/* СТАРТ ИГРЫ */
 function startGame(){
 
 if(gameRunning) return
 
+betAmount = Number(document.getElementById("bet").value)
+
+if(!payForCase(betAmount)) return
+
+updateBalance()
+
 multiplier = 1
-crashPoint = 1 + Math.random()*5
+crashPoint = generateCrash()
 gameRunning = true
 
 ctx.clearRect(0,0,canvas.width,canvas.height)
@@ -132,7 +181,7 @@ document.getElementById("multiplier").innerText =
 multiplier.toFixed(2) + "x"
 
 x += 2
-drawGraph(x, multiplier*20)
+drawGraph(x, multiplier*25)
 
 if(multiplier >= crashPoint){
 endGame()
@@ -142,6 +191,7 @@ endGame()
 
 }
 
+/* ЗАБРАТЬ */
 function cashOut(){
 
 if(!gameRunning) return
@@ -149,13 +199,17 @@ if(!gameRunning) return
 clearInterval(interval)
 gameRunning = false
 
-let bet = Number(document.getElementById("bet").value)
-let win = bet * multiplier
+let win = betAmount * multiplier
+addBalance(win)
+updateBalance()
 
-alert("Вы забрали: " + win.toFixed(2))
+tg.HapticFeedback.notificationOccurred("success")
+
+alert("Вы забрали " + win.toFixed(2) + " TON")
 
 }
 
+/* КРАШ */
 function endGame(){
 
 clearInterval(interval)
@@ -163,6 +217,13 @@ gameRunning = false
 
 document.getElementById("multiplier").innerText = "CRASH"
 
+tg.HapticFeedback.notificationOccurred("error")
+
+}
+
+/* РЕАЛЬНАЯ ФОРМУЛА CRASH */
+function generateCrash(){
+return Math.pow(1 - Math.random(), -1.2)
 }
 
 </script>
