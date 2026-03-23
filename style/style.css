@@ -667,3 +667,23 @@ font-weight:bold;
 .h-red{ background:#3a0000; color:#ff4d4d; }
 .h-orange{ background:#3a1f00; color:#ff9a2b; }
 .h-green{ background:#003a0a; color:#2bff88; }
+
+.case-banner{
+background-image:url('casesscreen/IMG_1087.png');
+background-size:cover;
+background-position:center;
+background-repeat:no-repeat;
+position:relative;
+overflow:hidden;
+}
+
+.case-text{
+position:absolute;
+bottom:15px;
+left:0;
+right:0;
+text-align:center;
+font-size:22px;
+font-weight:bold;
+text-shadow:0 0 10px rgba(0,0,0,0.8);
+}
