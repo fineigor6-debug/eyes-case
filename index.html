@@ -41,6 +41,12 @@ transform:scale(1.03);
 box-shadow:0 0 20px rgba(255,0,0,0.3);
 }
 
+/* ИКОНКА ВНУТРИ КАРТОЧКИ */
+.mode-icon{
+width:80px;
+margin-bottom:10px;
+}
+
 </style>
 
 </head>
@@ -64,7 +70,8 @@ Loading...
 <div class="modes">
 
 <div class="mode-card" onclick="openCases()">
-🎁 Кейсы
+<img src="casesscreen/IMG_1087.png" class="mode-icon">
+<div>Кейсы</div>
 </div>
 
 <div class="mode-card" onclick="openCrash()">
@@ -73,7 +80,7 @@ Loading...
 
 </div>
 
-<!-- NAVIGATION (КАК БЫЛО) -->
+<!-- NAVIGATION -->
 <div class="nav">
 
 <button class="nav-btn" onclick="goHome()">
